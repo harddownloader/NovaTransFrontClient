@@ -1,0 +1,10 @@
+{
+	"bail": 1,
+	"setupFilesAfterEnv": ["./enzyme.config.js"],
+	"verbose": true,
+	"modulePaths": ["src"],
+	"moduleDirectories": ["node_modules"],
+	"moduleNameMapper": {
+		"^@/(.*)$": "<rootDir>/src/$1"
+	}
+}

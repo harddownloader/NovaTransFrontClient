@@ -1,0 +1,13 @@
+.MuiFormControl-root.data_picker__container{
+  margin: 8px;
+  .MuiSelect-icon{
+    color: white;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .MuiFormControl-root.data_picker__container{
+    // margin: 0px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,173 @@
+import React, { useEffect, useState } from "react";
+import Head from "next/head";
+import Router from "next/router";
+import Layout from "../components/Layout";
+import Hero from "../components/Hero";
+import { Select, Button, Input, DatePicker } from "antd";
+import { SearchOutlined } from '@ant-design/icons';
+import moment from "moment";
+import { getAllLocations } from "@/actions/location";
+
+const { Option } = Select;
+
+function onBlur() {
+  console.log("blur");
+}
+
+function onFocus() {
+  console.log("focus");
+}
+
+function onSearch(val) {
+  console.log("search:", val);
+}
+
+function disabledDate(current) {
+  // Can not select days before today and today
+  return current && current < moment().endOf("day");
+}
+
+const threeLengthArray = [];
+
+const Home = () => {
+  const [locations, setLocations] = useState([]);
+  const [formData, setFormData] = useState({});
+  const [disButton, setDisButton] = useState(true);
+
+  const checkButtonDisabled = val => {
+    threeLengthArray.push(val);
+    if(threeLengthArray.length >= 3){
+      setDisButton(false)
+    }
+  };
+
+  const onChangeFrom = val => {
+    setFormData({ ...formData, ...{ startLocation: val } });
+    checkButtonDisabled(val);
+  };
+
+  const onChangeTo = val => {
+    setFormData({ ...formData, ...{ endLocation: val } });
+    checkButtonDisabled(val);
+  };
+
+  const onChangeDate = val => {
+    const journeyDate = val && moment(val._d).format("YYYY-MM-DD");
+    setFormData({ ...formData, ...{ journeyDate } });
+    checkButtonDisabled(val);
+  };
+
+  const dummytransition = () => {
+    console.log('dummytransition', {
+      pathname: "/buses",
+      query: formData
+    })
+    Router.push({
+      pathname: "/buses",
+      query: formData
+    });
+  };
+
+  useEffect(() => {
+    fetchAllLocations();
+  }, []);
+
+  const fetchAllLocations = async () => {
+    const locations = await getAllLocations();
+    // console.log('locations', locations)
+    setLocations(locations);
+  };
+
+  return (
+    <div>
+      <Head>
+        <title>Главная</title>
+        <link rel="icon" href="/static/favicon.ico" importance="low" />
+      </Head>
+
+      <Layout>
+        <div className="hero">
+          <Hero />
+
+          <div className="row">
+            <div className="input-background">
+              <h1 className="tag-line">Выбор рейса</h1>
+              <div className="route-form">
+                <label htmlFor="">
+                  <h4 className="color-white">Откуда: </h4>
+                </label>
+                <Select
+                  showSearch
+                  placeholder="Откуда"
+                  style={{ width: 200, marginRight: "1rem" }}
+                  optionFilterProp="children"
+                  onChange={onChangeFrom}
+                  onFocus={onFocus}
+                  name="startLocation"
+                  onBlur={onBlur}
+                  onSearch={onSearch}
+                  filterOption={(input, option) =>
+                    option.props.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {locations.map(location => (
+                    <Option value={location._id} key={location._id}>
+                      {location.name}
+                    </Option>
+                  ))}
+                </Select>
+                <label htmlFor="">
+                  <h4 className="color-white">Куда: </h4>
+                </label>
+                <Select
+                  showSearch
+                  style={{ width: 200, marginRight: "1rem" }}
+                  placeholder="Куда"
+                  optionFilterProp="children"
+                  onChange={onChangeTo}
+                  name="endLocation"
+                  onFocus={onFocus}
+                  onBlur={onBlur}
+                  onSearch={onSearch}
+                  filterOption={(input, option) =>
+                    option.props.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {locations.map(location => (
+                    <Option value={location._id} key={location._id}>
+                      {location.name}
+                    </Option>
+                  ))}
+                </Select>
+                <label htmlFor="">
+                  <h4 className="color-white">Дата: </h4>
+                </label>
+                <DatePicker
+                  style={{ width: "20%" }}
+                  format="YYYY-MM-DD"
+                  disabledDate={disabledDate}
+                  onChange={onChangeDate}
+                />
+                <Button
+                  type="primary"
+                  icon={<SearchOutlined />}
+                  style={{ marginLeft: "1rem" }}
+                  onClick={dummytransition}
+                  disabled={disButton}
+                >
+                  Поиск
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
+    </div>
+  );
+};
+
+export default Home;

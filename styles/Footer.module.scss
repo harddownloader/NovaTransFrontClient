@@ -1,0 +1,36 @@
+.footer__company{
+  text-align: center;
+}
+.footer__logo_description {
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: normal;
+}
+.footer__pages_list{
+
+}
+.pages_list__title{
+
+}
+.pages_list__item{
+
+}
+.social_link__item{
+  display: flex;
+}
+.social_link__icon{
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 575px) {
+  // центрируем для мобильной версии
+  .footer__pages_list,
+  .footer__socials
+  {
+    text-align: center;
+  }
+  .social-link__item{
+    justify-content: center;
+  }
+}

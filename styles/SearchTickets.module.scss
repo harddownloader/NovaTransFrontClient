@@ -1,0 +1,34 @@
+.search_tickets__container {
+  // background-image: url("/assets/images/backgrounds/bg-winter-mobile.jpg");
+}
+.welcome_block {
+  padding: 64px 0px;
+}
+.search_tickets {
+  padding: 64px 0px;
+  padding-top: 64px;
+  padding-bottom: 0px;
+}
+.search_btn {
+}
+// return trip
+.search_tickets.return_trip {
+  padding: 0px 0px;
+}
+.search_tickets.return_trip {
+  display: none;
+}
+.search_tickets.return_trip.activate {
+  display: block;
+}
+.MuiFormControlLabel-label {
+  color: white;
+}
+.MuiInputBase-input {
+  color: white !important;
+}
+@media only screen and (max-width: 575px) {
+  .search_btn {
+    width: 100%;
+  }
+}
