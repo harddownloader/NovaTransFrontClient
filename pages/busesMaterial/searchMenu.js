@@ -28,9 +28,9 @@ function disabledDate(current) {
 const SearchMenu = ({ buses, info }) => {
   const [locations, setLocations] = useState([]);
   const [formData, setFormData] = useState({
-    startLocation: info.startLocation,
-    endLocation: info.endLocation,
-    journeyDate: info.journeyDate
+    startLocation: info ? info.startLocation : null,
+    endLocation: info ? info.endLocation : null,
+    journeyDate: info ? info.journeyDate : null
   });
 
   const onChangeFrom = val => {
@@ -69,7 +69,7 @@ const SearchMenu = ({ buses, info }) => {
       </label>
       <Select
         showSearch
-        defaultValue={info.startLocation}
+        defaultValue={info ? info.startLocation : null}
         style={{ width: 200, marginRight: "1rem" }}
         placeholder="eg- Dhangadhi"
         optionFilterProp="children"
@@ -92,7 +92,7 @@ const SearchMenu = ({ buses, info }) => {
       </label>
       <Select
         showSearch
-        defaultValue={info.endLocation}
+        defaultValue={info ? info.endLocation : null}
         style={{ width: 200, marginRight: "1rem" }}
         placeholder="eg- Kathmandu"
         optionFilterProp="children"
@@ -117,7 +117,7 @@ const SearchMenu = ({ buses, info }) => {
         style={{ width: "20%" }}
         format="YYYY-MM-DD"
         disabledDate={disabledDate}
-        defaultValue={moment(info.journeyDate, "YYYY-MM-DD")}
+        defaultValue={info ? moment(info.journeyDate, "YYYY-MM-DD") : null}
         onChange={onChangeDate}
       />
       <Button

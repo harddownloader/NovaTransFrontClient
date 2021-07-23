@@ -34,7 +34,7 @@ class SeatDetails extends Component {
 
   render() {
     const { size, arr, oddA, oddB, evenA, evenB } = this.state;
-    const { sold, booked } = this.props;
+    const { sold = [] , booked = [] } = this.props;
     return (
       <div style={{display: "flex", justifyContent: "center"}}>
         <div style={styles.wrapper}>

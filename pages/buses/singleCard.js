@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Card, Row, Col, Modal, Button } from "antd";
 import Router from "next/router";
 import SeatDetails from "./seatDetails";
@@ -11,7 +11,7 @@ class SingleCard extends React.Component {
   showModal = () => {
     this.setState({
       visible: true,
-      loading: false
+      loading: false,
     });
   };
 
@@ -21,7 +21,7 @@ class SingleCard extends React.Component {
     // this.setState({userBooked: arr});
     this.encryptInfo(seat);
     // console.log(this.props)
-  }
+  };
 
   handleOk = (info) => {
     this.setState({ loading: true });
@@ -29,51 +29,58 @@ class SingleCard extends React.Component {
       this.setState({ loading: false, visible: false });
       Router.push({
         pathname: "/details",
-        query: {info}
+        query: { info },
       });
     }, 1000);
   };
 
-  encryptInfo = seat => {
-    const {startLocation, endLocation, fare, journeyDate, travel, slug} = this.props.bus;
+  encryptInfo = (seat) => {
+    const { startLocation, endLocation, fare, journeyDate, travel, slug } =
+      this.props.bus;
     let start = startLocation.name;
     let end = endLocation.name;
     let travelName = travel.name;
-    const info = {start, end, fare, journeyDate, travelName, seat, slug}
+    const info = { start, end, fare, journeyDate, travelName, seat, slug };
     const resp = enc(info);
-    this.handleOk(resp)
-  }
+    this.handleOk(resp);
+  };
 
-  handleCancel = e => {
+  handleCancel = (e) => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
   seatColorMeaning = () => {
-    return(
+    return (
       <>
-        <div style={{display: 'flex', alignItems: 'start', flexDirection: 'row-reverse'}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "start",
+            flexDirection: "row-reverse",
+          }}
+        >
           <p>Доступно</p>
-          <Button type="primary" style={{margin: '0 1rem'}}></Button>
+          <Button type="primary" style={{ margin: "0 1rem" }}></Button>
           <p>Забронировано</p>
-          <Button style={{backgroundColor: "rgb(67, 67, 67)", margin: '0 1rem'}}></Button>
+          <Button
+            style={{ backgroundColor: "rgb(67, 67, 67)", margin: "0 1rem" }}
+          ></Button>
           <p>Продано</p>
-          <Button type="danger" style={{margin: '0 1rem'}}></Button>
+          <Button type="danger" style={{ margin: "0 1rem" }}></Button>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   seatModal = () => (
     <Modal
       title="Бронирование Места"
       visible={this.state.visible}
       onCancel={this.handleCancel}
-      footer={[
-        this.seatColorMeaning()
-      ]}
-      >
+      footer={[this.seatColorMeaning()]}
+    >
       <SeatDetails
         sold={this.props.bus.soldSeat}
         setSold={() => {}}
@@ -87,7 +94,7 @@ class SingleCard extends React.Component {
 
   render() {
     const { bus } = this.props;
-    console.log('bus', bus)
+    console.log("bus", bus);
     return (
       <>
         <Card
@@ -98,28 +105,36 @@ class SingleCard extends React.Component {
           <Row>
             <Col span={3}>
               <img
-                src={`${API_ROOT}/uploads/${bus.image}`}
+                src={
+                  typeof bus === "object" && bus.hasOwnProperty("image")
+                    ? `${API_ROOT}/uploads/${bus.image}`
+                    : null
+                }
                 alt="suspense"
                 className="bus-thumbnail"
               />
             </Col>
             <Col span={1}></Col>
             <Col span={4}>
-              <p>{bus.travel ? bus.travel.name : 'нет travel.name'}</p>
+              <p>
+                {typeof bus === "object" && bus.hasOwnProperty("travel")
+                  ? bus.travel.name
+                  : "нет travel.name"}
+              </p>
             </Col>
             <Col span={4}>
-              <p>{bus.type}</p>
+              <p>{typeof bus === "object" ? bus.type : null}</p>
             </Col>
             <Col span={4}>
               <strong>
-                <p>{bus.departure_time}</p>
+                <p>{typeof bus === "object" ? bus.departure_time : null}</p>
               </strong>
             </Col>
             <Col span={4}>
               <p>20 мест*</p>
             </Col>
             <Col span={4}>
-              <p>Rs {`${bus.fare}`}</p>
+              <p>Rs {`${typeof bus === "object" ? bus.fare : null}`}</p>
             </Col>
           </Row>
         </Card>
