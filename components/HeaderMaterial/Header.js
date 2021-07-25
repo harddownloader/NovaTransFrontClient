@@ -17,7 +17,7 @@ import styles from '@/styles/Header.module.scss'
 
 import { API_ROOT } from "../../utils/config";
 // images
-const logo = '/static/img/logos/logo_white_gorizontal_cliped_200x200.png'
+const logo = '/static/img/logos/logo.png'
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -79,6 +79,7 @@ function Header(props) {
           className={classes.icon}
           
         />
+        <h1>NovaTrans</h1>
         {/* <Typography variant="h6" color="inherit" noWrap>
           NovaTrans
         </Typography> */}
