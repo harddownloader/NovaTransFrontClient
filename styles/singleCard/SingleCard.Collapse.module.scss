@@ -1,0 +1,107 @@
+// collapse
+.tabPanel{
+  padding: 22px 12px 12px;
+  font-size: 14px;
+}
+.detailsRoute{
+  display: flex;
+  margin: 0px -30px;
+}
+.detailsRouteColumn{
+  flex-basis: 50%;
+  margin: 0px 30px;
+}
+.detailsRouteInfo {
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+.detailsRouteInfo p{
+  margin-bottom: 8px;
+  line-height: 1.29;
+}
+.bold{
+  font-weight: 500;
+}
+.details{
+
+}
+.detailsContent{
+  display: flex;
+  margin: 0px -30px;
+}
+.detailsContent > div {
+  flex-basis: 50%;
+  margin: 0px 30px;
+}
+.wrapperPoints{
+  position: relative;
+}
+.mobile_ticket__segment_divider{
+  position: absolute;
+  top: 13px;
+  bottom: 40px;
+  left: 55.5px;
+  margin: 0;
+  background-color: transparent;
+  background-position: 50%;
+  background-size: 6px;
+}
+.item{
+  position: relative;
+  display: flex;
+  margin-bottom: 16px;
+}
+.item > div:first-child {
+  width: 50px;
+  min-width: 50px;
+  margin-right: 35px;
+}
+.time{
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+}
+.date{
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.17;
+  white-space: nowrap;
+}
+.city{
+  position: relative;
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+  word-break: break-all;
+}
+.address{
+  line-height: 1.29;
+}
+.listUnstyled{
+  padding-left: 0px;
+  list-style: none;
+}
+.listUnstyled strong{
+  font-weight: 400;
+}
+.title{
+  margin-bottom: 10px;
+  font-weight: 500;
+  line-height: 1;
+}
+.d_inline_block{
+  display: inline-block;
+}
+.pointer{
+  cursor: pointer;
+}
+.icon{
+
+}
+.icon_info{
+
+}
+.text_primary{
+  
+}
