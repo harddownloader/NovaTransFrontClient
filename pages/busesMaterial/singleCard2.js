@@ -143,7 +143,7 @@ class SingleCard extends Component {
                       </div>
                     </div>
                     <div>
-                      <div className={styles.title}>{this.state.bus.startLocation.name}</div>
+                      <div className={styles.title}>{this.state.bus ? this.state.bus.startLocation.name : null}</div>
                       <div className={styles.description}>
                         <div className={styles.linesEllipsis}>
                           Остановка "метро "Теремки", проспект Академика
@@ -164,7 +164,7 @@ class SingleCard extends Component {
                       </div>
                     </div>
                     <div>
-                      <div className={styles.title}>{this.state.bus.endLocation.name}</div>
+                      <div className={styles.title}>{this.state.bus ? this.state.bus.endLocation.name : null}</div>
                       <div className={styles.description}>
                         <div className={styles.linesEllipsis}>
                           Автовокзал "Центральный", улица Колонтаевская; дом 58
@@ -181,7 +181,7 @@ class SingleCard extends Component {
                   <div className={styles.priceContainer}>
                     <span>
                       <span className={`${styles.price} ${styles.text_nowrap}`}>
-                        {this.state.bus.fare}
+                        {this.state.bus ? this.state.bus.fare : null}
                       </span>
                       <span className={styles.currency}>грн</span>
                     </span>
