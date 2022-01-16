@@ -1,23 +1,23 @@
-import React from 'react';
+import React from "react";
 // import Image from 'next/image'
-import { makeStyles } from '@material-ui/core/styles';
-// import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from "@mui/material/styles";
+// import CssBaseline from '@mui/material/CssBaseline';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
 // import DirectionsBus from '@material-ui/icons/DirectionsBus';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 // icons
-import HelpIcon from '@material-ui/icons/Help';
+import HelpIcon from "@material-ui/icons/Help";
 
 // styles
-import styles from '@/styles/Header.module.scss'
+import styles from "@/styles/Header.module.scss";
 
 import { API_ROOT } from "../../utils/config";
 // images
-const logo = '/static/img/logos/logo.png'
+const logo = "/static/img/logos/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -65,26 +65,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header(props) {
-  const classes = useStyles()
+  const classes = useStyles();
 
-  return(
+  return (
     <React.Fragment>
-    {/* <CssBaseline /> */}
-    <AppBar position="relative" className={classes.container}>
-      <Toolbar>
-        <img
-          src={logo} 
-          alt="Logo NovaTrans"
-          height={50}
-          className={classes.icon}
-          
-        />
-        <h1>NovaTrans</h1>
-        {/* <Typography variant="h6" color="inherit" noWrap>
+      {/* <CssBaseline /> */}
+      <AppBar position="relative" className={classes.container}>
+        <Toolbar>
+          <img
+            src={logo}
+            alt="Logo NovaTrans"
+            height={50}
+            className={classes.icon}
+          />
+          <h1>NovaTrans</h1>
+          {/* <Typography variant="h6" color="inherit" noWrap>
           NovaTrans
         </Typography> */}
-        <section className={classes.rightToolbar}>
-          {/* <IconButton color="inherit" aria-label="Edit">
+          <section className={classes.rightToolbar}>
+            {/* <IconButton color="inherit" aria-label="Edit">
             <EditIcon />
           </IconButton>
           <IconButton color="inherit" aria-label="Save">
@@ -93,20 +92,17 @@ function Header(props) {
           <IconButton color="inherit" aria-label="More Options">
             <MoreVertIcon />
           </IconButton> */}
-          <HelpIcon className={classes.icon} />
-          <Box display={{ xs: 'none', md: 'block' }} m={1}>
-            <Typography variant="h6" color="inherit" align="right">
-              Служба поддержки
-            </Typography>
-          </Box>
-        
-        </section>
-        
-      </Toolbar>
-    </AppBar>
+            <HelpIcon className={classes.icon} />
+            <Box display={{ xs: "none", md: "block" }} m={1}>
+              <Typography variant="h6" color="inherit" align="right">
+                Служба поддержки
+              </Typography>
+            </Box>
+          </section>
+        </Toolbar>
+      </AppBar>
     </React.Fragment>
-  )
+  );
 }
-
 
 export default Header;

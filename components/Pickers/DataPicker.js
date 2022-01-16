@@ -1,40 +1,39 @@
-import 'date-fns';
-import React, {useState} from 'react';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
+import "date-fns";
+import React, { useState } from "react";
+import Grid from "@mui/material/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import ruLocale from "date-fns/locale/ru";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
+} from "@material-ui/pickers";
 
 // styles
-import styles from '@/styles/DataPicker.module.scss'
+import styles from "@/styles/DataPicker.module.scss";
 // makestales
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/material/styles";
 
 const useStyles = makeStyles((theme) => ({
-  '& .last_el': {
-    borderRadius: '0 4px 4px 0',
+  "& .last_el": {
+    borderRadius: "0 4px 4px 0",
   },
-}))
+}));
 
 export default function MaterialUIPickers(props) {
   const classes = useStyles();
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = useState(props.value);
-  const [isOpen, setIsOpen] = useState(false)
-  
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    props.onChangeDate(date)
+    props.onChangeDate(date);
   };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
-      <Grid container justify="space-around" >
+      <Grid container justify="space-around">
         <KeyboardDatePicker
           disableToolbar
           variant="inline"
@@ -45,12 +44,12 @@ export default function MaterialUIPickers(props) {
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change date',
+            "aria-label": "change date",
           }}
           className={`${styles.data_picker__container} ${props.classes}`}
-          onAccept={()=>setIsOpen(false)}
+          onAccept={() => setIsOpen(false)}
           open={isOpen}
-          onClick={()=>setIsOpen(true)}
+          onClick={() => setIsOpen(true)}
         />
         {/* <KeyboardDatePicker
           margin="normal"

@@ -1,15 +1,15 @@
-import React from 'react';
-// import { withStyles } from '@material-ui/core/styles';
-// import { green } from '@material-ui/core/colors';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import React from "react";
+// import { withStyles } from '@mui/material/styles';
+// import { green } from '@mui/material/colors';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 // import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 // import CheckBoxIcon from '@material-ui/icons/CheckBox';
 // import Favorite from '@material-ui/icons/Favorite';
 // import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 // styles
-import styles from '@/styles/Checkbox.scss'
+import styles from "@/styles/Checkbox.scss";
 
 // const GreenCheckbox = withStyles({
 //   root: {

@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
-
-class Copyright extends Component{
+class Copyright extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   render() {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
+        {"Copyright © "}
         <Link color="inherit" href="#">
           NovaTrans
-        </Link>{' '}
+        </Link>{" "}
         {new Date().getFullYear()}
-        {'.'}
+        {"."}
       </Typography>
     );
   }

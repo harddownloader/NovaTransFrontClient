@@ -1,10 +1,10 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import React from "react";
+import { makeStyles } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+// import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SimpleSelect() {
   const classes = useStyles();
-  const [from, setFrom] = React.useState('');
-  const [to, setTo] = React.useState('');
+  const [from, setFrom] = React.useState("");
+  const [to, setTo] = React.useState("");
 
   const handleChangeFrom = (event) => {
     setFrom(event.target.value);
@@ -60,7 +60,7 @@ function SimpleSelect() {
           <MenuItem value={30}>Одесса</MenuItem>
         </Select>
       </FormControl>
-       {/* <FormControl className={classes.formControl}>
+      {/* <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"

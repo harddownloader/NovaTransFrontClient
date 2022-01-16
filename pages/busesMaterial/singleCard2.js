@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Collapse from "@material-ui/core/Collapse";
-import Typography from "@material-ui/core/Typography";
+import Collapse from "@mui/material/Collapse";
+import Typography from "@mui/material/Typography";
 import { Card, Row, Col, Modal, Button } from "antd";
 import Router from "next/router";
 import SeatDetails from "./seatDetails";
@@ -9,7 +9,7 @@ import { enc, dec } from "../../utils/encdec";
 
 // sass
 import styles from "@/styles/singleCard/SingleCard2.module.scss";
-import stCollapse from '@/styles/singleCard/SingleCard.Collapse.module.scss'
+import stCollapse from "@/styles/singleCard/SingleCard.Collapse.module.scss";
 
 class SingleCard extends Component {
   constructor(props) {
@@ -18,7 +18,21 @@ class SingleCard extends Component {
       expanded: false,
       visible: false,
       userBooked: [],
+      // инфо о билете
       bus: props.bus,
+      months: [
+        "января",
+        "февраля",
+        "марта",
+        "апреля",
+        "мая",
+        "июня",
+        "июля",
+        "августа",
+        "сентября",
+        "ноября",
+        "декабря",
+      ],
     };
     this.handleExpandClick = this.handleExpandClick.bind(this);
   }
@@ -31,7 +45,7 @@ class SingleCard extends Component {
   showModal = () => {
     this.setState({
       visible: true,
-      loading: false
+      loading: false,
     });
   };
 
@@ -41,7 +55,7 @@ class SingleCard extends Component {
     // this.setState({userBooked: arr});
     this.encryptInfo(seat);
     // console.log(this.props)
-  }
+  };
 
   handleOk = (info) => {
     this.setState({ loading: true });
@@ -49,50 +63,57 @@ class SingleCard extends Component {
       this.setState({ loading: false, visible: false });
       Router.push({
         pathname: "/details",
-        query: {info}
+        query: { info },
       });
     }, 1000);
   };
 
-  encryptInfo = seat => {
-    const {startLocation, endLocation, fare, journeyDate, travel, slug} = this.props.bus;
+  encryptInfo = (seat) => {
+    const { startLocation, endLocation, fare, journeyDate, travel, slug } =
+      this.props.bus;
     let start = startLocation.name;
     let end = endLocation.name;
     let travelName = travel.name;
-    const info = {start, end, fare, journeyDate, travelName, seat, slug}
+    const info = { start, end, fare, journeyDate, travelName, seat, slug };
     const resp = enc(info);
-    this.handleOk(resp)
-  }
-  handleCancel = e => {
+    this.handleOk(resp);
+  };
+  handleCancel = (e) => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
   seatColorMeaning = () => {
-    return(
+    return (
       <>
-        <div style={{display: 'flex', alignItems: 'start', flexDirection: 'row-reverse'}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "start",
+            flexDirection: "row-reverse",
+          }}
+        >
           <p>Доступно</p>
-          <Button type="primary" style={{margin: '0 1rem'}}></Button>
+          <Button type="primary" style={{ margin: "0 1rem" }}></Button>
           <p>Забронировано</p>
-          <Button style={{backgroundColor: "rgb(67, 67, 67)", margin: '0 1rem'}}></Button>
+          <Button
+            style={{ backgroundColor: "rgb(67, 67, 67)", margin: "0 1rem" }}
+          ></Button>
           <p>Продано</p>
-          <Button type="danger" style={{margin: '0 1rem'}}></Button>
+          <Button type="danger" style={{ margin: "0 1rem" }}></Button>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   seatModal = () => (
     <Modal
       title="Бронирование Места"
       visible={this.state.visible}
       onCancel={this.handleCancel}
-      footer={[
-        this.seatColorMeaning()
-      ]}
-      >
+      footer={[this.seatColorMeaning()]}
+    >
       <SeatDetails
         sold={this.props.bus.soldSeat}
         setSold={() => {}}
@@ -130,10 +151,27 @@ class SingleCard extends Component {
                   <div className={`${styles.item} ${styles.itemWrap}`}>
                     <div className={styles.time_start}>
                       <div type="from" className={styles.time}>
-                        23:06
+                        {this.state.bus ? this.state.bus.departure_time : null}
                         <div>
-                          <span className={styles.date}>19 июля</span>
-                          <span className={styles.dateYear}>2021</span>
+                          <span className={styles.date}>
+                            {this.state.bus
+                              ? new Date(this.state.bus.journeyDate).getDate()
+                              : null}{" "}
+                            {this.state.bus
+                              ? this.state.months[
+                                  new Date(
+                                    this.state.bus.journeyDate
+                                  ).getMonth()
+                                ]
+                              : null}
+                          </span>
+                          <span className={styles.dateYear}>
+                            {this.state.bus
+                              ? new Date(
+                                  this.state.bus.journeyDate
+                                ).getFullYear()
+                              : null}
+                          </span>
                         </div>
                       </div>
                       <div className={styles.timeInRoadWrapper}>
@@ -143,7 +181,11 @@ class SingleCard extends Component {
                       </div>
                     </div>
                     <div>
-                      <div className={styles.title}>{this.state.bus ? this.state.bus.startLocation.name : null}</div>
+                      <div className={styles.title}>
+                        {this.state.bus
+                          ? this.state.bus.startLocation.name
+                          : null}
+                      </div>
                       <div className={styles.description}>
                         <div className={styles.linesEllipsis}>
                           Остановка "метро "Теремки", проспект Академика
@@ -156,15 +198,36 @@ class SingleCard extends Component {
                   <div className={`${styles.item} ${styles.itemWrap}`}>
                     <div className={styles.time_end}>
                       <div type="to" className={styles.time}>
-                        06:15
+                        {this.state.bus ? this.state.bus.arrival_time : null}
                         <div>
-                          <span className={styles.date}>20 июля</span>
-                          <span className={styles.dateYear}>2021</span>
+                          <span className={styles.date}>
+                            {this.state.bus
+                              ? new Date(this.state.bus.arrivalDate).getDate()
+                              : null}{" "}
+                            {this.state.bus
+                              ? this.state.months[
+                                  new Date(
+                                    this.state.bus.arrivalDate
+                                  ).getMonth()
+                                ]
+                              : null}
+                          </span>
+                          <span className={styles.dateYear}>
+                            {this.state.bus
+                              ? new Date(
+                                  this.state.bus.arrivalDate
+                                ).getFullYear()
+                              : null}
+                          </span>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <div className={styles.title}>{this.state.bus ? this.state.bus.endLocation.name : null}</div>
+                      <div className={styles.title}>
+                        {this.state.bus
+                          ? this.state.bus.endLocation.name
+                          : null}
+                      </div>
                       <div className={styles.description}>
                         <div className={styles.linesEllipsis}>
                           Автовокзал "Центральный", улица Колонтаевская; дом 58
@@ -187,7 +250,11 @@ class SingleCard extends Component {
                     </span>
                   </div>
                   <div className={styles.buttonWrapper}>
-                    <button className={styles.btn__submit} role="button" onClick={this.showModal}>
+                    <button
+                      className={styles.btn__submit}
+                      role="button"
+                      onClick={this.showModal}
+                    >
                       <span className="">Выбрать</span>
                     </button>
                   </div>
@@ -211,28 +278,21 @@ class SingleCard extends Component {
                         <span className={styles.carrierTitle}>
                           Перевозчик:{" "}
                         </span>
-                        <span>Суботин Д.Л.</span>
+                        <span>
+                          {this.state.bus ? this.state.bus.carrierBus : null}
+                        </span>
                       </div>
                       <div className={`${styles.busModel} ${styles.nowrap}`}>
                         <span className={styles.busModelTitle}>Автобус: </span>
-                        <span>Mercedes-Bens Travego</span>
+                        <span>
+                          {this.state.bus ? this.state.bus.carrierBus : null}
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className={styles.gridDivider8}></div>
-                <div className={styles.gridRight9}>
-                  {/* <div className={styles.options}>
-                    <div>
-                      <span>
-                        <div>
-                          <span className={`icon icon-undefined`}></span>
-                        </div>
-                      </span>
-                    </div>
-                  </div>
-                  <div></div> */}
-                </div>
+                <div className={styles.gridRight9}></div>
               </div>
             </div>
             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
@@ -252,10 +312,13 @@ class SingleCard extends Component {
                           <span className={stCollapse.bold}>
                             НАУ1035 Борисполь (аэропорт) - Одесса
                           </span>
-                          , по маршруту <span className={stCollapse.bold}>Киев — Одесса</span>
+                          , по маршруту{" "}
+                          <span className={stCollapse.bold}>Киев — Одесса</span>
                         </span>
                         <span>
-                          , на <span className={stCollapse.bold}>21 июля 2021</span> года
+                          , на{" "}
+                          <span className={stCollapse.bold}>21 июля 2021</span>{" "}
+                          года
                         </span>
                         <span>
                           {" "}
@@ -272,20 +335,16 @@ class SingleCard extends Component {
                   <div className={stCollapse.detailsContent}>
                     <div>
                       <div className={stCollapse.wrapperPoints}>
-                        <span className={stCollapse.mobile_ticket__segment_divider}></span>
+                        <span
+                          className={stCollapse.mobile_ticket__segment_divider}
+                        ></span>
                         <div className={stCollapse.item}>
                           <div>
-                            <div className={stCollapse.time}>
-                              23:06
-                            </div>
-                            <div className={stCollapse.date}>
-                              21 июля
-                            </div>
+                            <div className={stCollapse.time}>23:06</div>
+                            <div className={stCollapse.date}>21 июля</div>
                           </div>
                           <div>
-                            <div className={stCollapse.city}>
-                              Киев
-                            </div>
+                            <div className={stCollapse.city}>Киев</div>
                             <div className={stCollapse.address}>
                               Остановка "метро "Теремки", проспект Академика
                               Глушкова
@@ -294,14 +353,10 @@ class SingleCard extends Component {
                         </div>
                         <div className={stCollapse.item}>
                           <div>
-                            <div className={stCollapse.time}>
-                              02:20
-                            </div>
+                            <div className={stCollapse.time}>02:20</div>
                           </div>
                           <div>
-                            <div className={stCollapse.city}>
-                              Умань
-                            </div>
+                            <div className={stCollapse.city}>Умань</div>
                             <div className={stCollapse.address}>
                               Автовокзал Умань, улица Киевская; дом 1
                             </div>
@@ -309,14 +364,10 @@ class SingleCard extends Component {
                         </div>
                         <div className={stCollapse.item}>
                           <div>
-                            <div className={stCollapse.time}>
-                              03:55
-                            </div>
+                            <div className={stCollapse.time}>03:55</div>
                           </div>
                           <div>
-                            <div className={stCollapse.city}>
-                              Кривое озеро
-                            </div>
+                            <div className={stCollapse.city}>Кривое озеро</div>
                             <div className={stCollapse.address}>
                               Автостанция Кривое озеро, улица Куйбышева; дом 6
                             </div>
@@ -324,17 +375,11 @@ class SingleCard extends Component {
                         </div>
                         <div className={stCollapse.item}>
                           <div>
-                            <div className={stCollapse.time}>
-                              06:15
-                            </div>
-                            <div className={stCollapse.date}>
-                              22 июля
-                            </div>
+                            <div className={stCollapse.time}>06:15</div>
+                            <div className={stCollapse.date}>22 июля</div>
                           </div>
                           <div>
-                            <div className={stCollapse.city}>
-                              Одесса
-                            </div>
+                            <div className={stCollapse.city}>Одесса</div>
                             <div className={stCollapse.address}>
                               Автовокзал "Центральный", улица Колонтаевская; дом
                               58
@@ -347,19 +392,31 @@ class SingleCard extends Component {
                       <ul className={stCollapse.listUnstyled}>
                         <li className={stCollapse.title}>
                           Перевозчик
-                          <div className={`${stCollapse.d_inline_block} ${stCollapse.pointer}`}>
+                          <div
+                            className={`${stCollapse.d_inline_block} ${stCollapse.pointer}`}
+                          >
                             <span>
                               <div>
-                                <i className={`${stCollapse.icon} ${stCollapse.icon_info} ${stCollapse.text_primary} ${stCollapse.pointer}`}></i>
+                                <i
+                                  className={`${stCollapse.icon} ${stCollapse.icon_info} ${stCollapse.text_primary} ${stCollapse.pointer}`}
+                                ></i>
                               </div>
                             </span>
                           </div>
                         </li>
                         <p>
-                          Бренд: <strong>ТТК Новая Украина</strong>
+                          Бренд:{" "}
+                          <strong>
+                            {this.state.bus
+                              ? this.state.bus.carrierBrand
+                              : null}
+                          </strong>
                         </p>
                         <p>
-                          Автобус: <strong>Mercedes-Bens Travego </strong>
+                          Автобус:{" "}
+                          <strong>
+                            {this.state.bus ? this.state.bus.carrierBus : null}{" "}
+                          </strong>
                         </p>
                       </ul>
                     </div>

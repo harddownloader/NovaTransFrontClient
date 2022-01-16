@@ -1,28 +1,28 @@
-import React from 'react';
+import React from "react";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@mui/material/styles";
 
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-// import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+// import Card from '@mui/material/Card';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
+// import CardMedia from '@mui/material/CardMedia';
+import Typography from "@mui/material/Typography";
 
-import Carousel from '../Carousel/ReactAliceCarousel'
+import Carousel from "../Carousel/ReactAliceCarousel";
 // styles
-import styles from '@/styles/AboutDrivers.module.scss'
+import styles from "@/styles/AboutDrivers.module.scss";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
   },
-}))
+}));
 
 const AboutDrivers = () => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.heroContent}>
@@ -43,17 +43,25 @@ const AboutDrivers = () => {
           <Grid container spacing={4} justify="center">
             <Grid item xs={12} sm={8} md={8}>
               <Typography className={styles.about_drivers__description}>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde vero nemo recusandae laborum voluptatum consectetur provident, est possimus minus voluptas. Iusto saepe iste reiciendis? Iste nam delectus expedita nemo quae.
-                Maiores harum eveniet reprehenderit voluptates, magnam blanditiis quis eum inventore repellat suscipit mollitia officiis excepturi repellendus nihil ab, aliquid dolore. Quaerat pariatur aliquam officiis quas possimus repellendus sit odit reiciendis?
-                Ad ducimus repellat, alias deleniti odit optio consequuntur fugiat itaque voluptatem, dolores aut aspernatur veniam numquam quis illo ut dignissimos veritatis voluptas nisi, molestiae quia laudantium deserunt harum. Aliquid, veniam.
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde
+                vero nemo recusandae laborum voluptatum consectetur provident,
+                est possimus minus voluptas. Iusto saepe iste reiciendis? Iste
+                nam delectus expedita nemo quae. Maiores harum eveniet
+                reprehenderit voluptates, magnam blanditiis quis eum inventore
+                repellat suscipit mollitia officiis excepturi repellendus nihil
+                ab, aliquid dolore. Quaerat pariatur aliquam officiis quas
+                possimus repellendus sit odit reiciendis? Ad ducimus repellat,
+                alias deleniti odit optio consequuntur fugiat itaque voluptatem,
+                dolores aut aspernatur veniam numquam quis illo ut dignissimos
+                veritatis voluptas nisi, molestiae quia laudantium deserunt
+                harum. Aliquid, veniam.
               </Typography>
             </Grid>
-
           </Grid>
         </Grid>
       </Container>
     </div>
-  )
-}
+  );
+};
 
 export default AboutDrivers;

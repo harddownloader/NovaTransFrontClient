@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import { ServerStyleSheets } from '@material-ui/styles'
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles'
+import { ServerStyleSheets } from '@mui/styles';
+import { createMuiTheme, responsiveFontSizes } from "@mui/material/styles";
 
-const theme = responsiveFontSizes(createMuiTheme())
-
+const theme = responsiveFontSizes(createMuiTheme());
 
 class MyDocument extends Document {
   render() {
@@ -29,17 +28,17 @@ class MyDocument extends Document {
   }
 }
 
-MyDocument.getInitialProps = async ctx => {
+MyDocument.getInitialProps = async (ctx) => {
   // Render app and page and get the context of the page with collected side effects.
-  const sheets = new ServerStyleSheets()
-  const originalRenderPage = ctx.renderPage
+  const sheets = new ServerStyleSheets();
+  const originalRenderPage = ctx.renderPage;
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props} />)
-    })
+      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+    });
 
-  const initialProps = await Document.getInitialProps(ctx)
+  const initialProps = await Document.getInitialProps(ctx);
 
   return {
     ...initialProps,
@@ -48,10 +47,9 @@ MyDocument.getInitialProps = async ctx => {
       <React.Fragment key="styles">
         {initialProps.styles}
         {sheets.getStyleElement()}
-      </React.Fragment>
-    ]
-  }
-}
+      </React.Fragment>,
+    ],
+  };
+};
 
-
-export default MyDocument
+export default MyDocument;

@@ -3,33 +3,34 @@ import React, { useState, useEffect } from "react";
 // import moment from "moment";
 import { format } from "date-fns";
 // makestales
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/material/styles";
 // next
 import Router from "next/router";
 // material
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-// import TextField from '@material-ui/core/TextField';
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+// import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 // actions
 import { getAllLocations } from "@/actions/location";
 
 // checkbox
 // import CheckboxLabels from '../../Checkbox/Checkbox'
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 // pickers
 import MaterialUIPickers from "../../Pickers/DataPicker";
 // select
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-// import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+// import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Autocomplete from "@mui/material/Autocomplete";
 
 // styles
 import styles from "@/styles/SearchTickets.module.scss";
@@ -65,49 +66,49 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
     width: "100%",
     // нижние подчеркивание
-    '& .MuiInput-underline:before': {
-      borderBottom: 'none',
+    "& .MuiInput-underline:before": {
+      borderBottom: "none",
     },
-    '&.center_el': {
-      borderRight: '1px solid rgb(233, 233, 233)',
-      borderLeft: '1px solid rgb(233, 233, 233)',
+    "&.center_el": {
+      borderRight: "1px solid rgb(233, 233, 233)",
+      borderLeft: "1px solid rgb(233, 233, 233)",
     },
-    '& .first_el': {
-      borderRadius: '4px 0 0 4px',
+    "& .first_el": {
+      borderRadius: "4px 0 0 4px",
     },
-    '&.last_el': {
-      borderRadius: '0 4px 4px 0',
+    "&.last_el": {
+      borderRadius: "0 4px 4px 0",
     },
   },
   // select
   select: {},
   // data picker
   dataPicker: {
-    lineHeight: '1.1876em',
-    padding: '8px 12px 0px',
-    // 
-    '& .MuiInputLabel-shrink': {
-      transform: 'translate(12px, 10px) scale(0.75)',
+    lineHeight: "1.1876em",
+    padding: "8px 12px 0px",
+    //
+    "& .MuiInputLabel-shrink": {
+      transform: "translate(12px, 10px) scale(0.75)",
     },
     // нижние подчеркивание
-    '& .MuiInput-underline:before': {
-      borderBottom: 'none',
+    "& .MuiInput-underline:before": {
+      borderBottom: "none",
     },
-    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-      borderBottom: 'none'
-    }
+    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+      borderBottom: "none",
+    },
   },
   // selects + data pickers
   searchField: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: 0,
-    
-    '&:hover': {
+
+    "&:hover": {
       backgroundColor: theme.palette.background.paper,
     },
-    '&.MuiFilledInput-root.Mui-focused': {
+    "&.MuiFilledInput-root.Mui-focused": {
       backgroundColor: theme.palette.background.paper,
-    }
+    },
   },
 }));
 
@@ -207,29 +208,46 @@ function SearchTickets(props) {
     });
   };
 
+  let defaultOptionValue = null;
+
+  const getDefaultSelectValue = (type) => {
+    if (
+      props &&
+      props.hasOwnProperty("info") &&
+      props.info.hasOwnProperty(type)
+    ) {
+      return props.info.type;
+    } else {
+      // return ''
+      return [];
+    }
+  };
+
   return (
     <div className={classes.heroContent}>
-      {props.type !== "searchPage" ? <Container maxWidth="md" className={styles.welcome_block}>
-        <Typography
-          component="h1"
-          variant="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-          style={{ color: "white" }}
-        >
-          Билеты на автобус
-        </Typography>
-        <Typography
-          variant="h5"
-          align="center"
-          color="textSecondary"
-          paragraph
-          style={{ color: "white" }}
-        >
-          по Украине, Польше и Европе
-        </Typography>
-      </Container> : null}
+      {props.type !== "searchPage" ? (
+        <Container maxWidth="md" className={styles.welcome_block}>
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            style={{ color: "white" }}
+          >
+            Билеты на автобус
+          </Typography>
+          <Typography
+            variant="h5"
+            align="center"
+            color="textSecondary"
+            paragraph
+            style={{ color: "white" }}
+          >
+            по Украине, Польше и Европе
+          </Typography>
+        </Container>
+      ) : null}
       {/* </div> */}
 
       {/* <div className={classes.heroContent}> */}
@@ -240,8 +258,8 @@ function SearchTickets(props) {
           <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
             <FormControl className={classes.formControl} variant="filled">
               <InputLabel id="demo-simple-select-label">Откуда</InputLabel>
-              <Select
-                defaultValue={props.info ? props.info.startLocation : null}
+              {/* <Select
+                value={getDefaultSelectValue('startLocation')}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 // value={from}
@@ -251,29 +269,44 @@ function SearchTickets(props) {
                 filterOption={(input, option) =>
                   option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
+                SelectDisplayProps={{gg: "22"}}
               >
                 {locations.map((location) => (
                   <MenuItem value={location._id} key={location._id}>
                     {location.name}
                   </MenuItem>
                 ))}
-              </Select>
+              </Select> */}
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={getDefaultSelectValue("startLocation")}
+                sx={{ width: 300 }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Movie" />
+                )}
+              />
             </FormControl>
           </Grid>
           {/* куда */}
           <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
-            <FormControl className={`${classes.formControl} center_el`} variant="filled">
+            <FormControl
+              className={`${classes.formControl} center_el`}
+              variant="filled"
+            >
               <InputLabel id="demo-simple-select-label">Куда</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                defaultValue={props.info ? props.info.endLocation : null}
+                value={getDefaultSelectValue("endLocation")}
                 // value={to}
                 // onChange={handleChangeTo}
                 onChange={onChangeTo}
                 className={`${classes.select} ${classes.searchField}`}
                 filterOption={(input, option) =>
-                  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  option.props.children
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
                 }
               >
                 {locations.map((location) => (
@@ -285,7 +318,13 @@ function SearchTickets(props) {
             </FormControl>
           </Grid>
 
-          <Grid item xs={12} sm={2} md={2} className={`${classes.gridSelect} last_el`}>
+          <Grid
+            item
+            xs={12}
+            sm={2}
+            md={2}
+            className={`${classes.gridSelect} last_el`}
+          >
             <MaterialUIPickers
               value={props.info ? new Date(props.info.journeyDate) : new Date()}
               onChangeDate={onChangeDate}
@@ -312,82 +351,85 @@ function SearchTickets(props) {
         </Grid>
 
         {/* checkbox */}
-        {props.type !== "searchPage" ? <Grid container spacing={3} justify="center">
-          <Grid item xs={6}>
-            {/* <CheckboxLabels /> */}
-            <FormGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.checkedB}
-                    onChange={handleChangeCheckboxReturn}
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label="Обратный билет"
-              />
-            </FormGroup>
+        {props.type !== "searchPage" ? (
+          <Grid container spacing={3} justify="center">
+            <Grid item xs={6}>
+              {/* <CheckboxLabels /> */}
+              <FormGroup row>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={state.checkedB}
+                      onChange={handleChangeCheckboxReturn}
+                      name="checkedB"
+                      color="primary"
+                    />
+                  }
+                  label="Обратный билет"
+                />
+              </FormGroup>
+            </Grid>
           </Grid>
-        </Grid> : null }
+        ) : null}
         {/* checkox end */}
       </Container>
 
       {/* two part */}
-      {props.type !== "searchPage" ? <Container
-        maxWidth="lg"
-        className={`search-tickets ${styles.return_trip} ${
-          state.checkedB ? "activate" : ""
-        }`}
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={3} sm={3} md={3}></Grid>
-          {/* откуда */}
-          <Grid item xs={12} sm={2} md={2}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Откуда</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={fromReturn}
-                onChange={handleChangeFromReturn}
-                className={`${classes.select} ${classes.searchField}`}
-              >
-                {locations.map((location) => (
-                  <MenuItem value={location._id} key={location._id}>
-                    {location.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          {/* куда */}
-          <Grid item xs={12} sm={2} md={2}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">Куда</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={toReturn}
-                onChange={handleChangeToReturn}
-                className={`${classes.select} ${classes.searchField}`}
-              >
-                {locations.map((location) => (
-                  <MenuItem value={location._id} key={location._id}>
-                    {location.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
+      {props.type !== "searchPage" ? (
+        <Container
+          maxWidth="lg"
+          className={`search-tickets ${styles.return_trip} ${
+            state.checkedB ? "activate" : ""
+          }`}
+        >
+          <Grid container spacing={3}>
+            <Grid item xs={3} sm={3} md={3}></Grid>
+            {/* откуда */}
+            <Grid item xs={12} sm={2} md={2}>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">Откуда</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={fromReturn}
+                  onChange={handleChangeFromReturn}
+                  className={`${classes.select} ${classes.searchField}`}
+                >
+                  {locations.map((location) => (
+                    <MenuItem value={location._id} key={location._id}>
+                      {location.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            {/* куда */}
+            <Grid item xs={12} sm={2} md={2}>
+              <FormControl className={classes.formControl}>
+                <InputLabel id="demo-simple-select-label">Куда</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={toReturn}
+                  onChange={handleChangeToReturn}
+                  className={`${classes.select} ${classes.searchField}`}
+                >
+                  {locations.map((location) => (
+                    <MenuItem value={location._id} key={location._id}>
+                      {location.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
 
-          <Grid item xs={12} sm={2} md={2}>
-            <MaterialUIPickers
-              classes={`${classes.select} ${classes.searchField}`}
-            />
-          </Grid>
+            <Grid item xs={12} sm={2} md={2}>
+              <MaterialUIPickers
+                classes={`${classes.select} ${classes.searchField}`}
+              />
+            </Grid>
 
-          {/* <Grid item xs={12} sm={2} md={2}>
+            {/* <Grid item xs={12} sm={2} md={2}>
             <Box display={{ xs: 'block', md: 'none' }} m={1}>
               <Button
                 variant="contained"
@@ -401,8 +443,9 @@ function SearchTickets(props) {
               </Button>
             </Box>
           </Grid> */}
-        </Grid>
-      </Container>: null}
+          </Grid>
+        </Container>
+      ) : null}
       {/* two part end*/}
     </div>
   );
