@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 // import moment from "moment";
 import { format } from "date-fns";
 // makestales
-import { makeStyles } from "@mui/material/styles";
+// import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // next
 import Router from "next/router";
 // material
@@ -34,13 +36,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 // styles
 import styles from "@/styles/SearchTickets.module.scss";
-import { NaturePeopleOutlined } from "@material-ui/icons";
+import { NaturePeopleOutlined } from "@mui/icons-material";
 
 // images
 const BgImage = "/static/img/backgrounds/bg-winter.jpg";
 
 const { Option } = Select;
 
+const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   // container
   heroContent: {
@@ -224,6 +227,7 @@ function SearchTickets(props) {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <div className={classes.heroContent}>
       {props.type !== "searchPage" ? (
         <Container maxWidth="md" className={styles.welcome_block}>
@@ -448,6 +452,7 @@ function SearchTickets(props) {
       ) : null}
       {/* two part end*/}
     </div>
+    </ThemeProvider>
   );
 }
 

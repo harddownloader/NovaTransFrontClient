@@ -7,16 +7,19 @@ import React from "react";
 // import CardHeader from '@mui/material/CardHeader';
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-// import StarIcon from '@material-ui/icons/StarBorder';
+// import StarIcon from '@mui/icons-material/StarBorder';
 // import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-import { makeStyles } from "@mui/material/styles";
+// import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 // icons
-import FacebookIcon from "@material-ui/icons/Facebook";
-import InstagramIcon from "@material-ui/icons/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
 // styles
 import styles from "@/styles/Footer.module.scss";
 // images
@@ -36,6 +39,7 @@ function Copyright() {
   );
 }
 
+const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -169,93 +173,96 @@ const cosials = [
 export default function Pricing() {
   const classes = useStyles();
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* Footer */}
-      <Container maxWidth="md" component="footer" className={classes.footer}>
-        <Grid container spacing={4} justify="space-evenly">
-          <Grid item xs={12} sm={3} md={3} className={styles.footer__company}>
-            <img
-              src={footer}
-              alt="logo NovaTrans"
-              height="75"
-              className={classes.icon}
-            />
-            <Typography
-              // variant="subtitle1"
-              color="textSecondary"
-              gutterBottom
-              className={styles.footer__logo_description}
-            >
-              Ваш надежный перевозчик.
-            </Typography>
-          </Grid>
-          {pages.map((page, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={3}
-              md={6}
-              key={index}
-              className={styles.footer__pages_list}
-            >
-              <Typography
-                variant="h6"
-                color="textPrimary"
-                gutterBottom
-                className={styles.pages_list__title}
-              >
-                {page.title}
-              </Typography>
-              <ul>
-                {page.description.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      href="#"
-                      variant="subtitle1"
-                      color="textSecondary"
-                      className={styles.pages_list__item}
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-          ))}
+  // return (
+    
+  // );
 
-          {cosials.map((cosial, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={3}
-              md={3}
-              key={index}
-              className={styles.footer__socials}
-            >
-              <Typography variant="h6" color="textPrimary" gutterBottom>
-                {cosial.title}
-              </Typography>
-              <ul>
-                {cosial.links.map((link, index) => (
-                  <li key={index}>
-                    <Link href="#" variant="subtitle1" color="textSecondary">
-                      <Typography className={styles.social_link__item}>
-                        {link.icon} {link.name}
-                      </Typography>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-          ))}
+  return <ThemeProvider theme={theme}><React.Fragment>
+  <CssBaseline />
+  {/* Footer */}
+  <Container maxWidth="md" component="footer" className={classes.footer}>
+    <Grid container spacing={4} justify="space-evenly">
+      <Grid item xs={12} sm={3} md={3} className={styles.footer__company}>
+        <img
+          src={footer}
+          alt="logo NovaTrans"
+          height="75"
+          className={classes.icon}
+        />
+        <Typography
+          // variant="subtitle1"
+          color="textSecondary"
+          gutterBottom
+          className={styles.footer__logo_description}
+        >
+          Ваш надежный перевозчик.
+        </Typography>
+      </Grid>
+      {pages.map((page, index) => (
+        <Grid
+          item
+          xs={12}
+          sm={3}
+          md={6}
+          key={index}
+          className={styles.footer__pages_list}
+        >
+          <Typography
+            variant="h6"
+            color="textPrimary"
+            gutterBottom
+            className={styles.pages_list__title}
+          >
+            {page.title}
+          </Typography>
+          <ul>
+            {page.description.map((item, index) => (
+              <li key={index}>
+                <Link
+                  href="#"
+                  variant="subtitle1"
+                  color="textSecondary"
+                  className={styles.pages_list__item}
+                >
+                  {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Grid>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
-      {/* End footer */}
-    </React.Fragment>
-  );
+      ))}
+
+      {cosials.map((cosial, index) => (
+        <Grid
+          item
+          xs={12}
+          sm={3}
+          md={3}
+          key={index}
+          className={styles.footer__socials}
+        >
+          <Typography variant="h6" color="textPrimary" gutterBottom>
+            {cosial.title}
+          </Typography>
+          <ul>
+            {cosial.links.map((link, index) => (
+              <li key={index}>
+                <Link href="#" variant="subtitle1" color="textSecondary">
+                  <Typography className={styles.social_link__item}>
+                    {link.icon} {link.name}
+                  </Typography>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Grid>
+      ))}
+    </Grid>
+    <Box mt={5}>
+      <Copyright />
+    </Box>
+  </Container>
+  {/* End footer */}
+</React.Fragment>
+</ThemeProvider>;
 }

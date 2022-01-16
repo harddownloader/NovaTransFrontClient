@@ -4,10 +4,10 @@ import React from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-// import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-// import CheckBoxIcon from '@material-ui/icons/CheckBox';
-// import Favorite from '@material-ui/icons/Favorite';
-// import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+// import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+// import CheckBoxIcon from '@mui/icons-material/CheckBox';
+// import Favorite from '@mui/icons-material/Favorite';
+// import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 // styles
 import styles from "@/styles/Checkbox.scss";
 

@@ -1,6 +1,8 @@
 import React from "react";
 
-import { makeStyles } from "@mui/material/styles";
+// import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -14,6 +16,7 @@ import Carousel from "../Carousel/ReactAliceCarousel";
 // styles
 import styles from "@/styles/AboutDrivers.module.scss";
 
+const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,

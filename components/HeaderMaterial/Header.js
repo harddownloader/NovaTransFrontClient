@@ -1,16 +1,18 @@
 import React from "react";
 // import Image from 'next/image'
-import { makeStyles } from "@mui/material/styles";
+// import { makeStyles } from "@mui/material/styles";
+import { makeStyles } from '@mui/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import CssBaseline from '@mui/material/CssBaseline';
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-// import DirectionsBus from '@material-ui/icons/DirectionsBus';
+// import DirectionsBus from '@mui/icons-material/DirectionsBus';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 // icons
-import HelpIcon from "@material-ui/icons/Help";
+import HelpIcon from "@mui/icons-material/Help";
 
 // styles
 import styles from "@/styles/Header.module.scss";
@@ -19,12 +21,13 @@ import { API_ROOT } from "../../utils/config";
 // images
 const logo = "/static/img/logos/logo.png";
 
+const theme = createTheme({spacing: 2});
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: "10px 0",
   },
   icon: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing,
   },
   rightToolbar: {
     marginLeft: "auto",
@@ -67,42 +70,43 @@ const useStyles = makeStyles((theme) => ({
 function Header(props) {
   const classes = useStyles();
 
-  return (
-    <React.Fragment>
-      {/* <CssBaseline /> */}
-      <AppBar position="relative" className={classes.container}>
-        <Toolbar>
-          <img
-            src={logo}
-            alt="Logo NovaTrans"
-            height={50}
-            className={classes.icon}
-          />
-          <h1>NovaTrans</h1>
-          {/* <Typography variant="h6" color="inherit" noWrap>
-          NovaTrans
-        </Typography> */}
-          <section className={classes.rightToolbar}>
-            {/* <IconButton color="inherit" aria-label="Edit">
-            <EditIcon />
-          </IconButton>
-          <IconButton color="inherit" aria-label="Save">
-            <SaveIcon />
-          </IconButton>
-          <IconButton color="inherit" aria-label="More Options">
-            <MoreVertIcon />
-          </IconButton> */}
-            <HelpIcon className={classes.icon} />
-            <Box display={{ xs: "none", md: "block" }} m={1}>
-              <Typography variant="h6" color="inherit" align="right">
-                Служба поддержки
-              </Typography>
-            </Box>
-          </section>
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
-  );
+  
+  return (<ThemeProvider theme={theme}><React.Fragment>
+  {/* <CssBaseline /> */}
+  <AppBar position="relative" className={classes.container}>
+    <Toolbar>
+      <img
+        src={logo}
+        alt="Logo NovaTrans"
+        height={50}
+        className={classes.icon}
+      />
+      <h1>NovaTrans</h1>
+      {/* <Typography variant="h6" color="inherit" noWrap>
+      NovaTrans
+    </Typography> */}
+      <section className={classes.rightToolbar}>
+        {/* <IconButton color="inherit" aria-label="Edit">
+        <EditIcon />
+      </IconButton>
+      <IconButton color="inherit" aria-label="Save">
+        <SaveIcon />
+      </IconButton>
+      <IconButton color="inherit" aria-label="More Options">
+        <MoreVertIcon />
+      </IconButton> */}
+        <HelpIcon className={classes.icon} />
+        <Box display={{ xs: "none", md: "block" }} m={1}>
+          <Typography variant="h6" color="inherit" align="right">
+            Служба поддержки
+          </Typography>
+        </Box>
+      </section>
+    </Toolbar>
+  </AppBar>
+</React.Fragment>
+</ThemeProvider>
+);
 }
 
 export default Header;
