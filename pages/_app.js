@@ -1,11 +1,18 @@
 import React from 'react';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import App from 'next/app'
 import './about/test.css'
 import '@/styles/style.scss'
 
+// const theme = createTheme();
+
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
+  // return (
+  //   <ThemeProvider theme={theme}>
+  //     <Component {...pageProps} />
+  //   </ThemeProvider>
+  // );
 }
 
 // Only uncomment this method if you have blocking data requirements for

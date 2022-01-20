@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 // import { makeStyles } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -39,7 +39,6 @@ function Copyright() {
   );
 }
 
-const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   "@global": {
     ul: {
@@ -177,7 +176,8 @@ export default function Pricing() {
     
   // );
 
-  return <ThemeProvider theme={theme}><React.Fragment>
+  return (
+      <React.Fragment>
   <CssBaseline />
   {/* Footer */}
   <Container maxWidth="md" component="footer" className={classes.footer}>
@@ -264,5 +264,5 @@ export default function Pricing() {
   </Container>
   {/* End footer */}
 </React.Fragment>
-</ThemeProvider>;
+  );
 }

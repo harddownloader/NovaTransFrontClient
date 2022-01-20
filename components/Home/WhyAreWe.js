@@ -2,7 +2,6 @@ import React from "react";
 
 // import { makeStyles } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 // import Card from '@mui/material/Card';
@@ -18,7 +17,6 @@ import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
-const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,

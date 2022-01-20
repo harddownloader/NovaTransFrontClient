@@ -1,9 +1,9 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from '@mui/styles';
-import { createMuiTheme, responsiveFontSizes } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-const theme = responsiveFontSizes(createMuiTheme());
+const theme = responsiveFontSizes(createTheme());
 
 class MyDocument extends Document {
   render() {
@@ -33,8 +33,7 @@ MyDocument.getInitialProps = async (ctx) => {
   const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
 
-  ctx.renderPage = () =>
-    originalRenderPage({
+  ctx.renderPage = () => originalRenderPage({
       enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
     });
 

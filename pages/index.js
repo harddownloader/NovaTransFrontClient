@@ -58,22 +58,33 @@ const useStyles = makeStyles((theme) => ({
   //   },
 }));
 
-// export default function Album() {
 export default function App() {
+// function Component() {
   const classes = useStyles();
-
   return (
     <React.Fragment>
+      <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
 
       <main>
         <SearchTickets />
-        <WhyAreWe />
+         <WhyAreWe /> 
         <AboutDrivers />
       </main>
 
       <Footer />
+      </ThemeProvider>
     </React.Fragment>
   );
 }
+// export default function Album() {
+// export default function App(props) {
+  
+
+//   return (
+//     <ThemeProvider theme={theme}>
+//       <Component {...props}/>
+//     </ThemeProvider>
+//   );
+// }
