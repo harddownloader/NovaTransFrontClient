@@ -13,7 +13,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 // import Typography from '@mui/material/Typography';
 // import { makeStyles } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import Container from '@mui/material/Container';
 // import Link from '@mui/material/Link';
 
@@ -28,7 +27,6 @@ import Footer from "../components/Footer/Footer";
 
 // import './test.css'
 
-const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   //   menuButton: {
   //     marginRight: 16,
@@ -63,7 +61,6 @@ export default function App() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
 
@@ -74,17 +71,6 @@ export default function App() {
       </main>
 
       <Footer />
-      </ThemeProvider>
     </React.Fragment>
   );
 }
-// export default function Album() {
-// export default function App(props) {
-  
-
-//   return (
-//     <ThemeProvider theme={theme}>
-//       <Component {...props}/>
-//     </ThemeProvider>
-//   );
-// }

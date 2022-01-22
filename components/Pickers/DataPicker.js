@@ -9,6 +9,7 @@ import ruLocale from "date-fns/locale/ru";
 //   KeyboardDatePicker,
 // } from "@material-ui/pickers";
 import DatePicker from '@mui/lab/DatePicker';
+import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
@@ -18,6 +19,9 @@ import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 
 const useStyles = makeStyles((theme) => ({
+  date_picker: {
+    backgroundColor: '#fff',
+  },
   "& .last_el": {
     borderRadius: "0 4px 4px 0",
   },
@@ -37,7 +41,7 @@ export default function MaterialUIPickers(props) {
   return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Grid container justify="space-around">
-          <DatePicker
+          {/* <DatePicker
             disableToolbar
             variant="inline"
             format="MM/dd/yyyy"
@@ -54,6 +58,21 @@ export default function MaterialUIPickers(props) {
             open={isOpen}
             onClick={() => setIsOpen(true)}
             renderInput={(props) => <TextField {...props} />}
+          /> */}
+          <MobileDatePicker
+            label="Дата поездки"
+            inputFormat="MM/dd/yyyy"
+            // value={value}
+            value={selectedDate}
+            // onChange={handleChange}
+            onChange={handleDateChange}
+            renderInput={(params) => <TextField {...params} />}
+            open={isOpen}
+            onOpen={() => setIsOpen(true)}
+            onAccept={() => setIsOpen(false)}
+            // className={`${styles.data_picker__container} ${props.classes}`}
+            className={classes.date_picker}
+            // id="date-picker-inline"
           />
           {/* <KeyboardDatePicker
             margin="normal"

@@ -20,7 +20,9 @@ import { API_ROOT } from "../../utils/config";
 // images
 const logo = "/static/img/logos/logo.png";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => {
+  console.log('theme', theme)
+  return {
   container: {
     padding: "10px 0",
   },
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: -12,
     display: "flex",
     alignItems: "center",
-  },
+  }}
   // menuButton: {
   //   marginRight: 16,
   //   marginLeft: -12
@@ -63,11 +65,10 @@ const useStyles = makeStyles((theme) => ({
   //   backgroundColor: theme.palette.background.paper,
   //   padding: theme.spacing(6),
   // },
-}));
+});
 
-function Header(props) {
+const Header = (props) => {
   const classes = useStyles();
-
   
   return (
     <React.Fragment>

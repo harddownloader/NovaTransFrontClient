@@ -27,21 +27,21 @@ const Buses = ({ resp, info }) => {
   };
 
   return (
-    <Layout>
-      <Param info={info}>
-        <CssBaseline />
-        <Header />
-        <SearchTickets type="searchPage" info={info} />
-        <SearchMenu buses={buses} info={info} />
-        <Row className="row-container">
-          {/* <Col span={6} className="main-filter">
-            <Filters info={info} setBuses={setBuses} setLoading={setLoading} />
-          </Col> */}
-          {/* <Col span={18}> */}
-          <Col>{loading ? <Loading /> : <Cards buses={buses} />}</Col>
-        </Row>
-      </Param>
-    </Layout>
+      <Layout>
+        <Param info={info}>
+          <CssBaseline />
+          <Header />
+          <SearchTickets type="searchPage" info={info} />
+          <SearchMenu buses={buses} info={info} />
+          <Row className="row-container">
+            {/* <Col span={6} className="main-filter">
+              <Filters info={info} setBuses={setBuses} setLoading={setLoading} />
+            </Col> */}
+            {/* <Col span={18}> */}
+            <Col>{loading ? <Loading /> : <Cards buses={buses} />}</Col>
+          </Row>
+        </Param>
+      </Layout>
   );
 };
 
