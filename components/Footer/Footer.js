@@ -1,19 +1,9 @@
 import React from "react";
-// import AppBar from '@mui/material/AppBar';
-// import Button from '@mui/material/Button';
-// import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardHeader from '@mui/material/CardHeader';
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-// import StarIcon from '@mui/icons-material/StarBorder';
-// import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
-// import { makeStyles } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
-
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 // icons
@@ -125,25 +115,6 @@ const tiers = [
   },
 ];
 
-// const footers = [
-//   // {
-//   //   title: 'Company',
-//   //   description: ['Team', 'History', 'Contact us', 'Locations'],
-//   // },
-//   {
-//     title: 'Информация',
-//     description: ['О Нас', 'Вопросы и ответы', 'Договор оферты', 'Контакты'],
-//   },
-//   {
-//     title: 'Resources',
-//     description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-//   },
-//   // {
-//   //   title: 'Мы в социальных сетях',
-//   //   description: ['Facebook', 'Instagram'],
-//   // },
-// ];
-
 const pages = [
   {
     title: "Информация",
@@ -154,7 +125,6 @@ const pages = [
 const cosials = [
   {
     title: "Мы в социальных сетях",
-    // description: ['Facebook', 'Instagram'],
     links: [
       {
         name: "Facebook",
@@ -171,97 +141,95 @@ const cosials = [
 export default function Pricing() {
   const classes = useStyles();
 
-  // return (
-    
-  // );
-
   return (
-      <React.Fragment>
-  <CssBaseline />
-  {/* Footer */}
-  <Container maxWidth="md" component="footer" className={classes.footer}>
-    <Grid container spacing={4} justify="space-evenly">
-      <Grid item xs={12} sm={3} md={3} className={styles.footer__company}>
-        <img
-          src={footer}
-          alt="logo NovaTrans"
-          height="75"
-          className={classes.icon}
-        />
-        <Typography
-          // variant="subtitle1"
-          color="textSecondary"
-          gutterBottom
-          className={styles.footer__logo_description}
-        >
-          Ваш надежный перевозчик.
-        </Typography>
-      </Grid>
-      {pages.map((page, index) => (
-        <Grid
-          item
-          xs={12}
-          sm={3}
-          md={6}
-          key={index}
-          className={styles.footer__pages_list}
-        >
-          <Typography
-            variant="h6"
-            color="textPrimary"
-            gutterBottom
-            className={styles.pages_list__title}
-          >
-            {page.title}
-          </Typography>
-          <ul>
-            {page.description.map((item, index) => (
-              <li key={index}>
-                <Link
-                  href="#"
-                  variant="subtitle1"
-                  color="textSecondary"
-                  className={styles.pages_list__item}
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Grid>
-      ))}
+    <React.Fragment>
+      <CssBaseline />
+      {/* Footer */}
+      <Container maxWidth="md" component="footer" className={classes.footer}>
+        <Grid container  justifyContent="space-evenly">
+          <Grid item xs={12} sm={3} md={3} className={styles.footer__company}>
+            <img
+              src={footer}
+              alt="logo NovaTrans"
+              height="75"
+              className={classes.icon}
+            />
+            <Typography
+              // variant="subtitle1"
+              color="textSecondary"
+              gutterBottom
+              className={styles.footer__logo_description}
+            >
+              Ваш надежный перевозчик.
+            </Typography>
+          </Grid>
+          {pages.map((page, index) => (
+            <Grid
+              item
+              xs={12}
+              sm={3}
+              md={6}
+              key={index}
+              className={styles.footer__pages_list}
+              sx={{ pl: index === 0 ? 3 : 0 }}
+            >
+              <Typography
+                variant="h6"
+                color="textPrimary"
+                gutterBottom
+                className={styles.pages_list__title}
+              >
+                {page.title}
+              </Typography>
+              <ul>
+                {page.description.map((item, index) => (
+                  <li key={index}>
+                    <Link
+                      href="#"
+                      variant="subtitle1"
+                      color="textSecondary"
+                      className={styles.pages_list__item}
+                      underline="none"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Grid>
+          ))}
 
-      {cosials.map((cosial, index) => (
-        <Grid
-          item
-          xs={12}
-          sm={3}
-          md={3}
-          key={index}
-          className={styles.footer__socials}
-        >
-          <Typography variant="h6" color="textPrimary" gutterBottom>
-            {cosial.title}
-          </Typography>
-          <ul>
-            {cosial.links.map((link, index) => (
-              <li key={index}>
-                <Link href="#" variant="subtitle1" color="textSecondary">
-                  <Typography className={styles.social_link__item}>
-                    {link.icon} {link.name}
-                  </Typography>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {cosials.map((cosial, index) => (
+            <Grid
+              item
+              xs={12}
+              sm={3}
+              md={3}
+              key={index}
+              className={styles.social_list_container}
+            >
+              <Typography variant="h6" color="textPrimary" gutterBottom>
+                {cosial.title}
+              </Typography>
+              <ul className={styles.social_list}>
+                {cosial.links.map((link, index) => (
+                  <li key={index} className={styles.social_link__item}>
+                    <Link href="#" underline="none" variant="subtitle1" color="textSecondary" >
+                      <Typography className={styles.social_list__text}>
+                        {link.icon} {link.name}
+                      </Typography>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Grid>
+          ))}
         </Grid>
-      ))}
-    </Grid>
-    <Box mt={5}>
-      <Copyright />
-    </Box>
-  </Container>
-  {/* End footer */}
-</React.Fragment>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+      {/* End footer */}
+    </React.Fragment>
   );
 }

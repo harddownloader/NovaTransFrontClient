@@ -1,7 +1,14 @@
-.data_picker__container {
+.date_picker__container {
   background-color: #fff;
+  width: 100%;
 }
-.MuiFormControl-root.data_picker__container {
+.date_picker__input {
+
+}
+.date_picker__input.last_el {
+  border-radius: 0 4px 4px 0,
+}
+.MuiFormControl-root.date_picker__container {
   margin: 8px;
 
   .MuiSelect-icon {
@@ -10,7 +17,7 @@
 }
 
 @media only screen and (max-width: 575px) {
-  .MuiFormControl-root.data_picker__container {
+  .MuiFormControl-root.date_picker__container {
     // margin: 0px;
     width: 100%;
   }

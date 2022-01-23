@@ -66,7 +66,7 @@ function WhyAreWe() {
   return (
     <div className={classes.heroContent}>
       <Container maxWidth="md" className={styles.who_are_we__container}>
-        <Grid container spacing={4}>
+        <Grid container>
           {items.map((card, index) => (
             <Grid
               item

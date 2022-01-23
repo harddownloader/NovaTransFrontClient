@@ -16,6 +16,12 @@
 .pages_list__item{
 
 }
+.social_list_container {
+  
+}
+.social_list__text {
+  display: flex;
+}
 .social_link__item{
   display: flex;
 }
@@ -26,11 +32,15 @@
 @media only screen and (max-width: 575px) {
   // центрируем для мобильной версии
   .footer__pages_list,
-  .footer__socials
-  {
+  .footer__socials {
     text-align: center;
   }
-  .social-link__item{
+  .social_list_container {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .social_link__item{
     justify-content: center;
   }
+  
 }

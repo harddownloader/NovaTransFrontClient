@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import { makeStyles } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
 import InputLabel from "@mui/material/InputLabel";
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 function SimpleSelect() {
   const classes = useStyles();
-  const [from, setFrom] = React.useState("");
-  const [to, setTo] = React.useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
   const handleChangeFrom = (event) => {
     setFrom(event.target.value);

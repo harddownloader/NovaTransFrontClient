@@ -28,7 +28,7 @@ const AboutDrivers = () => {
   return (
     <div className={classes.heroContent}>
       <Container className={styles.about_drivers__container} maxWidth="lg">
-        <Grid container spacing={4}>
+        <Grid container gap={4}>
           <Grid item xs={12} sm={12} md={12}>
             <Typography
               variant="h2"
@@ -41,7 +41,7 @@ const AboutDrivers = () => {
               <Carousel />
             </Grid>
           </Grid>
-          <Grid container spacing={4} justify="center">
+          <Grid container gap={4} justifyContent="center">
             <Grid item xs={12} sm={8} md={8}>
               <Typography className={styles.about_drivers__description}>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde

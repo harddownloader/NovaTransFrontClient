@@ -1,28 +1,12 @@
-import React from "react";
-// import { withStyles } from '@mui/material/styles';
-// import { green } from '@mui/material/colors';
+import React, { useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-// import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-// import CheckBoxIcon from '@mui/icons-material/CheckBox';
-// import Favorite from '@mui/icons-material/Favorite';
-// import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 // styles
 import styles from "@/styles/Checkbox.scss";
 
-// const GreenCheckbox = withStyles({
-//   root: {
-//     color: green[400],
-//     '&$checked': {
-//       color: green[600],
-//     },
-//   },
-//   checked: {},
-// })((props) => <Checkbox color="default" {...props} />);
-
 export default function CheckboxLabels() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
     checkedF: true,

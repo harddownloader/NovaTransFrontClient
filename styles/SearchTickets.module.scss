@@ -4,12 +4,25 @@
 .welcome_block {
   padding: 64px 0px;
 }
-.search_tickets {
-  padding: 64px 0px;
-  padding-top: 64px;
-  padding-bottom: 0px;
+.search_tickets {}
+.search_field {
+  .MuiInputBase-root {
+    border-radius: 0 4px 4px 0;
+  }
+}
+.search_btn_container {
+  height: 100%;
 }
 .search_btn {
+  height: 100%;
+}
+.returnBackCheckbox {
+
+}
+.customFormControlClass {
+  .MuiFormControlLabel-label {
+    color: #fff;
+  }
 }
 // return trip
 .search_tickets.return_trip {
@@ -21,14 +34,18 @@
 .search_tickets.return_trip.activate {
   display: block;
 }
-.MuiFormControlLabel-label {
-  color: white;
-}
 .MuiInputBase-input {
   color: white !important;
 }
 @media only screen and (max-width: 575px) {
   .search_btn {
     width: 100%;
+  }
+}
+@media (min-width: 576px) {
+  .search_tickets {
+    padding: 64px 0px;
+    padding-top: 64px;
+    padding-bottom: 0px;
   }
 }

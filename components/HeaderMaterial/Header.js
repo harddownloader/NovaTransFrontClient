@@ -21,7 +21,7 @@ import { API_ROOT } from "../../utils/config";
 const logo = "/static/img/logos/logo.png";
 
 const useStyles = makeStyles((theme) => {
-  console.log('theme', theme)
+  // console.log('theme', theme)
   return {
   container: {
     padding: "10px 0",

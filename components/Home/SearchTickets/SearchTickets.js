@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 // time and data
-// import moment from "moment";
 import { format } from "date-fns";
 // makestales
-// import { makeStyles } from "@mui/material/styles";
 import { makeStyles } from '@mui/styles';
 // next
 import Router from "next/router";
@@ -19,23 +17,25 @@ import Box from "@mui/material/Box";
 import { getAllLocations } from "@/actions/location";
 
 // checkbox
-// import CheckboxLabels from '../../Checkbox/Checkbox'
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 // pickers
-import MaterialUIPickers from "../../Pickers/DataPicker";
+import MaterialUIPickers from "../../Pickers/DatePicker";
 // select
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 // import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 
 // styles
 import styles from "@/styles/SearchTickets.module.scss";
 import { NaturePeopleOutlined } from "@mui/icons-material";
+import SearchIcon from '@mui/icons-material/Search';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
 
 // images
 const BgImage = "/static/img/backgrounds/bg-winter.jpg";
@@ -75,12 +75,6 @@ const useStyles = makeStyles((theme) => {
       borderRight: "1px solid rgb(233, 233, 233)",
       borderLeft: "1px solid rgb(233, 233, 233)",
     },
-    "& .first_el": {
-      borderRadius: "4px 0 0 4px",
-    },
-    "&.last_el": {
-      borderRadius: "0 4px 4px 0",
-    },
   },
   // select
   select: {},
@@ -104,14 +98,21 @@ const useStyles = makeStyles((theme) => {
   searchField: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: 0,
-
-    "&:hover": {
-      backgroundColor: theme.palette.background.paper,
+    "&.first_el": {
+      borderRadius: "4px 0 0 4px",
     },
-    "&.MuiFilledInput-root.Mui-focused": {
-      backgroundColor: theme.palette.background.paper,
+    "&.first_el:hover": {
+      borderRadius: "4px 0 0 4px",
     },
   },
+  searchFieldrenderedInput: {
+    "&.first_input_el .MuiInputBase-root": {
+      borderRadius: "4px 0 0 4px",
+    },
+    "&.middle_input_el .MuiInputBase-root": {
+      borderRadius: "0px",
+    },
+  }
 }});
 
 const threeLengthArray = [];
@@ -120,40 +121,11 @@ function SearchTickets(props) {
   const classes = useStyles();
 
   // select-----------------
-  // туда
-  // const [from, setFrom] = React.useState('');
-  // const [to, setTo] = React.useState('');
-
-  // const handleChangeFrom = (event) => {
-  //   setFrom(event.target.value);
-  // };
-  // const handleChangeTo = (event) => {
-  //   setTo(event.target.value);
-  // };
   // обратно
-  const [fromReturn, setFromReturn] = React.useState("");
-  const [toReturn, setToReturn] = React.useState("");
-
-  const handleChangeFromReturn = (event) => {
-    setFromReturn(event.target.value);
-  };
-  const handleChangeToReturn = (event) => {
-    setToReturn(event.target.value);
-  };
-  // end select-----------------
-
+  const [fromReturn, setFromReturn] = useState("");
+  const [toReturn, setToReturn] = useState("");
   // checkbox------------------
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true,
-  });
-
-  const handleChangeCheckboxReturn = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-  // checkbox end -------------
+  const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(0);
 
   // список городов для рейса
   const [locations, setLocations] = useState([]);
@@ -162,6 +134,14 @@ function SearchTickets(props) {
   // делаем кнопку поиска билетов активной только тогда,
   //   когда все поля выбраны
   const [disButton, setDisButton] = useState(true);
+
+  const handleChangeFromReturn = (event) => {
+    setFromReturn(event.target.value);
+  };
+  const handleChangeToReturn = (event) => {
+    setToReturn(event.target.value);
+  };
+  // end select-----------------
 
   const checkButtonDisabled = (val) => {
     threeLengthArray.push(val);
@@ -227,6 +207,52 @@ function SearchTickets(props) {
     }
   };
 
+  /**
+   * 
+   * @param {number} status 
+   * @returns jsx component
+   * 
+   * status = 1 - desctop
+   * status = 2 - mobile
+   */
+  const getSearchTicketsBtn = (status) => {
+    const theme = useTheme();
+    const isNotMobile = useMediaQuery(theme.breakpoints.up('sm'));
+
+    if (
+      (status === 1 && !isNotMobile) ||
+      (status === 2 && isNotMobile)
+    ) return
+
+    return (
+      <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
+        <Box
+          sx={{
+            ml: !isNotMobile ? 0 : 1,
+            mt: !isNotMobile ? 1 : 0
+          }}
+          className={styles.search_btn_container}
+        >
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            className={styles.search_btn}
+            onClick={dummytransition}
+            disabled={disButton}
+            startIcon={<SearchIcon/>}
+          >
+            Найти билет
+          </Button>
+        </Box>
+      </Grid>
+    );
+  }
+
+  // const t = 11//isBackTicketFildsShow
+  const isBackTickets = isBackTicketFildsShow ? true : false //Boolean(isBackTicketFildsShow)
+  console.log('isBackTicketFildsShow', isBackTickets)
+
   return (
       <div className={classes.heroContent}>
         {props.type !== "searchPage" ? (
@@ -252,36 +278,13 @@ function SearchTickets(props) {
             </Typography>
           </Container>
         ) : null}
-        {/* </div> */}
 
-        {/* <div className={classes.heroContent}> */}
+        {/* thither */}
         <Container maxWidth="lg" className={styles.search_tickets}>
-          <Grid container spacing={3}>
+          <Grid container gap={0}>
             <Grid item xs={3} sm={3} md={3}></Grid>
             {/* откуда */}
             <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
-              {/* <FormControl className={classes.formControl} variant="filled"> */}
-                {/* <InputLabel id="demo-simple-select-label">Откуда</InputLabel> */}
-                {/* <Select
-                  value={getDefaultSelectValue('startLocation')}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  // value={from}
-                  // onChange={handleChangeFrom}
-                  onChange={onChangeFrom}
-                  className={`${classes.select} ${classes.searchField} first_el`}
-                  filterOption={(input, option) =>
-                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                  }
-                  SelectDisplayProps={{gg: "22"}}
-                >
-                  {locations.map((location) => (
-                    <MenuItem value={location._id} key={location._id}>
-                      {location.name}
-                    </MenuItem>
-                  ))}
-                </Select> */}
-              {/* </FormControl> */}
               <Autocomplete
                   disablePortal
                   id="toCity1"
@@ -290,38 +293,12 @@ function SearchTickets(props) {
                   options={locations.map(location => location.name)}
                   onChange={onChangeFrom}
                   renderInput={(params) => (
-                    <TextField {...params} label="Откуда" />
+                    <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
                   )}
                 />
             </Grid>
             {/* куда */}
             <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
-              {/* <FormControl
-                className={`${classes.formControl} center_el`}
-                variant="filled"
-              >
-                <InputLabel id="demo-simple-select-label">Куда</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={getDefaultSelectValue("endLocation")}
-                  // value={to}
-                  // onChange={handleChangeTo}
-                  onChange={onChangeTo}
-                  className={`${classes.select} ${classes.searchField}`}
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {locations.map((location) => (
-                    <MenuItem value={location._id} key={location._id}>
-                      {location.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl> */}
               <Autocomplete
                   disablePortal
                   id="toCity2"
@@ -329,60 +306,50 @@ function SearchTickets(props) {
                   // options={getDefaultSelectValue("startLocation")}
                   options={locations.map(location => location.name)}
                   onChange={onChangeTo}
+                  style={{borderRadius: '0px'}}
                   renderInput={(params) => (
-                    <TextField {...params} label="Куда" />
+                    <TextField {...params} label="Куда" className={`${classes.searchFieldrenderedInput} middle_input_el`} />
                   )}
                 />
             </Grid>
 
-            <Grid
-              item
-              xs={12}
-              sm={2}
-              md={2}
-              className={`${classes.gridSelect} last_el`}
+            <Grid item xs={12} sm={2} md={2}
+              className={`${classes.gridSelect}`}
             >
               <MaterialUIPickers
                 value={props.info ? new Date(props.info.journeyDate) : new Date()}
                 onChangeDate={onChangeDate}
-                classes={`${classes.dataPicker} ${classes.searchField} last_el`}
+                classes={`${classes.dataPicker} ${classes.searchField}`}
+                isLastElementInRow
               />
             </Grid>
 
-            <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
-              <Box display={{ xs: "none", md: "block" }} m={1}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  className={classes.margin}
-                  onClick={dummytransition}
-                  disabled={disButton}
-                >
-                  Найти билет
-                </Button>
-              </Box>
-            </Grid>
+            {/* search btn */}
+            {getSearchTicketsBtn(1)}
 
             <Grid item xs={3}></Grid>
           </Grid>
 
-          {/* checkbox */}
+          rrrrrrrrrrrrrr =  {isBackTickets}
+          {/* back tickets checkbox */}
           {props.type !== "searchPage" ? (
-            <Grid container spacing={3} justify="center">
+            <Grid container gap={3} justifyContent="center">
               <Grid item xs={6}>
-                {/* <CheckboxLabels /> */}
                 <FormGroup row>
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={state.checkedB}
-                        onChange={handleChangeCheckboxReturn}
-                        name="checkedB"
+                        checked={isBackTickets}
+                        onChange={(e) => setIsBackTicketFildsShow(!isBackTickets)} //
                         color="primary"
+                        className={styles.returnBackCheckbox}
                       />
                     }
+                    className={styles.customFormControlClass}
                     label="Обратный билет"
+                    sx={{
+                      color: '#fff', fontSize: 34, 
+                    }}
                   />
                 </FormGroup>
               </Grid>
@@ -391,65 +358,34 @@ function SearchTickets(props) {
           {/* checkox end */}
         </Container>
 
-        {/* two part */}
+        {/* back */}
+        {/* {(props.type !== "searchPage" && isBackTicketFildsShow) ? ( */}
         {props.type !== "searchPage" ? (
           <Container
             maxWidth="lg"
             className={`search-tickets ${styles.return_trip} ${
-              state.checkedB ? "activate" : ""
+              isBackTickets ? "activate" : ""
             }`}
           >
-            <Grid container spacing={3}>
+            <Grid container gap={0}>
               <Grid item xs={3} sm={3} md={3}></Grid>
               {/* откуда */}
               <Grid item xs={12} sm={2} md={2}>
-                {/* <FormControl className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-label">Откуда</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={fromReturn}
-                    onChange={handleChangeFromReturn}
-                    className={`${classes.select} ${classes.searchField}`}
-                  >
-                    {locations.map((location) => (
-                      <MenuItem value={location._id} key={location._id}>
-                        {location.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl> */}
                 <Autocomplete
                   disablePortal
                   id="fromCity1"
-                  className={`${classes.select} ${classes.searchField}`}
+                  className={`${classes.select} ${classes.searchField} first_el`}
                   // options={getDefaultSelectValue("startLocation")}
                   options={locations.map(location => location.name)}
                   value={fromReturn}
                   onChange={handleChangeFromReturn}
                   renderInput={(params) => (
-                    <TextField {...params} label="Откуда" />
+                    <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
                   )}
                 />
               </Grid>
               {/* куда */}
               <Grid item xs={12} sm={2} md={2}>
-                {/* <FormControl className={classes.formControl}>
-                  <InputLabel id="demo-simple-select-label">Куда</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={toReturn}
-                    onChange={handleChangeToReturn}
-                    className={`${classes.select} ${classes.searchField}`}
-                  >
-                    {locations.map((location) => (
-                      <MenuItem value={location._id} key={location._id}>
-                        {location.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl> */}
                 <Autocomplete
                   disablePortal
                   id="fromCity2"
@@ -459,7 +395,7 @@ function SearchTickets(props) {
                   value={fromReturn}
                   onChange={handleChangeToReturn}
                   renderInput={(params) => (
-                    <TextField {...params} label="Куда" />
+                    <TextField {...params} label="Куда" className={`${classes.searchFieldrenderedInput} middle_input_el`} />
                   )}
                 />
               </Grid>
@@ -467,23 +403,14 @@ function SearchTickets(props) {
               <Grid item xs={12} sm={2} md={2}>
                 <MaterialUIPickers
                   classes={`${classes.select} ${classes.searchField}`}
+                  isLastElementInRow
                 />
               </Grid>
 
-              {/* <Grid item xs={12} sm={2} md={2}>
-              <Box display={{ xs: 'block', md: 'none' }} m={1}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  color="primary"
-                  className={styles.search_btn}
-                  onClick={() => { alert('clicked') }}
-                  disabled={disButton}
-                >
-                  Найти билет
-                </Button>
-              </Box>
-            </Grid> */}
+              {/* search btn */}
+              {getSearchTicketsBtn(2)}
+
+              <Grid item xs={3}></Grid>
             </Grid>
           </Container>
         ) : null}
