@@ -119,13 +119,15 @@ const threeLengthArray = [];
 
 function SearchTickets(props) {
   const classes = useStyles();
+  const theme = useTheme();
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'));
 
   // select-----------------
   // обратно
   const [fromReturn, setFromReturn] = useState("");
   const [toReturn, setToReturn] = useState("");
   // checkbox------------------
-  const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(0);
+  const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(true);
 
   // список городов для рейса
   const [locations, setLocations] = useState([]);
@@ -216,16 +218,13 @@ function SearchTickets(props) {
    * status = 2 - mobile
    */
   const getSearchTicketsBtn = (status) => {
-    const theme = useTheme();
-    const isNotMobile = useMediaQuery(theme.breakpoints.up('sm'));
-
     if (
       (status === 1 && !isNotMobile) ||
       (status === 2 && isNotMobile)
-    ) return
+    ) return <></>
 
     return (
-      <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
+      <Grid item xs={12} sm={12} md={2} className={classes.gridSelect}>
         <Box
           sx={{
             ml: !isNotMobile ? 0 : 1,
@@ -241,6 +240,7 @@ function SearchTickets(props) {
             onClick={dummytransition}
             disabled={disButton}
             startIcon={<SearchIcon/>}
+            fullWidth={isNotMobile ? false : true}
           >
             Найти билет
           </Button>
@@ -249,13 +249,10 @@ function SearchTickets(props) {
     );
   }
 
-  // const t = 11//isBackTicketFildsShow
-  const isBackTickets = isBackTicketFildsShow ? true : false //Boolean(isBackTicketFildsShow)
-  console.log('isBackTicketFildsShow', isBackTickets)
-
   return (
       <div className={classes.heroContent}>
         {props.type !== "searchPage" ? (
+          // welcome block
           <Container maxWidth="md" className={styles.welcome_block}>
             <Typography
               component="h1"
@@ -277,14 +274,14 @@ function SearchTickets(props) {
               по Украине, Польше и Европе
             </Typography>
           </Container>
-        ) : null}
+        ) : <></>}
 
         {/* thither */}
         <Container maxWidth="lg" className={styles.search_tickets}>
           <Grid container gap={0}>
             <Grid item xs={3} sm={3} md={3}></Grid>
             {/* откуда */}
-            <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
+            <Grid item xs={12} sm={12} md={2} className={classes.gridSelect}>
               <Autocomplete
                   disablePortal
                   id="toCity1"
@@ -298,7 +295,7 @@ function SearchTickets(props) {
                 />
             </Grid>
             {/* куда */}
-            <Grid item xs={12} sm={2} md={2} className={classes.gridSelect}>
+            <Grid item xs={12} sm={12} md={2} className={classes.gridSelect}>
               <Autocomplete
                   disablePortal
                   id="toCity2"
@@ -313,7 +310,7 @@ function SearchTickets(props) {
                 />
             </Grid>
 
-            <Grid item xs={12} sm={2} md={2}
+            <Grid item xs={12} sm={12} md={2}
               className={`${classes.gridSelect}`}
             >
               <MaterialUIPickers
@@ -330,17 +327,16 @@ function SearchTickets(props) {
             <Grid item xs={3}></Grid>
           </Grid>
 
-          rrrrrrrrrrrrrr =  {isBackTickets}
           {/* back tickets checkbox */}
           {props.type !== "searchPage" ? (
             <Grid container gap={3} justifyContent="center">
-              <Grid item xs={6}>
+              <Grid item xs={6} className={styles.returnBackCheckboxWrap}>
                 <FormGroup row>
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={isBackTickets}
-                        onChange={(e) => setIsBackTicketFildsShow(!isBackTickets)} //
+                        checked={isBackTicketFildsShow}
+                        onChange={(e) => setIsBackTicketFildsShow(!isBackTicketFildsShow)}
                         color="primary"
                         className={styles.returnBackCheckbox}
                       />
@@ -354,23 +350,23 @@ function SearchTickets(props) {
                 </FormGroup>
               </Grid>
             </Grid>
-          ) : null}
+          ) : <></>}
           {/* checkox end */}
         </Container>
 
         {/* back */}
-        {/* {(props.type !== "searchPage" && isBackTicketFildsShow) ? ( */}
-        {props.type !== "searchPage" ? (
+        {(props.type !== "searchPage" && isBackTicketFildsShow) ? 
+        // {props.type !== "searchPage" ? (
           <Container
             maxWidth="lg"
             className={`search-tickets ${styles.return_trip} ${
-              isBackTickets ? "activate" : ""
+              isBackTicketFildsShow ? "activate" : ""
             }`}
           >
             <Grid container gap={0}>
               <Grid item xs={3} sm={3} md={3}></Grid>
               {/* откуда */}
-              <Grid item xs={12} sm={2} md={2}>
+              <Grid item xs={12} sm={12} md={2}>
                 <Autocomplete
                   disablePortal
                   id="fromCity1"
@@ -385,7 +381,7 @@ function SearchTickets(props) {
                 />
               </Grid>
               {/* куда */}
-              <Grid item xs={12} sm={2} md={2}>
+              <Grid item xs={12} sm={12} md={2}>
                 <Autocomplete
                   disablePortal
                   id="fromCity2"
@@ -400,7 +396,7 @@ function SearchTickets(props) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={2} md={2}>
+              <Grid item xs={12} sm={12} md={2}>
                 <MaterialUIPickers
                   classes={`${classes.select} ${classes.searchField}`}
                   isLastElementInRow
@@ -412,8 +408,7 @@ function SearchTickets(props) {
 
               <Grid item xs={3}></Grid>
             </Grid>
-          </Container>
-        ) : null}
+          </Container> : <></>}
         {/* two part end*/}
       </div>
   );

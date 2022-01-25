@@ -12,10 +12,10 @@ import TextField from '@mui/material/TextField';
 
 
 export default function MaterialUIPickers(props) {
-  const refDatePicker = useRef(null);
-
   const [selectedDate, setSelectedDate] = useState(props.value);
   const [isOpen, setIsOpen] = useState(false);
+
+  const refDatePicker = useRef(null);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,7 +30,14 @@ export default function MaterialUIPickers(props) {
      * (по непонятным мне причинам)
      * пришлось прокидывать border-radius через ref 
      */
-    refDatePicker.current.lastChild.style='border-radius: 0 4px 4px 0'
+    if (
+      refDatePicker &&
+      refDatePicker.hasOwnProperty('current') &&
+      refDatePicker.current &&
+      refDatePicker.current.hasOwnProperty('lastChild') &&
+      refDatePicker.current.lastChild &&
+      refDatePicker.current.lastChild.hasOwnProperty('style')
+    ) refDatePicker.current.lastChild.style='border-radius: 0 4px 4px 0'
   })
 
   return (
