@@ -132,17 +132,22 @@ function SearchTickets(props) {
   // список городов для рейса
   const [locations, setLocations] = useState([]);
   // данные для отправки запроса(откуда,куда, дата)
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    startLocation: props.info ? props.info.startLocation : null,
+    endLocation: props.info ? props.info.endLocation : null,
+    journeyDate: props.info ? props.info.journeyDate : null
+  });
   // делаем кнопку поиска билетов активной только тогда,
   //   когда все поля выбраны
   const [disButton, setDisButton] = useState(true);
 
-  const handleChangeFromReturn = (event) => {
-    setFromReturn(event.target.value);
-  };
-  const handleChangeToReturn = (event) => {
-    setToReturn(event.target.value);
-  };
+  // const handleChangeFromReturn = (event) => {
+  //   setFromReturn(event.target.value);
+  // };
+  // const handleChangeToReturn = (event) => {
+  //   console.log('handleChangeToReturn val', event.target.value);
+  //   setToReturn(event.target.value);
+  // };
   // end select-----------------
 
   const checkButtonDisabled = (val) => {
@@ -152,15 +157,18 @@ function SearchTickets(props) {
     }
   };
 
-  const onChangeFrom = (val) => {
-    setFormData({ ...formData, ...{ startLocation: val.target.value } });
-    checkButtonDisabled(val.target.value);
+  // туда
+  const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
+    console.log('onChangeDirectionField', {locations, newValue}) //"Киев"
+    const newValueObj = locations.find(location => location.name === newValue)
+    setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
+    checkButtonDisabled(newValue)
   };
 
-  const onChangeTo = (val) => {
-    setFormData({ ...formData, ...{ endLocation: val.target.value } });
-    checkButtonDisabled(val.target.value);
-  };
+  // const onChangeTo = (val) => {
+  //   setFormData({ ...formData, ...{ endLocation: val.target.value } });
+  //   checkButtonDisabled(val.target.value);
+  // };
 
   const onChangeDate = (val) => {
     const journeyDate = format(val, "yyyy-MM-dd");
@@ -172,6 +180,10 @@ function SearchTickets(props) {
     // запрос на получения списка городов для рейсов
     fetchAllLocations();
   }, []);
+
+  useEffect(() => {
+    console.log('state', {formData, locations})
+  }, [formData, locations]);
 
   // получаем список городов для селекта
   const fetchAllLocations = async () => {
@@ -249,6 +261,20 @@ function SearchTickets(props) {
     );
   }
 
+  const optionsLocations = locations.length ? locations.map(location => location.name) : [];
+  // const optionsLocations = locations.length ? locations : [];
+
+  const getAutocomplateValue = (nameField) => {
+    return locations.find(location => {
+      console.log('defaultValue find', {locations, location, formData, if: location._id === formData[`${nameField}`]});
+      // return "Одесса";
+      return location._id === formData[`${nameField}`]
+    })
+  }
+
+  const fromValue = getAutocomplateValue("startLocation")
+  const toValue = getAutocomplateValue("endLocation")
+
   return (
       <div className={classes.heroContent}>
         {props.type !== "searchPage" ? (
@@ -277,7 +303,7 @@ function SearchTickets(props) {
         ) : <></>}
 
         {/* thither */}
-        <Container maxWidth="lg" className={styles.search_tickets}>
+        <Container maxWidth="lg" className={`${styles.search_tickets} ${props.type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
           <Grid container gap={0}>
             <Grid item xs={3} sm={3} md={3}></Grid>
             {/* откуда */}
@@ -287,8 +313,26 @@ function SearchTickets(props) {
                   id="toCity1"
                   className={`${classes.select} ${classes.searchField} first_el`}
                   // options={getDefaultSelectValue("startLocation")}
-                  options={locations.map(location => location.name)}
-                  onChange={onChangeFrom}
+                  // value="ОДесса"
+                  value={fromValue && fromValue.hasOwnProperty('name') ? fromValue.name : null}
+                  options={optionsLocations}
+                  // defaultValue={formData.startLocation}
+                  // defaultValue={optionsLocations.find(location => {
+                  //   console.log('defaultValue find', {location, formData});
+                  //   return location._id === formData.startLocation;
+                  // })} //"Одесса"
+                  // value={formData.startLocation}
+                  // getOptionLabel={(option) => {
+                  //   console.log('getOptionLabel', option)
+                  //   return option.name
+                  // }}
+                  // getOptionSelected={(option) => option.__v === formData.startLocation}
+                  // getOptionSelected={(option) => {
+                  //   console.log('getOptionSelected', option)
+                  //   // return option.__v === "60daf3428228e4315e12c1ad"
+                  //   return option === "Одесса"
+                  // }}
+                  onChange={(event, newValue) => onChangeDirectionField(newValue, "startLocation")}
                   renderInput={(params) => (
                     <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
                   )}
@@ -301,8 +345,9 @@ function SearchTickets(props) {
                   id="toCity2"
                   className={`${classes.select} ${classes.searchField}`}
                   // options={getDefaultSelectValue("startLocation")}
-                  options={locations.map(location => location.name)}
-                  onChange={onChangeTo}
+                  value={toValue && toValue.hasOwnProperty('name') ? toValue.name : null}
+                  options={optionsLocations}
+                  onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
                   style={{borderRadius: '0px'}}
                   renderInput={(params) => (
                     <TextField {...params} label="Куда" className={`${classes.searchFieldrenderedInput} middle_input_el`} />
@@ -372,9 +417,9 @@ function SearchTickets(props) {
                   id="fromCity1"
                   className={`${classes.select} ${classes.searchField} first_el`}
                   // options={getDefaultSelectValue("startLocation")}
-                  options={locations.map(location => location.name)}
+                  options={optionsLocations}
                   value={fromReturn}
-                  onChange={handleChangeFromReturn}
+                  onChange={(val, newValue) => onChangeDirectionField(newValue, "startBackLocation")}
                   renderInput={(params) => (
                     <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
                   )}
@@ -387,9 +432,9 @@ function SearchTickets(props) {
                   id="fromCity2"
                   className={`${classes.select} ${classes.searchField}`}
                   // options={getDefaultSelectValue("startLocation")}
-                  options={locations.map(location => location.name)}
+                  options={optionsLocations}
                   value={fromReturn}
-                  onChange={handleChangeToReturn}
+                  onChange={(val, newValue) => onChangeDirectionField(newValue, "endBackLocation")}
                   renderInput={(params) => (
                     <TextField {...params} label="Куда" className={`${classes.searchFieldrenderedInput} middle_input_el`} />
                   )}

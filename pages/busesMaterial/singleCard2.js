@@ -125,7 +125,16 @@ class SingleCard extends Component {
     </Modal>
   );
 
+  getLocaleDate = (date) => {
+    const dateObj = new Date(date);
+    const optionsDate = {  month: 'long', day: 'numeric' };
+
+    return dateObj.toLocaleDateString('ru-RU', optionsDate);
+  }
+
   render() {
+    const { bus } = this.state;
+
     return (
       <div className={styles.ticket}>
         <div className={styles.root}>
@@ -338,7 +347,32 @@ class SingleCard extends Component {
                         <span
                           className={stCollapse.mobile_ticket__segment_divider}
                         ></span>
-                        <div className={stCollapse.item}>
+
+                        {bus.wayStations.map((station, stationIndex) => {
+                          const date = this.getLocaleDate(station.date)
+                          let isDateVisible = true
+
+                          // if date was dublicate
+                          if (
+                            stationIndex !== 0 &&
+                            this.getLocaleDate(bus.wayStations[stationIndex - 1].date) === date
+                          ) isDateVisible = false
+
+                          return (
+                            <div className={stCollapse.item}>
+                              <div>
+                                <div className={stCollapse.time}>{station.time}</div>
+                                {isDateVisible && <div className={stCollapse.date}>{date}</div>}
+                              </div>
+                              <div>
+                                <div className={stCollapse.city}>{station.city}</div>
+                                <div className={stCollapse.address}>{station.station}</div>
+                              </div>
+                            </div>
+                          )
+                        })}
+
+                        {/* <div className={stCollapse.item}>
                           <div>
                             <div className={stCollapse.time}>23:06</div>
                             <div className={stCollapse.date}>21 июля</div>
@@ -350,8 +384,8 @@ class SingleCard extends Component {
                               Глушкова
                             </div>
                           </div>
-                        </div>
-                        <div className={stCollapse.item}>
+                        </div> */}
+                        {/* <div className={stCollapse.item}>
                           <div>
                             <div className={stCollapse.time}>02:20</div>
                           </div>
@@ -361,8 +395,8 @@ class SingleCard extends Component {
                               Автовокзал Умань, улица Киевская; дом 1
                             </div>
                           </div>
-                        </div>
-                        <div className={stCollapse.item}>
+                        </div> */}
+                        {/* <div className={stCollapse.item}>
                           <div>
                             <div className={stCollapse.time}>03:55</div>
                           </div>
@@ -372,8 +406,8 @@ class SingleCard extends Component {
                               Автостанция Кривое озеро, улица Куйбышева; дом 6
                             </div>
                           </div>
-                        </div>
-                        <div className={stCollapse.item}>
+                        </div> */}
+                        {/* <div className={stCollapse.item}>
                           <div>
                             <div className={stCollapse.time}>06:15</div>
                             <div className={stCollapse.date}>22 июля</div>
@@ -385,7 +419,7 @@ class SingleCard extends Component {
                               58
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     <div>

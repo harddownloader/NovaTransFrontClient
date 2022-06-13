@@ -71,7 +71,7 @@ const SearchMenu = ({ buses, info }) => {
         showSearch
         defaultValue={info ? info.startLocation : null}
         style={{ width: 200, marginRight: "1rem" }}
-        placeholder="eg- Dhangadhi"
+        placeholder="От куда:"
         optionFilterProp="children"
         onChange={onChangeFrom}
         onFocus={onFocus}
