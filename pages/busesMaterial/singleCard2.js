@@ -167,7 +167,11 @@ class SingleCard extends Component {
   }
 
   render() {
-    const { bus, ticketDescription } = this.state;
+    const {
+      bus,
+      ticketDescription,
+      expanded,
+    } = this.state;
 
     return (
       <div className={styles.ticket}>
@@ -308,7 +312,7 @@ class SingleCard extends Component {
                         <i
                           className={`${styles.toggleIcon} icon icon-down-arrow`}
                         ></i>
-                        Детали рейса
+                        { expanded ? 'Свернуть' : 'Детали рейса' }
                       </span>
                     </div>
                     <div className={styles.information}>
