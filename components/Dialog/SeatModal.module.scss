@@ -1,0 +1,23 @@
+.wrapper {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+}
+
+.seat_dialog_row_wrapp {
+  justify-content: center;
+}
+
+.seat_side_row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.seat_modal_footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
