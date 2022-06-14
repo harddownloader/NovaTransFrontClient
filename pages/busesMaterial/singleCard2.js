@@ -33,8 +33,17 @@ class SingleCard extends Component {
         "ноября",
         "декабря",
       ],
+      ticketDescription: null,
     };
+
     this.handleExpandClick = this.handleExpandClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { bus } = this.state
+
+    const ticketDescription = this.getFirstAndFinishedPoints(bus.wayStations)
+    this.setState({ticketDescription})
   }
 
   handleExpandClick() {
@@ -78,6 +87,7 @@ class SingleCard extends Component {
     const resp = enc(info);
     this.handleOk(resp);
   };
+
   handleCancel = (e) => {
     this.setState({
       visible: false,
@@ -132,8 +142,32 @@ class SingleCard extends Component {
     return dateObj.toLocaleDateString('ru-RU', optionsDate);
   }
 
+  getFirstAndFinishedPoints = (wayStations) => {
+    const start = wayStations[0]
+    const end = wayStations[wayStations.length - 1]
+    
+    const startDateTime = new Date(`${start.date}T${start.time}:00`)
+    const endDateTime = new Date(`${end.date}T${end.time}:00`)
+    const timeInTripMilliseconds = Math.abs(endDateTime - startDateTime)
+    const timeInTrip = this.getDateLineFromMilliseconds(timeInTripMilliseconds)
+
+    return {
+      start: start,
+      end: end,
+      timeInTrip
+    }
+  }
+
+  getDateLineFromMilliseconds = (milliseconds) => {
+    const diffDays = Math.floor(milliseconds / 86400000) // days
+    const diffHrs = Math.floor((milliseconds % 86400000) / 3600000) // hours
+    const diffMins = Math.round(((milliseconds % 86400000) % 3600000) / 60000) // minutes
+    console.log(diffDays + " дней, " + diffHrs + " часов, " + diffMins + " минут")
+    return `${diffDays ? diffDays + 'д.' : ''}  ${diffHrs ? diffHrs + 'ч.' : ''}  ${diffMins ? diffMins + 'мин.' : ''}`
+  }
+
   render() {
-    const { bus } = this.state;
+    const { bus, ticketDescription } = this.state;
 
     return (
       <div className={styles.ticket}>
@@ -160,7 +194,7 @@ class SingleCard extends Component {
                   <div className={`${styles.item} ${styles.itemWrap}`}>
                     <div className={styles.time_start}>
                       <div type="from" className={styles.time}>
-                        {this.state.bus ? this.state.bus.departure_time : null}
+                        {this.state?.bus?.departure_time}
                         <div>
                           <span className={styles.date}>
                             {this.state.bus
@@ -185,20 +219,17 @@ class SingleCard extends Component {
                       </div>
                       <div className={styles.timeInRoadWrapper}>
                         <span className={styles.timeInRoad}>
-                          7&nbsp;ч. 9&nbsp;мин. в&nbsp;пути
+                          {ticketDescription?.timeInTrip} в&nbsp;пути
                         </span>
                       </div>
                     </div>
                     <div>
                       <div className={styles.title}>
-                        {this.state.bus
-                          ? this.state.bus.startLocation.name
-                          : null}
+                      {ticketDescription?.start?.city}
                       </div>
                       <div className={styles.description}>
                         <div className={styles.linesEllipsis}>
-                          Остановка "метро "Теремки", проспект Академика
-                          Глушкова
+                          {ticketDescription?.start?.station}
                           <wbr />
                         </div>
                       </div>
@@ -233,13 +264,11 @@ class SingleCard extends Component {
                     </div>
                     <div>
                       <div className={styles.title}>
-                        {this.state.bus
-                          ? this.state.bus.endLocation.name
-                          : null}
+                      {ticketDescription?.end?.city}
                       </div>
                       <div className={styles.description}>
                         <div className={styles.linesEllipsis}>
-                          Автовокзал "Центральный", улица Колонтаевская; дом 58
+                          {ticketDescription?.end?.station}
                           <wbr />
                         </div>
                       </div>
@@ -253,7 +282,7 @@ class SingleCard extends Component {
                   <div className={styles.priceContainer}>
                     <span>
                       <span className={`${styles.price} ${styles.text_nowrap}`}>
-                        {this.state.bus ? this.state.bus.fare : null}
+                        {this.state?.bus?.fare}
                       </span>
                       <span className={styles.currency}>грн</span>
                     </span>
@@ -288,13 +317,13 @@ class SingleCard extends Component {
                           Перевозчик:{" "}
                         </span>
                         <span>
-                          {this.state.bus ? this.state.bus.carrierBus : null}
+                        {this.state?.bus?.carrierBrand}
                         </span>
                       </div>
                       <div className={`${styles.busModel} ${styles.nowrap}`}>
                         <span className={styles.busModelTitle}>Автобус: </span>
                         <span>
-                          {this.state.bus ? this.state.bus.carrierBus : null}
+                          {this.state?.bus?.carrierBus}
                         </span>
                       </div>
                     </div>
@@ -322,7 +351,7 @@ class SingleCard extends Component {
                             НАУ1035 Борисполь (аэропорт) - Одесса
                           </span>
                           , по маршруту{" "}
-                          <span className={stCollapse.bold}>Киев — Одесса</span>
+                          <span className={stCollapse.bold}>{ticketDescription?.start?.city} — {ticketDescription?.end?.city}</span>
                         </span>
                         <span>
                           , на{" "}
@@ -331,7 +360,7 @@ class SingleCard extends Component {
                         </span>
                         <span>
                           {" "}
-                          в <span className={stCollapse.bold}>23:06</span>
+                          в <span className={stCollapse.bold}>{ticketDescription?.start?.time}</span>
                         </span>
                       </p>
                       <p>Тип рейса: Регулярный</p>
@@ -439,17 +468,15 @@ class SingleCard extends Component {
                           </div>
                         </li>
                         <p>
-                          Бренд:{" "}
+                          Перевозчик:{" "}
                           <strong>
-                            {this.state.bus
-                              ? this.state.bus.carrierBrand
-                              : null}
+                            {this.state?.bus?.carrierBrand}
                           </strong>
                         </p>
                         <p>
                           Автобус:{" "}
                           <strong>
-                            {this.state.bus ? this.state.bus.carrierBus : null}{" "}
+                            {this.state?.bus?.carrierBus}{" "}
                           </strong>
                         </p>
                       </ul>
