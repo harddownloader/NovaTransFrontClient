@@ -311,7 +311,7 @@ function SearchTickets(props) {
               <Autocomplete
                   disablePortal
                   id="toCity1"
-                  className={`${classes.select} ${classes.searchField} first_el`}
+                  className={`${classes.select} ${classes.searchField} ${styles.searchField} first_el`}
                   // options={getDefaultSelectValue("startLocation")}
                   // value="ОДесса"
                   value={fromValue && fromValue.hasOwnProperty('name') ? fromValue.name : null}
@@ -343,7 +343,7 @@ function SearchTickets(props) {
               <Autocomplete
                   disablePortal
                   id="toCity2"
-                  className={`${classes.select} ${classes.searchField}`}
+                  className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
                   // options={getDefaultSelectValue("startLocation")}
                   value={toValue && toValue.hasOwnProperty('name') ? toValue.name : null}
                   options={optionsLocations}
@@ -361,7 +361,7 @@ function SearchTickets(props) {
               <MaterialUIPickers
                 value={props.info ? new Date(props.info.journeyDate) : new Date()}
                 onChangeDate={onChangeDate}
-                classes={`${classes.dataPicker} ${classes.searchField}`}
+                classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                 isLastElementInRow
               />
             </Grid>
@@ -415,7 +415,7 @@ function SearchTickets(props) {
                 <Autocomplete
                   disablePortal
                   id="fromCity1"
-                  className={`${classes.select} ${classes.searchField} first_el`}
+                  className={`${classes.select} ${classes.searchField}  ${styles.searchField} first_el`}
                   // options={getDefaultSelectValue("startLocation")}
                   options={optionsLocations}
                   value={fromReturn}
@@ -430,7 +430,7 @@ function SearchTickets(props) {
                 <Autocomplete
                   disablePortal
                   id="fromCity2"
-                  className={`${classes.select} ${classes.searchField}`}
+                  className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
                   // options={getDefaultSelectValue("startLocation")}
                   options={optionsLocations}
                   value={fromReturn}

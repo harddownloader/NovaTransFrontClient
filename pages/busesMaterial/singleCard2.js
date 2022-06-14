@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Alert from '@mui/material/Alert';
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 import { Card, Row, Col, Modal, Button } from "antd";
@@ -163,7 +164,7 @@ class SingleCard extends Component {
     const diffHrs = Math.floor((milliseconds % 86400000) / 3600000) // hours
     const diffMins = Math.round(((milliseconds % 86400000) % 3600000) / 60000) // minutes
     console.log(diffDays + " дней, " + diffHrs + " часов, " + diffMins + " минут")
-    return `${diffDays ? diffDays + 'д.' : ''}  ${diffHrs ? diffHrs + 'ч.' : ''}  ${diffMins ? diffMins + 'мин.' : ''}`
+    return `${diffDays ? diffDays + 'д.' : ''}  ${diffHrs ? diffHrs + 'ч.' : ''}  ${diffMins + 'мин.'}`
   }
 
   render() {
@@ -352,7 +353,7 @@ class SingleCard extends Component {
                         <span>
                           Рейс №{" "}
                           <span className={stCollapse.bold}>
-                            НАУ1035 Борисполь (аэропорт) - Одесса
+                            {bus?.name} Борисполь (аэропорт) - Одесса
                           </span>
                           , по маршруту{" "}
                           <span className={stCollapse.bold}>{ticketDescription?.start?.city} — {ticketDescription?.end?.city}</span>
@@ -486,6 +487,7 @@ class SingleCard extends Component {
                       </ul>
                     </div>
                   </div>
+                  {bus?.features && <Alert severity="info">{bus.features}</Alert>}
                 </div>
                 <div></div>
               </div>

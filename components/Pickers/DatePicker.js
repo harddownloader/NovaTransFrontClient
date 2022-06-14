@@ -7,6 +7,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // styles
 import styles from "@/styles/DataPicker.module.scss";
+import searchTicketsStyles from "@/styles/SearchTickets.module.scss";
 // import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 
@@ -56,7 +57,7 @@ export default function MaterialUIPickers(props) {
             "aria-label": "change date",
           }}
           className={
-            `${styles.date_picker__container} ${props.classes}`
+            `${styles.date_picker__container} ${props.classes}` // props.classes - I don't know why, but that's doesn't work
           }
           ref={refDatePicker}
           onClose={() => setIsOpen(false)}
@@ -65,7 +66,7 @@ export default function MaterialUIPickers(props) {
             renderInput={(props) => {
               return <TextField
                 {...props}
-                className={`${styles.date_picker__container} ${styles.date_picker__input} ${isLastElementInRow ? styles.last_el : ''}`}
+                className={`${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`}
                 onClick={(e) => setIsOpen(true)}
               />
             }
