@@ -3,6 +3,7 @@ import Alert from '@mui/material/Alert';
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
 import { Card, Row, Col, Modal, Button } from "antd";
+import SeatModal from '@/components/Dialog/SeatModal'
 import Router from "next/router";
 import SeatDetails from "./seatDetails";
 import { API_ROOT } from "../../utils/config";
@@ -59,6 +60,12 @@ class SingleCard extends Component {
     });
   };
 
+  handleCancel = (e) => {
+    this.setState({
+      visible: false,
+    });
+  };
+
   handleUserBooked = (seat) => {
     // let arr = [...this.state.userBooked];
     // arr.push(seat);
@@ -89,11 +96,7 @@ class SingleCard extends Component {
     this.handleOk(resp);
   };
 
-  handleCancel = (e) => {
-    this.setState({
-      visible: false,
-    });
-  };
+  
 
   seatColorMeaning = () => {
     return (
@@ -172,6 +175,7 @@ class SingleCard extends Component {
       bus,
       ticketDescription,
       expanded,
+      visible,
     } = this.state;
 
     return (
@@ -495,7 +499,11 @@ class SingleCard extends Component {
             </Collapse>
           </div>
         </div>
-        {this.state.visible && this.seatModal()}
+        {/* {this.state.visible && this.seatModal()} */}
+        {visible && <SeatModal
+          handleCancel={this.handleCancel}
+          visible={visible}
+        />}
       </div>
     );
   }

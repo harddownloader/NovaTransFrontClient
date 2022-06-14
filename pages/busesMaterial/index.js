@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import Layout from "../../components/Layout";
+import Layout from "../../components/Layout";
 import SearchMenu from "./searchMenu";
 // import Filters from "./filters";
 import Cards from "./cards";
@@ -30,12 +30,12 @@ const Buses = ({ resp, info }) => {
   };
 
   return (
-      // <Layout>
+      <Layout>
         <Param info={info}>
           <CssBaseline />
           <Header />
           <SearchTickets type="searchPage" info={info} />
-          {/* <SearchMenu buses={buses} info={info} /> */}
+          <SearchMenu buses={buses} info={info} />
           <Container maxWidth="md">
             {/* <Row className="row-container"> */}
               {/* <Col span={6} className="main-filter">
@@ -61,7 +61,7 @@ const Buses = ({ resp, info }) => {
             </Grid>
           </Container>
         </Param>
-      // </Layout> 
+      </Layout> 
   );
 };
 
