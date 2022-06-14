@@ -1,6 +1,6 @@
 import React from 'react';
 import SingleCard from "./singleCard2";
-import { Row, Col } from "antd";
+// import { Row, Col } from "antd";
 // import NepaliDate from "ad-bs-converter";
 
 const Cards = ({ buses=[] }) => {

@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 // import DirectionsBus from '@mui/icons-material/DirectionsBus';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Container from '@mui/material/Container';
 
 // icons
 import HelpIcon from "@mui/icons-material/Help";
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => {
   return {
   container: {
     padding: "10px 0",
+    color: '#fff'
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -73,7 +75,13 @@ const Header = (props) => {
   return (
     <React.Fragment>
       {/* <CssBaseline /> */}
-      <AppBar position="relative" className={classes.container}>
+      <AppBar
+        color="transparent"
+        elevation={0}
+        position="relative"
+        className={classes.container}
+      >
+      <Container maxWidth="md">
         <Toolbar>
           <img
             src={logo}
@@ -103,6 +111,7 @@ const Header = (props) => {
             </Box>
           </section>
         </Toolbar>
+        </Container>
       </AppBar>
     </React.Fragment>
   );
