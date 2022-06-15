@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -11,7 +11,8 @@ import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
+import ConfirmModal from './ConfirmModal'
 import classes from './SeatModal.module.scss'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -59,36 +60,45 @@ export default function SeatModal(props) {
   const [evenA, setEvenA] = useState(["A2", "A4", "A6", "A8", "A10", "A12", "A14"])
   const [oddB, setOddB] = useState(["B1", "B3", "B5", "B7", "B9", "B11", "B13", "B15"])
   const [evenB, setEvenB] = useState(["B2", "B4", "B6", "B8", "B10", "B12", "B14"])
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false)
+  const [currentSeat, setCurrentSeat] = useState(null)
+
+  useEffect(() => {
+    if (currentSeat) {
+      setIsConfirmVisible(true)
+    }
+  }, [currentSeat])
 
   const handleClose = () => {
     // setOpen(false);
+    setCurrentSeat({})
     props.handleCancel()
   };
 
   const handleClick = async seat => {
     // confirm modal
-    Swal.fire({
-      title: "Вы уверены?",
-      text: "Подтвердите пожалуйста свою бронь!",
-      type: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3f51b5",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Забронировать"
-    }).then(result => {
-      // if user confirm his choise
-      if (result.value) {
-        props.handleUserBooked(seat)
-      }
-    });
+    // Swal.fire({
+    //   title: "Вы уверены?",
+    //   text: "Подтвердите пожалуйста свою бронь!",
+    //   type: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3f51b5",
+    //   cancelButtonColor: "#d33",
+    //   confirmButtonText: "Забронировать"
+    // }).then(result => {
+    //   // if user confirm his choise
+    //   if (result.value) {
+    //     props.handleUserBooked(seat)
+    //   }
+    // });
+    setCurrentSeat(seat)
   };
+
+
 
 
   return (
     <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -283,6 +293,18 @@ export default function SeatModal(props) {
           </div>
         </DialogActions>
       </BootstrapDialog>
+
+      {isConfirmVisible &&
+        <ConfirmModal
+          isVisible={isConfirmVisible}
+          changeVisibility={setIsConfirmVisible}
+          titleText={'Вы уверены?'}
+          contentText={'Подтвердите пожалуйста свою бронь'}
+          confirmButtonText={'Забронировать'}
+          cancelButtonText={'Отмена'}
+          confirmButtonHandler={() => props.handleUserBooked(currentSeat)}
+        />
+      }
     </div>
   );
 }

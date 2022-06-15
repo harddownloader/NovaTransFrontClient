@@ -16,10 +16,6 @@ import { dec } from "../../utils/encdec";
 import { postBookSeat } from "../../actions/book";
 const { Option } = Select;
 import Header from '../../components/HeaderMaterial/Header';
-// import Grid from '@mui/material/Grid';
-// import IconButton from '@mui/material/IconButton';
-// import Button from '@mui/material/Button';
-// import ConfirmModal from '@/components/Dialog/ConfirmModal'
 
 
 class Details extends React.Component {

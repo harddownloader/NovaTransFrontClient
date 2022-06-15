@@ -503,6 +503,11 @@ class SingleCard extends Component {
         {visible && <SeatModal
           handleCancel={this.handleCancel}
           visible={visible}
+          sold={this.props.bus.soldSeat}
+          // setSold={() => {}}
+          booked={this.props.bus.bookedSeat}
+          // setBooked={() => {}}
+          handleUserBooked={this.handleUserBooked}
         />}
       </div>
     );
