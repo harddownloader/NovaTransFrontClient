@@ -115,7 +115,6 @@ const useStyles = makeStyles((theme) => {
   }
 }});
 
-const threeLengthArray = [];
 
 function SearchTickets(props) {
   const classes = useStyles();
@@ -137,9 +136,6 @@ function SearchTickets(props) {
     endLocation: props.info ? props.info.endLocation : null,
     journeyDate: props.info ? props.info.journeyDate : null
   });
-  // делаем кнопку поиска билетов активной только тогда,
-  //   когда все поля выбраны
-  const [disButton, setDisButton] = useState(true);
 
   // const handleChangeFromReturn = (event) => {
   //   setFromReturn(event.target.value);
@@ -150,30 +146,20 @@ function SearchTickets(props) {
   // };
   // end select-----------------
 
-  const checkButtonDisabled = (val) => {
-    threeLengthArray.push(val);
-    if (threeLengthArray.length >= 3) {
-      setDisButton(false);
-    }
-  };
-
   // туда
   const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
     console.log('onChangeDirectionField', {locations, newValue}) //"Киев"
     const newValueObj = locations.find(location => location.name === newValue)
     setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
-    checkButtonDisabled(newValue)
   };
 
   // const onChangeTo = (val) => {
   //   setFormData({ ...formData, ...{ endLocation: val.target.value } });
-  //   checkButtonDisabled(val.target.value);
   // };
 
   const onChangeDate = (val) => {
     const journeyDate = format(val, "yyyy-MM-dd");
     setFormData({ ...formData, ...{ journeyDate } });
-    checkButtonDisabled(val);
   };
 
   useEffect(() => {
@@ -250,7 +236,11 @@ function SearchTickets(props) {
             color="primary"
             className={styles.search_btn}
             onClick={dummytransition}
-            disabled={disButton}
+            disabled={!Boolean(
+              formData?.startLocation &&
+              formData?.endLocation &&
+              formData?.journeyDate
+            )}
             startIcon={<SearchIcon/>}
             fullWidth={isNotMobile ? false : true}
           >
