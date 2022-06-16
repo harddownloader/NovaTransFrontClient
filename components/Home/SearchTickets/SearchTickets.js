@@ -30,7 +30,7 @@ import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 
 // styles
-import styles from "@/styles/SearchTickets.module.scss";
+import styles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
 import { NaturePeopleOutlined } from "@mui/icons-material";
 import SearchIcon from '@mui/icons-material/Search';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -236,7 +236,7 @@ function SearchTickets(props) {
     ) return <></>
 
     return (
-      <Grid item xs={12} sm={12} md={2} className={classes.gridSelect}>
+      <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
         <Box
           sx={{
             ml: !isNotMobile ? 0 : 1,
@@ -303,11 +303,11 @@ function SearchTickets(props) {
         ) : <></>}
 
         {/* thither */}
-        <Container maxWidth="lg" className={`${styles.search_tickets} ${props.type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
+        <Container maxWidth="md" className={`${styles.search_tickets} ${props.type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
           <Grid container gap={0}>
-            <Grid item xs={3} sm={3} md={3}></Grid>
+            {/* <Grid item xs={3} sm={3} md={3}></Grid> */}
             {/* откуда */}
-            <Grid item xs={12} sm={12} md={2} className={classes.gridSelect}>
+            <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
               <Autocomplete
                   disablePortal
                   id="toCity1"
@@ -339,7 +339,7 @@ function SearchTickets(props) {
                 />
             </Grid>
             {/* куда */}
-            <Grid item xs={12} sm={12} md={2} className={classes.gridSelect}>
+            <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
               <Autocomplete
                   disablePortal
                   id="toCity2"
@@ -355,7 +355,7 @@ function SearchTickets(props) {
                 />
             </Grid>
 
-            <Grid item xs={12} sm={12} md={2}
+            <Grid item xs={12} sm={12} md={3}
               className={`${classes.gridSelect}`}
             >
               <MaterialUIPickers
@@ -369,7 +369,7 @@ function SearchTickets(props) {
             {/* search btn */}
             {getSearchTicketsBtn(1)}
 
-            <Grid item xs={3}></Grid>
+            {/* <Grid item xs={3}></Grid> */}
           </Grid>
 
           {/* back tickets checkbox */}
@@ -403,15 +403,14 @@ function SearchTickets(props) {
         {(props.type !== "searchPage" && isBackTicketFildsShow) ? 
         // {props.type !== "searchPage" ? (
           <Container
-            maxWidth="lg"
+            maxWidth="md"
             className={`search-tickets ${styles.return_trip} ${
               isBackTicketFildsShow ? "activate" : ""
             }`}
           >
             <Grid container gap={0}>
-              <Grid item xs={3} sm={3} md={3}></Grid>
               {/* откуда */}
-              <Grid item xs={12} sm={12} md={2}>
+              <Grid item xs={12} sm={12} md={3}>
                 <Autocomplete
                   disablePortal
                   id="fromCity1"
@@ -426,7 +425,7 @@ function SearchTickets(props) {
                 />
               </Grid>
               {/* куда */}
-              <Grid item xs={12} sm={12} md={2}>
+              <Grid item xs={12} sm={12} md={3}>
                 <Autocomplete
                   disablePortal
                   id="fromCity2"
@@ -441,7 +440,7 @@ function SearchTickets(props) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} md={2}>
+              <Grid item xs={12} sm={12} md={3}>
                 <MaterialUIPickers
                   classes={`${classes.select} ${classes.searchField}`}
                   isLastElementInRow
@@ -451,7 +450,6 @@ function SearchTickets(props) {
               {/* search btn */}
               {getSearchTicketsBtn(2)}
 
-              <Grid item xs={3}></Grid>
             </Grid>
           </Container> : <></>}
         {/* two part end*/}

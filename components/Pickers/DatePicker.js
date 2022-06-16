@@ -7,7 +7,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 // styles
 import styles from "@/styles/DataPicker.module.scss";
-import searchTicketsStyles from "@/styles/SearchTickets.module.scss";
+import searchTicketsStyles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
 // import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 

@@ -31,7 +31,7 @@ const Buses = ({ resp, info }) => {
       <Container maxWidth="md">
         <Grid
           container
-          className="row-container"
+          className="tickets_wrapp"
         >
           <Grid
             item

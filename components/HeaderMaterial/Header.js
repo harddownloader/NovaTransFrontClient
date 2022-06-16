@@ -48,7 +48,7 @@ const Header = (props) => {
         className={`${classes.container} ${isDarkStyle ? classes.darkColors : classes.lightColors}`}
       >
       <Container maxWidth={containerWidth}>
-        <Toolbar>
+        <Toolbar disableGutters>
           <img
             src={logo}
             alt="Logo NovaTrans"
