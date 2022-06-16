@@ -10,8 +10,8 @@ import { API_ROOT } from "../../utils/config";
 import { enc, dec } from "../../utils/encdec";
 
 // sass
-import styles from "@/styles/singleCard/SingleCard2.module.scss";
-import stCollapse from "@/styles/singleCard/SingleCard.Collapse.module.scss";
+import styles from "./SingleCard2.module.scss";
+import stCollapse from "./SingleCard.Collapse.module.scss";
 
 class SingleCard extends Component {
   constructor(props) {
@@ -197,10 +197,17 @@ class SingleCard extends Component {
           </div>
           <div type="only" className={styles.preview}>
             <span className={`${styles.badge} ${styles.bg_success}`}></span>
-            <div className={styles.grid}>
+            <div className={`${styles.gridBody} ${styles.grid}`}>
               <div className={styles.gridLeft}>
+
+                <div className={`${styles.timeInRoadWrapper} ${styles.timeInRoadWrapperMobile}`}>
+                  <span className={styles.timeInRoad}>
+                    {ticketDescription?.timeInTrip} в&nbsp;пути
+                  </span>
+                </div>
+
                 <div className={styles.items}>
-                  <div className={`${styles.item} ${styles.itemWrap}`}>
+                  <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                     <div className={styles.time_start}>
                       <div type="from" className={styles.time}>
                         {this.state?.bus?.departure_time}
@@ -244,7 +251,7 @@ class SingleCard extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className={`${styles.item} ${styles.itemWrap}`}>
+                  <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                     <div className={styles.time_end}>
                       <div type="to" className={styles.time}>
                         {this.state.bus ? this.state.bus.arrival_time : null}
@@ -339,7 +346,15 @@ class SingleCard extends Component {
                   </div>
                 </div>
                 <div className={styles.gridDivider8}></div>
-                <div className={styles.gridRight9}></div>
+                <div className={styles.gridRight9}>
+                  <button
+                    className={`${styles.btn__submit} ${styles.btn__submit_mobile}`}
+                    role="button"
+                    onClick={this.showModal}
+                  >
+                    <span className="">{this.state?.bus?.fare} грн</span>
+                  </button>
+                </div>
               </div>
             </div>
             <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
@@ -409,55 +424,6 @@ class SingleCard extends Component {
                             </div>
                           )
                         })}
-
-                        {/* <div className={stCollapse.item}>
-                          <div>
-                            <div className={stCollapse.time}>23:06</div>
-                            <div className={stCollapse.date}>21 июля</div>
-                          </div>
-                          <div>
-                            <div className={stCollapse.city}>Киев</div>
-                            <div className={stCollapse.address}>
-                              Остановка "метро "Теремки", проспект Академика
-                              Глушкова
-                            </div>
-                          </div>
-                        </div> */}
-                        {/* <div className={stCollapse.item}>
-                          <div>
-                            <div className={stCollapse.time}>02:20</div>
-                          </div>
-                          <div>
-                            <div className={stCollapse.city}>Умань</div>
-                            <div className={stCollapse.address}>
-                              Автовокзал Умань, улица Киевская; дом 1
-                            </div>
-                          </div>
-                        </div> */}
-                        {/* <div className={stCollapse.item}>
-                          <div>
-                            <div className={stCollapse.time}>03:55</div>
-                          </div>
-                          <div>
-                            <div className={stCollapse.city}>Кривое озеро</div>
-                            <div className={stCollapse.address}>
-                              Автостанция Кривое озеро, улица Куйбышева; дом 6
-                            </div>
-                          </div>
-                        </div> */}
-                        {/* <div className={stCollapse.item}>
-                          <div>
-                            <div className={stCollapse.time}>06:15</div>
-                            <div className={stCollapse.date}>22 июля</div>
-                          </div>
-                          <div>
-                            <div className={stCollapse.city}>Одесса</div>
-                            <div className={stCollapse.address}>
-                              Автовокзал "Центральный", улица Колонтаевская; дом
-                              58
-                            </div>
-                          </div>
-                        </div> */}
                       </div>
                     </div>
                     <div>
