@@ -300,20 +300,25 @@
   white-space: nowrap;
   cursor: pointer;
 }
-.toggleIcon {
-  margin-right: 3px;
+
+.toggleWrapp {
+  display: flex;
+  align-items: center;
 }
-.icon-down-arrow:before {
-  content: "\E80E";
-}
-.icon-down-arrow:before,
-.icon-up-arrow:before {
-  font-size: 50%;
-}
-.icon-down-arrow:before {
-  width: 1.7em;
-  line-height: 1.1em;
-}
+// .toggleIcon {
+//   margin-right: 3px;
+// }
+// .icon_down_arrow:before {
+//   content: "\E80E";
+// }
+// .icon_down_arrow:before,
+// .icon-up-arrow:before {
+//   font-size: 50%;
+// }
+// .icon_down_arrow:before {
+//   width: 1.7em;
+//   line-height: 1.1em;
+// }
 
 .information {
   display: flex;

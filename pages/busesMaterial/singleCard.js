@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import Alert from '@mui/material/Alert';
 import Collapse from "@mui/material/Collapse";
 import Typography from "@mui/material/Typography";
-import { Card, Row, Col, Modal, Button } from "antd";
+// import { Card, Row, Col, Modal, Button } from "antd";
 import SeatModal from '@/components/Dialog/SeatModal'
 import Router from "next/router";
-import SeatDetails from "./seatDetails";
+// import SeatDetails from "./seatDetails";
 import { API_ROOT } from "../../utils/config";
 import { enc, dec } from "../../utils/encdec";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+// import Button from '@mui/material/Button';
 
 // sass
 import styles from "./SingleCard2.module.scss";
@@ -98,46 +101,46 @@ class SingleCard extends Component {
 
   
 
-  seatColorMeaning = () => {
-    return (
-      <>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "start",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <p>Доступно</p>
-          <Button type="primary" style={{ margin: "0 1rem" }}></Button>
-          <p>Забронировано</p>
-          <Button
-            style={{ backgroundColor: "rgb(67, 67, 67)", margin: "0 1rem" }}
-          ></Button>
-          <p>Продано</p>
-          <Button type="danger" style={{ margin: "0 1rem" }}></Button>
-        </div>
-      </>
-    );
-  };
+  // seatColorMeaning = () => {
+  //   return (
+  //     <>
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           alignItems: "start",
+  //           flexDirection: "row-reverse",
+  //         }}
+  //       >
+  //         <p>Доступно</p>
+  //         <Button type="primary" style={{ margin: "0 1rem" }}></Button>
+  //         <p>Забронировано</p>
+  //         <Button
+  //           style={{ backgroundColor: "rgb(67, 67, 67)", margin: "0 1rem" }}
+  //         ></Button>
+  //         <p>Продано</p>
+  //         <Button type="danger" style={{ margin: "0 1rem" }}></Button>
+  //       </div>
+  //     </>
+  //   );
+  // };
 
-  seatModal = () => (
-    <Modal
-      title="Бронирование Места"
-      visible={this.state.visible}
-      onCancel={this.handleCancel}
-      footer={[this.seatColorMeaning()]}
-    >
-      <SeatDetails
-        sold={this.props.bus.soldSeat}
-        setSold={() => {}}
-        booked={this.props.bus.bookedSeat}
-        setBooked={() => {}}
-        slug={"ss"}
-        handleUserBooked={this.handleUserBooked}
-      />
-    </Modal>
-  );
+  // seatModal = () => (
+  //   <Modal
+  //     title="Бронирование Места"
+  //     visible={this.state.visible}
+  //     onCancel={this.handleCancel}
+  //     footer={[this.seatColorMeaning()]}
+  //   >
+  //     <SeatDetails
+  //       sold={this.props.bus.soldSeat}
+  //       setSold={() => {}}
+  //       booked={this.props.bus.bookedSeat}
+  //       setBooked={() => {}}
+  //       slug={"ss"}
+  //       handleUserBooked={this.handleUserBooked}
+  //     />
+  //   </Modal>
+  // );
 
   getLocaleDate = (date) => {
     const dateObj = new Date(date);
@@ -320,10 +323,8 @@ class SingleCard extends Component {
                 <div className={styles.gridLeft}>
                   <div className={styles.flex}>
                     <div className={styles.toggle}>
-                      <span onClick={this.handleExpandClick}>
-                        <i
-                          className={`${styles.toggleIcon} icon icon-down-arrow`}
-                        ></i>
+                      <span className={styles.toggleWrapp} onClick={this.handleExpandClick}>
+                        { expanded ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> }
                         { expanded ? 'Свернуть' : 'Детали рейса' }
                       </span>
                     </div>
