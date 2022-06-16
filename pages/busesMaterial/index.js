@@ -38,7 +38,6 @@ const Buses = ({ resp, info }) => {
             xs={12}
             sm={12}
             md={12}
-            // key={index}
           >
             {loading ? <Loading /> : <Cards buses={buses} />}
           </Grid>
