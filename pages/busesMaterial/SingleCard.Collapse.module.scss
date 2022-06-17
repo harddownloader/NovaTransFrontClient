@@ -105,3 +105,9 @@
 .text_primary{
   
 }
+
+@media only screen and (max-width: 667px) {
+  .tabPanel {
+    display: none;
+  }
+}

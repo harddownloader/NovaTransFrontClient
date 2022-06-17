@@ -45,6 +45,7 @@
   position: relative;
 }
 .gridLeft {
+  display: flex;
   flex: 1 1 0%;
 }
 .items {
@@ -322,6 +323,7 @@
 
 .information {
   display: flex;
+  align-items: center;
   flex: 1 1 0%;
   padding: 0px 30px;
   overflow: hidden;
@@ -373,6 +375,7 @@
     }
 
     .gridLeft {
+      display: block;
       .timeInRoadWrapperMobile {
         display: block;
       }

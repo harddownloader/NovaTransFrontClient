@@ -294,8 +294,9 @@ class SingleCard extends Component {
                     </div>
                   </div>
                 </div>
+                <div className={styles.gridDivider}></div>
               </div>
-              <div className={styles.gridDivider}></div>
+              
               <div className={styles.gridRight}>
                 <div className={styles.priceWrapper}>
                   <div className={styles.priceContainer}>
@@ -347,7 +348,7 @@ class SingleCard extends Component {
                   </div>
                 </div>
                 <div className={styles.gridDivider8}></div>
-                <div className={styles.gridRight9}>
+                <div className={`${styles.gridRight9} ${styles.gridRight}`}>
                   <button
                     className={`${styles.btn__submit} ${styles.btn__submit_mobile}`}
                     role="button"
