@@ -150,6 +150,12 @@ class SingleCard extends Component {
   }
 
   getFirstAndFinishedPoints = (wayStations) => {
+    if (!Array.isArray(wayStations) || !wayStations.length) return {
+      start: '',
+      end: '',
+      timeInTrip: 'не указано сколько ',
+    }
+
     const start = wayStations[0]
     const end = wayStations[wayStations.length - 1]
     
