@@ -13,7 +13,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 // import Button from '@mui/material/Button';
 
 // sass
-import styles from "./SingleCard2.module.scss";
+import styles from "./SingleCard.module.scss";
 import stCollapse from "./SingleCard.Collapse.module.scss";
 
 class SingleCard extends Component {
