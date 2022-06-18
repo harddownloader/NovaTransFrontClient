@@ -302,8 +302,8 @@ function SearchTickets(props) {
                   disablePortal
                   id="toCity1"
                   className={`${classes.select} ${classes.searchField} ${styles.searchField} first_el`}
-                  // options={getDefaultSelectValue("startLocation")}
-                  // value="ОДесса"
+                  noOptionsText="Не найдено"
+                  loadingText="Зпгрузка..."
                   value={fromValue && fromValue.hasOwnProperty('name') ? fromValue.name : null}
                   options={optionsLocations}
                   // defaultValue={formData.startLocation}
@@ -334,7 +334,8 @@ function SearchTickets(props) {
                   disablePortal
                   id="toCity2"
                   className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
-                  // options={getDefaultSelectValue("startLocation")}
+                  noOptionsText="Не найдено"
+                  loadingText="Зпгрузка..."
                   value={toValue && toValue.hasOwnProperty('name') ? toValue.name : null}
                   options={optionsLocations}
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
@@ -405,7 +406,8 @@ function SearchTickets(props) {
                   disablePortal
                   id="fromCity1"
                   className={`${classes.select} ${classes.searchField}  ${styles.searchField} first_el`}
-                  // options={getDefaultSelectValue("startLocation")}
+                  noOptionsText="Не найдено"
+                  loadingText="Загрузка..."
                   options={optionsLocations}
                   value={fromReturn}
                   onChange={(val, newValue) => onChangeDirectionField(newValue, "startBackLocation")}
@@ -420,7 +422,8 @@ function SearchTickets(props) {
                   disablePortal
                   id="fromCity2"
                   className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
-                  // options={getDefaultSelectValue("startLocation")}
+                  noOptionsText="Не найдено"
+                  loadingText="Загрузка..."
                   options={optionsLocations}
                   value={fromReturn}
                   onChange={(val, newValue) => onChangeDirectionField(newValue, "endBackLocation")}
