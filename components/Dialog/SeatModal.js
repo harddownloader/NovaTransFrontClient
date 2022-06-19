@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-// import Swal from "sweetalert2";
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
+import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import IconButton from '@mui/material/IconButton'
+import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined'
+import CloseIcon from '@mui/icons-material/Close'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+// import Swal from "sweetalert2"
 import ConfirmModal from './ConfirmModal'
 import classes from './SeatModal.module.scss'
 
@@ -22,10 +22,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
-}));
+}))
 
 const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
+  const { children, onClose, ...other } = props
 
   return (
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
@@ -45,8 +45,8 @@ const BootstrapDialogTitle = (props) => {
         </IconButton>
       ) : null}
     </DialogTitle>
-  );
-};
+  )
+}
 
 BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
@@ -70,10 +70,10 @@ export default function SeatModal(props) {
   }, [currentSeat])
 
   const handleClose = () => {
-    // setOpen(false);
+    // setOpen(false)
     setCurrentSeat({})
     props.handleCancel()
-  };
+  }
 
   const handleClick = async seat => {
     // confirm modal
@@ -90,9 +90,9 @@ export default function SeatModal(props) {
     //   if (result.value) {
     //     props.handleUserBooked(seat)
     //   }
-    // });
+    // })
     setCurrentSeat(seat)
-  };
+  }
 
 
 
@@ -100,6 +100,7 @@ export default function SeatModal(props) {
   return (
     <div>
       <BootstrapDialog
+        fullScreen
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={props.visible}
@@ -306,7 +307,7 @@ export default function SeatModal(props) {
         />
       }
     </div>
-  );
+  )
 }
 
 const styles = {
@@ -350,4 +351,4 @@ const styles = {
   button: {
     margin: ".5rem"
   }
-};
+}
