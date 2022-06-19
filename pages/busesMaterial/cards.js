@@ -6,7 +6,7 @@ const Cards = ({ buses=[] }) => {
 
   const markup =
     buses.length <= 0 ? (
-      <h2>Рейсы не найдены</h2>
+      <h2>Рейс еще не запланирован</h2>
     ) : (
       <div className="cards">
         <div>
