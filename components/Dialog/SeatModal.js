@@ -13,7 +13,11 @@ import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ConfirmModal from './ConfirmModal'
 import classes from './SeatModal.module.scss'
+import Slide from '@mui/material/Slide';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -102,6 +106,7 @@ export default function SeatModal(props) {
     <div>
       <BootstrapDialog
         fullScreen={isMobileVesion}
+        TransitionComponent={Transition}
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={props.visible}
