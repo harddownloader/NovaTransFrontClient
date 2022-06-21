@@ -1,3 +1,5 @@
+@import '../../styles/mixins/PriceBlock.scss';
+
 .ticket {
   position: relative;
   margin-bottom: 20px;
@@ -184,10 +186,11 @@
   }
 }
 .priceWrapper {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 16px;
+  @include price_wrapper;
+  // display: flex;
+  // -webkit-box-align: center;
+  // align-items: center;
+  // padding: 16px;
 }
 @media only screen and (max-width: 978px) {
   .priceWrapper {
@@ -196,8 +199,9 @@
   }
 }
 .priceContainer {
-  display: flex;
-  flex-direction: column;
+  @include price_container;
+  // display: flex;
+  // flex-direction: column;
 }
 @media only screen and (max-width: 978px) {
   .priceContainer {
@@ -206,26 +210,32 @@
 }
 
 .price {
-  font-size: 32px;
-  line-height: 1;
+  @include price;
+  // font-size: 32px;
+  // line-height: 1;
 }
+
 .priceContainer .price {
-  font-size: 28px;
+  @include price_in_price_container;
+  // font-size: 28px;
 }
 
 .priceContainer .currency {
-  margin-left: 5px;
+  @include currency_in_price_container;
+  // margin-left: 5px;
 }
 
 .text_nowrap {
-  white-space: nowrap;
+  @include text_nowrap;
+  // white-space: nowrap;
 }
 
 .buttonWrapper {
-  display: flex;
-  position: relative;
-  margin-left: 16px;
-  font-size: 14px;
+  @include button_wrapp;
+  // display: flex;
+  // position: relative;
+  // margin-left: 16px;
+  // font-size: 14px;
 }
 
 @media only screen and (max-width: 978px) {
@@ -235,28 +245,29 @@
 }
 
 .btn__submit {
-  display: inline-block;
-  width: auto;
-  font-weight: normal;
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  vertical-align: middle;
-  touch-action: manipulation;
-  cursor: pointer;
-  user-select: none;
-  background-image: none;
-  border: 0px;
-  outline: 0px;
-  position: relative;
-  color: rgb(255, 255, 255);
-  background-color: #3f51b5;
-  padding: 13px 30px;
-  font-size: 16px;
-  border-radius: 4px;
-  line-height: 20px;
-  transition: all 0.28s ease-in-out 0s;
-  will-change: transform;
+  @include button;
+  // display: inline-block;
+  // width: auto;
+  // font-weight: normal;
+  // text-align: center;
+  // text-decoration: none;
+  // white-space: nowrap;
+  // vertical-align: middle;
+  // touch-action: manipulation;
+  // cursor: pointer;
+  // user-select: none;
+  // background-image: none;
+  // border: 0px;
+  // outline: 0px;
+  // position: relative;
+  // color: rgb(255, 255, 255);
+  // background-color: #3f51b5;
+  // padding: 13px 30px;
+  // font-size: 16px;
+  // border-radius: 4px;
+  // line-height: 20px;
+  // transition: all 0.28s ease-in-out 0s;
+  // will-change: transform;
 }
 
 .btn__submit_mobile {
