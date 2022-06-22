@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import IconButton from '@mui/material/IconButton'
 import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined'
 import Grid from '@mui/material/Grid'
-import ConfirmModal from '@/components/Dialog/ConfirmModal'
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import classes from './SeatModal.module.scss'
 import DialogHOC from './Modal/DialogHOC'
 

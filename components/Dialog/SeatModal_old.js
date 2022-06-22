@@ -11,7 +11,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import classes from './SeatModal.module.scss'
 import Slide from '@mui/material/Slide'
 
