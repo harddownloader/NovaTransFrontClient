@@ -27,8 +27,10 @@ const SingleCard = (props) => {
   const [isLoading , setIsLoading] = useState(true)
 
   useEffect(() => {
-    const ticketDescription = getFirstAndFinishedPoints(bus.wayStations)
-    setTicketDescription(ticketDescription)
+    if (bus?.wayStations) {
+      const ticketDescription = getFirstAndFinishedPoints(bus.wayStations)
+      setTicketDescription(ticketDescription)
+    }
   }, [])
 
   const handleExpandClick = () => {
@@ -40,12 +42,12 @@ const SingleCard = (props) => {
     e.stopPropagation()
     setVisibleSeatModal(true)
     setIsLoading(false)
-  };
+  }
 
   const handleCancel = (e) => {
     e.stopPropagation()
     setVisibleSeatModal(false)
-  };
+  }
 
   // modal with trip details
   const showDetailModal = (e) => {
@@ -61,11 +63,11 @@ const SingleCard = (props) => {
   }
 
   const handleUserBooked = (seat) => {
-    // let arr = [...this.state.userBooked];
-    // arr.push(seat);
-    // this.setState({userBooked: arr});
+    // let arr = [...this.state.userBooked]
+    // arr.push(seat)
+    // this.setState({userBooked: arr})
     encryptInfo(seat)
-  };
+  }
 
   const handleSuccess = (info) => {
     Router.push({
@@ -85,7 +87,7 @@ const SingleCard = (props) => {
     } = props.bus
     const start = startLocation.name
     const end = endLocation.name
-    // const travelName = travel.name;
+    // const travelName = travel.name
     // const info = { start, end, fare, journeyDate, travelName, seat, slug }
     const info = { start, end, fare, journeyDate, seat, slug }
     const resp = enc(info)
@@ -143,7 +145,7 @@ const SingleCard = (props) => {
                   className={stCollapse.mobile_ticket__segment_divider}
                 ></span>
 
-                {bus.wayStations.map((station, stationIndex) => {
+                {bus?.wayStations && bus.wayStations.map((station, stationIndex) => {
                   const date = getLocaleDate(station.date)
                   let isDateVisible = true
 
@@ -210,7 +212,7 @@ const SingleCard = (props) => {
   }
 
   const getLocaleDate = (date) => {
-    const dateObj = new Date(date);
+    const dateObj = new Date(date)
     const optionsDate = {  month: 'long', day: 'numeric' }
 
     return dateObj.toLocaleDateString('ru-RU', optionsDate)
