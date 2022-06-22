@@ -55,7 +55,7 @@ const Header = (props) => {
               src={logo}
               alt="Logo NovaTrans"
               height={50}
-              className={`${styles.icon} ${classes.pointer}`}
+              className={`${styles.icon} ${classes.pointer} ${isDarkStyle ? classes.invent_img : ''}`}
             />
           </Link>
           <Link href='/'>
