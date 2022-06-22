@@ -5,7 +5,7 @@ import SearchTickets from "@/components/Home/SearchTickets/SearchTickets";
 import WhyAreWe from "@/components/Home/WhyAreWe";
 import AboutDrivers from "@/components/Home/AboutDrivers";
 import Footer from "@/components/Footer/Footer";
-import ConfirmModal from '@/components/Dialog/ConfirmModal'
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 
 
 function App(props) {
@@ -37,8 +37,8 @@ function App(props) {
 }
 
 App.getInitialProps = ({ query }) => {
-  const alert = JSON.parse(query.alert);
-  if (alert) {
+  if (query?.alert) {
+    const alert = JSON.parse(query.alert);
     return {alert};
   }
   return {};

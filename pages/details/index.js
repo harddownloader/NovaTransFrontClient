@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 import Router from "next/router";
 import { dec } from "../../utils/encdec";
 import { postBookSeat } from "../../actions/book";
 import Header from '../../components/HeaderMaterial/Header';
-// import Container from '@mui/material/Container';
-// import Grid from '@mui/material/Grid';
-// import IconButton from '@mui/material/IconButton';
-// import Button from '@mui/material/Button';
-import ConfirmModal from '@/components/Dialog/ConfirmModal'
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import PoperCard from '@/components/Card/PoperCard'
-// import Select from "@mui/material/Select";
-// import Autocomplete from "@mui/material/Autocomplete";
-// import Box from '@mui/material/Box';
-// import Typography from '@mui/material/Typography';
-// import Paper from '@mui/material/Paper';
 import {
   // Input,
   TextField,
@@ -33,7 +23,6 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import classes from './Details.module.scss'
 
-// class Details extends React.Component {
 function Details(props) {
   const [dataSource, setDataSource] = useState([])
   const [name, setName] = useState('')
@@ -55,10 +44,6 @@ function Details(props) {
     )
     setEmail(value)
   };
-
-  // const handleChange = e => {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // };
 
   const handleNumber = value => {
     setPhone(value)

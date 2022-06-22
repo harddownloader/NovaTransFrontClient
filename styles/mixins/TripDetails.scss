@@ -24,9 +24,7 @@
   margin-bottom: 8px;
   line-height: 1.29;
 }
-@mixin bold {
-  font-weight: 500;
-}
+
 @mixin details {
 
 }
@@ -98,9 +96,7 @@
 @mixin d_inline_block {
   display: inline-block;
 }
-@mixin pointer {
-  cursor: pointer;
-}
+
 .icon {
 
 }

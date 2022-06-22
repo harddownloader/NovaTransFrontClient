@@ -1,4 +1,6 @@
 @import '../../styles/mixins/TripDetails.scss';
+@import '../../styles/mixins/Common.scss';
+
 // collapse
 .tabPanel {
   @include tabPanel;
