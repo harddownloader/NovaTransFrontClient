@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react"
 import Alert from '@mui/material/Alert'
 import Collapse from "@mui/material/Collapse"
-import Typography from "@mui/material/Typography"
-// import { Card, Row, Col, Modal, Button } from "antd"
 import SeatModal from '@/components/Dialog/SeatModal'
 import TripDetails from "@/components/Dialog/TripDetails"
 import Router from "next/router"
-// import SeatDetails from "./seatDetails"
 import { API_ROOT } from "../../utils/config"
 import { enc, dec } from "../../utils/encdec"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-// import Button from '@mui/material/Button'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 // sass
@@ -21,89 +17,33 @@ import stCollapse from "./SingleCard.Collapse.module.scss"
 const SingleCard = (props) => {
   const theme = useTheme()
   const isMobileVesion = !useMediaQuery(theme.breakpoints.up('sm'))
-  console.log({ isMobileVesion })
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     expanded: false,
-  //     visibleSeatModal: false,
-  //     visibleDetailsModal: false,
-  //     userBooked: [],
-  //     // инфо о билете
-  //     bus: props.bus,
-  //     months: [
-  //       "января",
-  //       "февраля",
-  //       "марта",
-  //       "апреля",
-  //       "мая",
-  //       "июня",
-  //       "июля",
-  //       "августа",
-  //       "сентября",
-  //       "ноября",
-  //       "декабря",
-  //     ],
-  //     ticketDescription: null,
-  //   };
-
-  //   this.handleExpandClick = this.handleExpandClick.bind(this);
-  // }
 
   const [expanded, setExpanded] = useState(false)
   const [visibleSeatModal, setVisibleSeatModal] = useState(false)
   const [visibleDetailsModal, setVisibleDetailsModal] = useState(false)
   const [userBooked, setUserBooked] = useState([])
   const [bus, setBus] = useState(props.bus)
-  // const [months, setMonths] = useState([
-  //   "января",
-  //   "февраля",
-  //   "марта",
-  //   "апреля",
-  //   "мая",
-  //   "июня",
-  //   "июля",
-  //   "августа",
-  //   "сентября",
-  //   "ноября",
-  //   "декабря",
-  // ])
   const [ticketDescription, setTicketDescription] = useState(false)
   const [isLoading , setIsLoading] = useState(true)
 
-
-  // componentDidMount() {
-  //   const { bus } = this.state
-
-  //   const ticketDescription = this.getFirstAndFinishedPoints(bus.wayStations)
-  //   this.setState({ticketDescription})
-  // }
   useEffect(() => {
     const ticketDescription = getFirstAndFinishedPoints(bus.wayStations)
     setTicketDescription(ticketDescription)
   }, [])
 
   const handleExpandClick = () => {
-    // this.setState({ expanded: !this.state.expanded });
     setExpanded(!expanded)
   }
 
   // бронь
   const showSeatModal = (e) => {
     e.stopPropagation()
-    // this.setState({
-    //   visibleSeatModal: true,
-    //   loading: false,
-    // });
     setVisibleSeatModal(true)
     setIsLoading(false)
   };
 
   const handleCancel = (e) => {
     e.stopPropagation()
-    // this.setState({
-    //   visibleSeatModal: false,
-    // });
     setVisibleSeatModal(false)
   };
 
@@ -111,19 +51,12 @@ const SingleCard = (props) => {
   const showDetailModal = (e) => {
     e.stopPropagation()
     if (!isMobileVesion) return
-    // this.setState({
-    //   visibleDetailsModal: true,
-    //   loading: false,
-    // })
     setVisibleDetailsModal(true)
     setIsLoading(false)
   }
 
   const handleDetailModalCancel = (e) => {
     e.stopPropagation()
-    // this.setState({
-    //   visibleDetailsModal: false,
-    // })
     setVisibleDetailsModal(false)
   }
 
@@ -132,18 +65,9 @@ const SingleCard = (props) => {
     // arr.push(seat);
     // this.setState({userBooked: arr});
     encryptInfo(seat)
-    // console.log(this.props)
   };
 
   const handleSuccess = (info) => {
-    // this.setState({ loading: true })
-    // setTimeout(() => {
-    //   this.setState({ loading: false, visibleSeatModal: false })
-    //   Router.push({
-    //     pathname: "/details",
-    //     query: { info },
-    //   });
-    // }, 1000)
     Router.push({
       pathname: "/details",
       query: { info },
@@ -357,9 +281,6 @@ const SingleCard = (props) => {
                       {bus?.departure_time}
                       <div>
                         <span className={styles.date}>
-                          {/* {bus
-                            ? new Date(bus.journeyDate).getDate()
-                            : null}{" "} */}
                           {bus
                             ? getLocaleDate(bus.journeyDate)
                             : null}
@@ -494,14 +415,11 @@ const SingleCard = (props) => {
           </Collapse>
         </div>
       </div>
-      {/* {this.state.visible && this.seatModal()} */}
       {visibleSeatModal && <SeatModal
         handleCancel={handleCancel}
         visible={visibleSeatModal}
         sold={bus.soldSeat}
-        // setSold={() => {}}
         booked={bus.bookedSeat}
-        // setBooked={() => {}}
         handleUserBooked={handleUserBooked}
         isMobileVesion={isMobileVesion}
       />}

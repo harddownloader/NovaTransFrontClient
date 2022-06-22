@@ -75,15 +75,15 @@ function Details(props) {
     };
     const resp = await postBookSeat(props.slug, info);
     if (!resp.error) {
-      sweetAlert("success");
+      sweetAlert("success")
     } else {
-      sweetAlert("error", resp.error);
+      sweetAlert("error", resp.error)
     }
   };
 
   const sweetAlert = (status, errorText) => {
-    setTimeout(() => {
-      if(status !== "error"){
+    if(status !== "error") {
+      setTimeout(() => {
         Router.push({
           pathname: '/',
           query: {
@@ -92,30 +92,19 @@ function Details(props) {
               alertText: 'Ожидайте билет на свою почту',
             })
           }
-        });
-      }
-    }, 1000);
-
-    if (status === "error") {
-      // return Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: "Что то пошло не так!"
-      // });
+        })
+      }, 1000)
+    } else {
       if (errorText === "Not available") setErrorText('Выбранные места уже успели занять')
       else setErrorText('Вы ввели не корректные данные')
       return setIsErrorVisible(true)
     }
-    // else {
-    //   Swal.fire("Поздравляю!", "Ваше место забронировано", "success");
-    // }
   };
 
   return (
     <>
     <Header isDarkStyle containerWidth={"lg"} />
     <Container maxWidth="lg">
-      
       <Grid
         container
         spacing={2}

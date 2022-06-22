@@ -9,7 +9,6 @@ import ConfirmModal from '@/components/Dialog/ConfirmModal'
 
 
 function App(props) {
-  console.log({props})
   const alert = props?.alert
   const [isAlertVibible, setIsAlertVibible] = useState(Boolean(alert))
 
