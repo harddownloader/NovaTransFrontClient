@@ -1,64 +1,17 @@
-import React from "react";
-// import AppBar from '@mui/material/AppBar';
-// import Button from '@mui/material/Button';
-// import DirectionsBus from '@mui/icons-material/DirectionsBus';
-// import HelpIcon from '@mui/icons-material/Help';
-// import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
+import React, { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-// import Grid from '@mui/material/Grid';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import { makeStyles } from "@mui/material/styles";
-import { makeStyles } from '@mui/styles';
-// import Container from '@mui/material/Container';
-// import Link from '@mui/material/Link';
+import Header from "@/components/HeaderMaterial/Header";
+import SearchTickets from "@/components/Home/SearchTickets/SearchTickets";
+import WhyAreWe from "@/components/Home/WhyAreWe";
+import AboutDrivers from "@/components/Home/AboutDrivers";
+import Footer from "@/components/Footer/Footer";
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 
-// import TextField from '@mui/material/TextField';
 
-// import MaterialUIPickers from './DataPicker'
-import Header from "../components/HeaderMaterial/Header";
-import SearchTickets from "../components/Home/SearchTickets/SearchTickets";
-import WhyAreWe from "../components/Home/WhyAreWe";
-import AboutDrivers from "../components/Home/AboutDrivers";
-import Footer from "../components/Footer/Footer";
+function App(props) {
+  const alert = props?.alert
+  const [isAlertVibible, setIsAlertVibible] = useState(Boolean(alert))
 
-// import './test.css'
-
-const useStyles = makeStyles((theme) => ({
-  //   menuButton: {
-  //     marginRight: 16,
-  //     marginLeft: -12
-  //   },
-  //   // heroContent: {
-  //   //   backgroundColor: theme.palette.background.paper,
-  //   //   padding: theme.spacing(8, 0, 6),
-  //   // },
-  //   heroButtons: {
-  //     marginTop: theme.spacing(4),
-  //   },
-  //   cardGrid: {
-  //     paddingTop: theme.spacing(8),
-  //     paddingBottom: theme.spacing(8),
-  //   },
-  //   card: {
-  //     height: '100%',
-  //     display: 'flex',
-  //     flexDirection: 'column',
-  //   },
-  //   cardMedia: {
-  //     paddingTop: '56.25%', // 16:9
-  //   },
-  //   cardContent: {
-  //     flexGrow: 1,
-  //   },
-}));
-
-export default function App() {
-// function Component() {
-  const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
@@ -66,11 +19,29 @@ export default function App() {
 
       <main>
         <SearchTickets />
-         <WhyAreWe /> 
+        <WhyAreWe /> 
         <AboutDrivers />
       </main>
+
+      {isAlertVibible && <ConfirmModal
+        isVisible={isAlertVibible}
+        changeVisibility={() => setIsAlertVibible(!isAlertVibible)}
+        titleText={alert?.alertTitle}
+        contentText={alert?.alertText}
+        cancelButtonText={'ОК'}
+      />}
 
       <Footer />
     </React.Fragment>
   );
 }
+
+App.getInitialProps = ({ query }) => {
+  if (query?.alert) {
+    const alert = JSON.parse(query.alert);
+    return {alert};
+  }
+  return {};
+};
+
+export default App;

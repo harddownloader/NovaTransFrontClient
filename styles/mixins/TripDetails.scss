@@ -1,0 +1,108 @@
+@mixin tabPanel {
+  padding: 22px 12px 12px;
+  font-size: 14px;
+}
+@mixin detailsRoute {
+  display: flex;
+  margin: 0px -30px;
+}
+@mixin detailsRouteColumn {
+  flex-basis: 50%;
+  margin: 0px 30px;
+}
+@mixin detailsRouteColumnFirst {
+
+}
+@mixin detailsRouteColumnSecond {
+
+}
+@mixin detailsRouteInfo {
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+@mixin detailsRouteInfo_p {
+  margin-bottom: 8px;
+  line-height: 1.29;
+}
+
+@mixin details {
+
+}
+@mixin detailsContent {
+  display: flex;
+  margin: 0px -30px;
+}
+@mixin detailsContent_in_div {
+  flex-basis: 50%;
+  margin: 0px 30px;
+}
+@mixin wrapperPoints {
+  position: relative;
+}
+@mixin mobile_ticket__segment_divider {
+  position: absolute;
+  top: 13px;
+  bottom: 40px;
+  left: 55.5px;
+  margin: 0;
+  background-color: transparent;
+  background-position: 50%;
+  background-size: 6px;
+}
+@mixin item {
+  position: relative;
+  display: flex;
+  margin-bottom: 16px;
+}
+@mixin item_in_div_first_child {
+  width: 50px;
+  min-width: 50px;
+  margin-right: 35px;
+}
+@mixin time {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+}
+@mixin date {
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.17;
+  white-space: nowrap;
+}
+@mixin city {
+  position: relative;
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.29;
+  word-break: break-all;
+}
+@mixin address {
+  line-height: 1.29;
+}
+@mixin listUnstyled {
+  padding-left: 0px;
+  list-style: none;
+}
+@mixin listUnstyled_strong {
+  font-weight: 400;
+}
+@mixin title {
+  margin-bottom: 10px;
+  font-weight: 600;
+  line-height: 1;
+}
+@mixin d_inline_block {
+  display: inline-block;
+}
+
+.icon {
+
+}
+.icon_info {
+
+}
+.text_primary {
+  
+}

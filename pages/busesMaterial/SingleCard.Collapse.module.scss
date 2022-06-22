@@ -1,108 +1,86 @@
+@import '../../styles/mixins/TripDetails.scss';
+@import '../../styles/mixins/Common.scss';
+
 // collapse
-.tabPanel{
-  padding: 22px 12px 12px;
-  font-size: 14px;
+.tabPanel {
+  @include tabPanel;
 }
-.detailsRoute{
-  display: flex;
-  margin: 0px -30px;
+.detailsRoute {
+  @include detailsRoute;
 }
-.detailsRouteColumn{
-  flex-basis: 50%;
-  margin: 0px 30px;
+.detailsRouteColumn {
+  @include detailsRouteColumn;
+}
+.detailsRouteColumn.fistCol {
+  @include detailsRouteColumnFirst;
+}
+.detailsRouteColumn.secondCol {
+  @include detailsRouteColumnSecond;
 }
 .detailsRouteInfo {
-  margin-bottom: 24px;
-  font-size: 14px;
+  @include detailsRouteInfo;
 }
-.detailsRouteInfo p{
-  margin-bottom: 8px;
-  line-height: 1.29;
+.detailsRouteInfo p {
+  @include detailsRouteInfo_p;
 }
-.bold{
-  font-weight: 500;
+.bold {
+  @include bold;
 }
-.details{
-
+.details {
+  @include details;
 }
-.detailsContent{
-  display: flex;
-  margin: 0px -30px;
+.detailsContent {
+  @include detailsContent;
 }
 .detailsContent > div {
-  flex-basis: 50%;
-  margin: 0px 30px;
+  @include detailsContent_in_div;
 }
-.wrapperPoints{
-  position: relative;
+.wrapperPoints {
+  @include wrapperPoints;
 }
-.mobile_ticket__segment_divider{
-  position: absolute;
-  top: 13px;
-  bottom: 40px;
-  left: 55.5px;
-  margin: 0;
-  background-color: transparent;
-  background-position: 50%;
-  background-size: 6px;
+.mobile_ticket__segment_divider {
+  @include mobile_ticket__segment_divider;
 }
-.item{
-  position: relative;
-  display: flex;
-  margin-bottom: 16px;
+.item {
+  @include item;
 }
 .item > div:first-child {
-  width: 50px;
-  min-width: 50px;
-  margin-right: 35px;
+  @include item_in_div_first_child;
 }
-.time{
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.29;
+.time {
+  @include time;
 }
-.date{
-  margin-top: 5px;
-  font-size: 12px;
-  line-height: 1.17;
-  white-space: nowrap;
+.date {
+  @include date;
 }
-.city{
-  position: relative;
-  margin-bottom: 3px;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.29;
-  word-break: break-all;
+.city {
+  @include city;
 }
-.address{
-  line-height: 1.29;
+.address {
+  @include address;
 }
-.listUnstyled{
-  padding-left: 0px;
-  list-style: none;
+.listUnstyled {
+  @include listUnstyled;
 }
-.listUnstyled strong{
-  font-weight: 400;
+.listUnstyled strong {
+  @include listUnstyled_strong;
 }
-.title{
-  margin-bottom: 10px;
-  font-weight: 600;
-  line-height: 1;
+.title {
+  @include title;
 }
-.d_inline_block{
-  display: inline-block;
+.d_inline_block {
+  @include d_inline_block;
 }
-.pointer{
-  cursor: pointer;
+.pointer {
+  @include pointer;
 }
-.icon{
+.icon {
 
 }
-.icon_info{
+.icon_info {
 
 }
-.text_primary{
+.text_primary {
   
 }
 

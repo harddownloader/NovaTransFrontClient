@@ -16,8 +16,27 @@
 }
 
 .seat_modal_footer {
+  width: 100%;
+}
+
+.seat_modal_footer__desktop {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+}
+
+.button {
+  margin: .5rem;
+}
+
+.mobileButton {
+  font-size: 1em;
+}
+
+.soldButton {
+  color: #ff4d4f;
+}
+
+.bookedButton {
+  color: #434343;
 }

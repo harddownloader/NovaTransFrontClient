@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 import Router from "next/router";
 import { dec } from "../../utils/encdec";
 import { postBookSeat } from "../../actions/book";
 import Header from '../../components/HeaderMaterial/Header';
-// import Container from '@mui/material/Container';
-// import Grid from '@mui/material/Grid';
-// import IconButton from '@mui/material/IconButton';
-// import Button from '@mui/material/Button';
-import ConfirmModal from '@/components/Dialog/ConfirmModal'
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import PoperCard from '@/components/Card/PoperCard'
-// import Select from "@mui/material/Select";
-// import Autocomplete from "@mui/material/Autocomplete";
-// import Box from '@mui/material/Box';
-// import Typography from '@mui/material/Typography';
-// import Paper from '@mui/material/Paper';
 import {
   // Input,
   TextField,
@@ -33,13 +23,14 @@ import {
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import classes from './Details.module.scss'
 
-// class Details extends React.Component {
 function Details(props) {
   const [dataSource, setDataSource] = useState([])
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAdress] = useState('lipoviy_adress')
+  const [isErrorVisible, setIsErrorVisible] = useState(false)
+  const [errorText, setErrorText] = useState('')
 
   const handleAutoComplete = value => {
     setDataSource(
@@ -53,10 +44,6 @@ function Details(props) {
     )
     setEmail(value)
   };
-
-  // const handleChange = e => {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // };
 
   const handleNumber = value => {
     setPhone(value)
@@ -73,27 +60,29 @@ function Details(props) {
     };
     const resp = await postBookSeat(props.slug, info);
     if (!resp.error) {
-      sweetAlert("success");
+      sweetAlert("success")
     } else {
-      sweetAlert("error");
+      sweetAlert("error", resp.error)
     }
   };
 
-  const sweetAlert = status => {
-    setTimeout(() => {
-      if(status !== "error"){
-        Router.push("/");
-      }
-    }, 1000);
-
-    if (status === "error") {
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Что то пошло не так!"
-      });
+  const sweetAlert = (status, errorText) => {
+    if(status !== "error") {
+      setTimeout(() => {
+        Router.push({
+          pathname: '/',
+          query: {
+            alert: JSON.stringify({
+              alertTitle: 'Заказ принят',
+              alertText: 'Ожидайте билет на свою почту',
+            })
+          }
+        })
+      }, 1000)
     } else {
-      Swal.fire("Поздравляю!", "Ваше место забронировано", "success");
+      if (errorText === "Not available") setErrorText('Выбранные места уже успели занять')
+      else setErrorText('Вы ввели не корректные данные')
+      return setIsErrorVisible(true)
     }
   };
 
@@ -101,7 +90,6 @@ function Details(props) {
     <>
     <Header isDarkStyle containerWidth={"lg"} />
     <Container maxWidth="lg">
-      
       <Grid
         container
         spacing={2}
@@ -248,6 +236,13 @@ function Details(props) {
         ></Grid>
       </Grid>
     </Container>
+    {isErrorVisible && <ConfirmModal
+      isVisible={isErrorVisible}
+      changeVisibility={() => setIsErrorVisible(false)}
+      titleText={'Ошибка'}
+      contentText={errorText}
+      cancelButtonText={'ОК'}
+    />}
     </>
   );
 }

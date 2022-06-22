@@ -1,0 +1,167 @@
+@import '../../styles/mixins/TripDetails.scss';
+@import '../../styles/mixins/PriceBlock.scss';
+@import '../../styles/mixins/Common.scss';
+
+// TRIP INFO
+// collapse
+.tabPanel {
+  @include tabPanel;
+  padding: 0.8rem;
+}
+.detailsRoute {
+  @include detailsRoute;
+}
+.detailsRouteColumn {
+  @include detailsRouteColumn;
+}
+.detailsRouteColumn.fistCol {
+  @include detailsRouteColumnFirst;
+  flex-basis: 100%;
+}
+.detailsRouteColumn.secondCol {
+  @include detailsRouteColumnSecond;
+  display: none;
+}
+.detailsRouteInfo {
+  @include detailsRouteInfo;
+}
+.detailsRouteInfo p {
+  @include detailsRouteInfo_p;
+}
+.bold {
+  @include bold;
+}
+.details {
+  @include details;
+}
+.detailsContent {
+  @include detailsContent;
+}
+.detailsContent > div {
+  @include detailsContent_in_div;
+  flex-basis: 100%;
+}
+.detailsContent > div:nth-child(2) {
+  display: none;
+}
+.wrapperPoints {
+  @include wrapperPoints;
+}
+.mobile_ticket__segment_divider {
+  @include mobile_ticket__segment_divider;
+}
+.item {
+  @include item;
+}
+.item > div:first-child {
+  @include item_in_div_first_child;
+}
+.time {
+  @include time;
+}
+.date {
+  @include date;
+}
+.city {
+  @include city;
+}
+.address {
+  @include address;
+}
+.listUnstyled {
+  @include listUnstyled;
+}
+.listUnstyled strong {
+  @include listUnstyled_strong;
+}
+.title {
+  @include title;
+}
+.d_inline_block {
+  @include d_inline_block;
+}
+.pointer {
+  @include pointer;
+}
+.icon{
+
+}
+.icon_info{
+
+}
+.text_primary{
+  
+}
+
+
+// FOOTER
+.footer {
+  width: 100%;
+}
+
+.price_wrapper {
+  @include price_wrapper;
+  display: flex;
+  width: 100%;
+  padding: 0;
+  text-align: center;
+  background-color: #fff;
+}
+
+.price {
+  @include price;
+}
+
+.price_container {
+  @include price_container;
+  flex: 1 1 0%;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding: 6px 0px;
+  .passengers {
+    font-size: 14px;
+    line-height: 16px;
+    color: rgb(156, 156, 156);
+  }
+  .price {
+    @include price_in_price_container;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .currency {
+    @include currency_in_price_container;
+    font-size: 18px;
+  }
+}
+
+.text_nowrap {
+  @include text_nowrap;
+}
+
+.button_wrapp {
+  @include button_wrapp;
+  flex: 1 1 0%;
+  margin-left: 0px;
+  font-size: 16px;
+}
+
+.button {
+  @include button;
+  height: 54px;
+  padding: 13px 30px;
+  font-size: 16px;
+  line-height: 20px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 978px) {
+  // .price_wrapper {
+  //   flex-direction: column;
+  //   padding: 16px 0px 26px;
+  // }
+
+  .priceContainer {
+    margin-bottom: 5px;
+  }
+}

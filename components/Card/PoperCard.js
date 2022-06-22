@@ -1,7 +1,7 @@
 import React from "react"
 import {
-Paper,
-Typography,
+  Paper,
+  Typography,
 } from '@mui/material'
 import classes from './PoperCard.module.scss'
 
@@ -16,9 +16,16 @@ export default function PoperCard(props) {
         {heading}
       </Typography>
 
-      {content.map((textLine) => <Typography variant="body1" gutterBottom component="div">
-        <b>{textLine.title}: </b>{textLine.text}
-      </Typography>)}
+      {content.map((textLine, indx) => (
+        <Typography
+          key={indx}
+          variant="body1"
+          gutterBottom
+          component="div"
+        >
+          <b>{textLine.title}: </b>{textLine.text}
+        </Typography>
+      ))}
     </Paper>
   )
 } 
