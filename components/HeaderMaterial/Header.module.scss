@@ -1,6 +1,7 @@
+@import '../../styles/mixins/Common.scss';
+
 .container {
   padding: 10px 0;
-  
 }
 
 .lightColors {
@@ -9,4 +10,8 @@
 
 .darkColors {
   color: #424242;
+}
+
+.pointer {
+  @include pointer;
 }
