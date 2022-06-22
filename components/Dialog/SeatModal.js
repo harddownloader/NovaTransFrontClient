@@ -1,65 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { styled } from '@mui/material/styles'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined'
-import CloseIcon from '@mui/icons-material/Close'
 import Grid from '@mui/material/Grid'
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import ConfirmModal from './ConfirmModal'
+import ConfirmModal from '@/components/Dialog/ConfirmModal'
 import classes from './SeatModal.module.scss'
-import Slide from '@mui/material/Slide';
+import DialogHOC from './Modal/DialogHOC'
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}))
-
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  )
-}
-
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-}
 
 export default function SeatModal(props) {
-  const theme = useTheme();
-  const isMobileVesion = useMediaQuery(theme.breakpoints.down('md'));
+  const { isMobileVesion } = props
 
   const { sold = [] , booked = [] } = props
   const [arr, setArr] = useState([0, 2.5, 5, 7.5, 10, 12.5, 15])
@@ -76,12 +26,14 @@ export default function SeatModal(props) {
     }
   }, [currentSeat])
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation()
     setCurrentSeat({})
-    props.handleCancel()
+    props.handleCancel(e)
   }
 
-  const handleClick = async seat => {
+  const handleClick = async (e, seat) => {
+    e.stopPropagation()
     setCurrentSeat(seat)
   }
 
@@ -103,134 +55,11 @@ export default function SeatModal(props) {
   }
 
   return (
-    <div>
-      <BootstrapDialog
-        fullScreen={isMobileVesion}
-        TransitionComponent={Transition}
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={props.visible}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Выберите места
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Grid
-            container
-            className={classes.seat_dialog_row_wrapp}
-          >
-            <Grid
-              item
-              xs={2}
-              sm={2}
-              md={2}
-            >
-              {arr.map((le, i) => {
-                return (
-                  <div
-                    className={classes.seat_side_row}
-                    key={i}
-                  >
-                    <IconButton
-                      size="large"
-                      color="primary"
-                      aria-label="seat"
-                      component="span"
-                      disabled={getSeatBtnStatus(oddA[i])}
-                      className={getSeatClass(oddA[i])}
-                      onClick={() => handleClick(oddA[i])}
-                    >
-                      <WeekendOutlinedIcon />
-                    </IconButton>
-
-                    <IconButton
-                      color="primary"
-                      aria-label="seat"
-                      component="span"
-                      disabled={getSeatBtnStatus(evenA[i])}
-                      className={getSeatClass(evenA[i])}
-                      onClick={() => handleClick(evenA[i])}
-                    >
-                      <WeekendOutlinedIcon />
-                    </IconButton>
-                  </div>
-                )
-              })}
-            </Grid>
-            <Grid
-              item
-              xs={4}
-            ></Grid>
-            <Grid
-              item
-              xs={2}
-              sm={2}
-              md={2}
-            >
-              {arr.map((le, i) => {
-                return (
-                  <div
-                    className={classes.seat_side_row}
-                    key={i}
-                  >
-                    <IconButton
-                      color="primary"
-                      aria-label="seat"
-                      component="span"
-                      disabled={getSeatBtnStatus(oddB[i])}
-                      className={getSeatClass(oddB[i])}
-                      onClick={() => handleClick(oddB[i])}
-                    >
-                      <WeekendOutlinedIcon />
-                    </IconButton>
-
-                    <IconButton
-                      color="primary"
-                      aria-label="seat"
-                      component="span"
-                      disabled={getSeatBtnStatus(evenB[i])}
-                      className={getSeatClass(evenB[i])}
-                      onClick={() => handleClick(evenB[i])}
-                    >
-                      <WeekendOutlinedIcon />
-                    </IconButton>
-                  </div>
-                )
-              })}
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <div className={`${classes.seat_modal_footer} ${isMobileVesion ? '' : classes.seat_modal_footer__desktop}`}>
-            <IconButton
-              color="primary"
-              aria-label="seat"
-              component="span"
-              className={`${classes.button} ${isMobileVesion ? classes.mobileButton : '' }`}
-            >
-              <WeekendOutlinedIcon />&nbsp;Доступно
-            </IconButton>
-            <IconButton
-              color="primary"
-              aria-label="seat"
-              component="span"
-              className={`${classes.button} ${classes.bookedButton} ${isMobileVesion ? classes.mobileButton : '' }`}
-            >
-              <WeekendOutlinedIcon />&nbsp;Забронировано
-            </IconButton>
-            <IconButton
-              color="primary"
-              aria-label="seat"
-              component="span"
-              className={`${classes.button} ${classes.soldButton} ${isMobileVesion ? classes.mobileButton : '' }`}
-            >
-              <WeekendOutlinedIcon />&nbsp;Продано
-            </IconButton>
-          </div>
-        </DialogActions>
-      </BootstrapDialog>
-
-      {isConfirmVisible &&
+    <DialogHOC
+      {...props}
+      title={'Выберите места'}
+      handleClose={handleClose}
+      confirm={isConfirmVisible &&
         <ConfirmModal
           isVisible={isConfirmVisible}
           changeVisibility={setIsConfirmVisible}
@@ -241,6 +70,119 @@ export default function SeatModal(props) {
           confirmButtonHandler={() => props.handleUserBooked(currentSeat)}
         />
       }
-    </div>
+      childrenFooter={
+        <div className={`${classes.seat_modal_footer} ${isMobileVesion ? '' : classes.seat_modal_footer__desktop}`}>
+          <IconButton
+            color="primary"
+            aria-label="seat"
+            component="span"
+            className={`${classes.button} ${isMobileVesion ? classes.mobileButton : '' }`}
+          >
+            <WeekendOutlinedIcon />&nbsp;Доступно
+          </IconButton>
+          <IconButton
+            color="primary"
+            aria-label="seat"
+            component="span"
+            className={`${classes.button} ${classes.bookedButton} ${isMobileVesion ? classes.mobileButton : '' }`}
+          >
+            <WeekendOutlinedIcon />&nbsp;Забронировано
+          </IconButton>
+          <IconButton
+            color="primary"
+            aria-label="seat"
+            component="span"
+            className={`${classes.button} ${classes.soldButton} ${isMobileVesion ? classes.mobileButton : '' }`}
+          >
+            <WeekendOutlinedIcon />&nbsp;Продано
+          </IconButton>
+        </div>
+      }
+    >
+      <Grid
+        container
+        className={classes.seat_dialog_row_wrapp}
+      >
+        <Grid
+          item
+          xs={2}
+          sm={2}
+          md={2}
+        >
+          {arr.map((le, i) => {
+            return (
+              <div
+                className={classes.seat_side_row}
+                key={i}
+              >
+                <IconButton
+                  size="large"
+                  color="primary"
+                  aria-label="seat"
+                  component="span"
+                  disabled={getSeatBtnStatus(oddA[i])}
+                  className={getSeatClass(oddA[i])}
+                  onClick={(e) => handleClick(e, oddA[i])}
+                >
+                  <WeekendOutlinedIcon />
+                </IconButton>
+
+                <IconButton
+                  color="primary"
+                  aria-label="seat"
+                  component="span"
+                  disabled={getSeatBtnStatus(evenA[i])}
+                  className={getSeatClass(evenA[i])}
+                  onClick={(e) => handleClick(e, evenA[i])}
+                >
+                  <WeekendOutlinedIcon />
+                </IconButton>
+              </div>
+            )
+          })}
+        </Grid>
+        <Grid
+          item
+          xs={4}
+        ></Grid>
+        <Grid
+          item
+          xs={2}
+          sm={2}
+          md={2}
+        >
+          {arr.map((le, i) => {
+            return (
+              <div
+                className={classes.seat_side_row}
+                key={i}
+              >
+                <IconButton
+                  color="primary"
+                  aria-label="seat"
+                  component="span"
+                  disabled={getSeatBtnStatus(oddB[i])}
+                  className={getSeatClass(oddB[i])}
+                  onClick={(e) => handleClick(e, oddB[i])}
+                >
+                  <WeekendOutlinedIcon />
+                </IconButton>
+
+                <IconButton
+                  color="primary"
+                  aria-label="seat"
+                  component="span"
+                  disabled={getSeatBtnStatus(evenB[i])}
+                  className={getSeatClass(evenB[i])}
+                  onClick={(e) => handleClick(e, evenB[i])}
+                >
+                  <WeekendOutlinedIcon />
+                </IconButton>
+              </div>
+            )
+          })}
+        </Grid>
+      </Grid>
+    </DialogHOC>
   )
 }

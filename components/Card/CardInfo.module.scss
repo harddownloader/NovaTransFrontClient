@@ -1,0 +1,9 @@
+.heading {
+  padding: 0.6rem;
+}
+
+@media only screen and (max-width: 667px) {
+  .heading {
+    margin: 0;
+  }
+}

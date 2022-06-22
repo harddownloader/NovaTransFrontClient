@@ -40,6 +40,8 @@ function Details(props) {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAdress] = useState('lipoviy_adress')
+  const [isErrorVisible, setIsErrorVisible] = useState(false)
+  const [errorText, setErrorText] = useState('')
 
   const handleAutoComplete = value => {
     setDataSource(
@@ -75,26 +77,38 @@ function Details(props) {
     if (!resp.error) {
       sweetAlert("success");
     } else {
-      sweetAlert("error");
+      sweetAlert("error", resp.error);
     }
   };
 
-  const sweetAlert = status => {
+  const sweetAlert = (status, errorText) => {
     setTimeout(() => {
       if(status !== "error"){
-        Router.push("/");
+        Router.push({
+          pathname: '/',
+          query: {
+            alert: JSON.stringify({
+              alertTitle: 'Заказ принят',
+              alertText: 'Ожидайте билет на свою почту',
+            })
+          }
+        });
       }
     }, 1000);
 
     if (status === "error") {
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Что то пошло не так!"
-      });
-    } else {
-      Swal.fire("Поздравляю!", "Ваше место забронировано", "success");
+      // return Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Что то пошло не так!"
+      // });
+      if (errorText === "Not available") setErrorText('Выбранные места уже успели занять')
+      else setErrorText('Вы ввели не корректные данные')
+      return setIsErrorVisible(true)
     }
+    // else {
+    //   Swal.fire("Поздравляю!", "Ваше место забронировано", "success");
+    // }
   };
 
   return (
@@ -248,6 +262,13 @@ function Details(props) {
         ></Grid>
       </Grid>
     </Container>
+    {isErrorVisible && <ConfirmModal
+      isVisible={isErrorVisible}
+      changeVisibility={() => setIsErrorVisible(false)}
+      titleText={'Ошибка'}
+      contentText={errorText}
+      cancelButtonText={'ОК'}
+    />}
     </>
   );
 }

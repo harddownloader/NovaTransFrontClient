@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -22,8 +22,14 @@ export default function ConfirmModal(props) {
     confirmButtonHandler,
   } = props
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.stopPropagation()
     changeVisibility(false)
+  }
+
+  const handleSuccess = (e) => {
+    e.stopPropagation()
+    confirmButtonHandler()
   }
 
   return (
@@ -42,8 +48,12 @@ export default function ConfirmModal(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>{cancelButtonText}</Button>
-          <Button onClick={confirmButtonHandler}>{confirmButtonText}</Button>
+          <Button variant="outlined" onClick={handleClose}>{cancelButtonText}</Button>
+          {
+            confirmButtonText &&
+            handleSuccess && 
+            <Button variant="contained" onClick={handleSuccess}>{confirmButtonText}</Button>
+          }
         </DialogActions>
       </Dialog>
     </div>
