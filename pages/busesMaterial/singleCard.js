@@ -14,6 +14,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import styles from "./SingleCard.module.scss"
 import stCollapse from "./SingleCard.Collapse.module.scss"
 
+
 const SingleCard = (props) => {
   const theme = useTheme()
   const isMobileVesion = !useMediaQuery(theme.breakpoints.up('sm'))
@@ -119,7 +120,9 @@ const SingleCard = (props) => {
                     {bus?.name} Борисполь (аэропорт) - Одесса
                   </span>
                   , по маршруту{" "}
-                  <span className={stCollapse.bold}>{ticketDescription?.start?.city} — {ticketDescription?.end?.city}</span>
+                  <span className={stCollapse.bold}>
+                    {ticketDescription?.start?.city} — {ticketDescription?.end?.city}
+                  </span>
                 </span>
                 <span>
                   , на{" "}
@@ -304,7 +307,7 @@ const SingleCard = (props) => {
                   </div>
                   <div>
                     <div className={styles.title}>
-                    {ticketDescription?.start?.city}
+                      {ticketDescription?.start?.city}
                     </div>
                     <div className={styles.description}>
                       <div className={styles.linesEllipsis}>
@@ -336,7 +339,7 @@ const SingleCard = (props) => {
                   </div>
                   <div>
                     <div className={styles.title}>
-                    {ticketDescription?.end?.city}
+                      {ticketDescription?.end?.city}
                     </div>
                     <div className={styles.description}>
                       <div className={styles.linesEllipsis}>
