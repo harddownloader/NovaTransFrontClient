@@ -1,18 +1,24 @@
-import React from 'react';
-import { styled, ThemeProvider } from '@mui/styles';
-import { createTheme } from '@mui/material/styles';
+import React from 'react'
+import { styled, ThemeProvider } from '@mui/styles'
+import { createTheme } from '@mui/material/styles'
 // import App from 'next/app'
+import { Provider } from 'react-redux'
+import  { AppProps } from 'next/app'
 import './about/test.css'
-import '@/styles/style.scss'
+import '@/styles/global.scss'
+import store from '../app/store'
 
-const theme = createTheme();
+const theme = createTheme()
 
-function MyApp({ Component, pageProps }) {
+
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
-  );
+      <ThemeProvider theme={theme}>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </ThemeProvider>
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -27,4 +33,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+

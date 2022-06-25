@@ -1,2 +1,2 @@
 # NovaTransFrontClient
-yarn dev
+nvm use 14.16.0 && yarn dev

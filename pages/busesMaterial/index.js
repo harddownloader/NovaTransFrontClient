@@ -10,13 +10,29 @@ import Header from "../../components/HeaderMaterial/Header";
 import SearchTickets from "../../components/Home/SearchTickets/SearchTickets";
 // material
 import CssBaseline from "@mui/material/CssBaseline";
+// store
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@/app/hooks'
+import {
+  getLocations,
+  selectLocations,
+} from '@/features/locations/locationsSlice'
 
 const Buses = ({ resp, info }) => {
-  const [buses, setBuses] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [buses, setBuses] = useState([])
+  const [loading, setLoading] = useState(false)
+  const dispatch = useAppDispatch()
+  const {
+    data,
+    pending, 
+    error,
+  } = useAppSelector(selectLocations)
 
   useEffect(() => {
     fetchBuses();
+    if (!data?.length && !pending) dispatch(getLocations())
   }, [resp]);
 
   const fetchBuses = () => {
