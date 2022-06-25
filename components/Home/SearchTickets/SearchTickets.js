@@ -12,10 +12,17 @@ import Grid from "@mui/material/Grid";
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-
 // actions
-import { getAllLocations } from "@/actions/location";
-
+// import { getAllLocations } from "@/actions/location"
+// store
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '@/app/hooks'
+import {
+  getLocations,
+  selectLocations,
+} from '@/features/locations/locationsSlice'
 // checkbox
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -121,6 +128,13 @@ function SearchTickets(props) {
   const theme = useTheme();
   const isNotMobile = useMediaQuery(theme.breakpoints.up('md'));
 
+  const dispatch = useAppDispatch()
+  const {
+    data,
+    pending, 
+    error,
+  } = useAppSelector(selectLocations)
+
   // select-----------------
   // обратно
   const [fromReturn, setFromReturn] = useState("");
@@ -128,8 +142,8 @@ function SearchTickets(props) {
   // checkbox------------------
   const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(true);
 
-  // список городов для рейса
-  const [locations, setLocations] = useState([]);
+  // a list of cities
+  const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
   const [formData, setFormData] = useState({
     startLocation: props.info ? props.info.startLocation : null,
@@ -148,7 +162,6 @@ function SearchTickets(props) {
 
   // туда
   const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
-    console.log('onChangeDirectionField', {locations, newValue}) //"Киев"
     const newValueObj = locations.find(location => location.name === newValue)
     setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
   };
@@ -163,21 +176,9 @@ function SearchTickets(props) {
   };
 
   useEffect(() => {
-    // запрос на получения списка городов для рейсов
-    fetchAllLocations();
-  }, []);
+    if (data.length && !pending) setLocations(data)
+  }, [data]);
 
-  useEffect(() => {
-    console.log('state', {formData, locations})
-  }, [formData, locations]);
-
-  // получаем список городов для селекта
-  const fetchAllLocations = async () => {
-    const locations = await getAllLocations();
-    setLocations(locations);
-  };
-
-  //
   const dummytransition = () => {
     // console.log('dummytransition', {
     //   pathname: "/buses",
@@ -194,7 +195,6 @@ function SearchTickets(props) {
 
   // нужна ли тут на самом деле эта функция это вопрос
   const getDefaultSelectValue = (type) => {
-    // console.log('getDefaultSelectValue', props)
     if (
       props &&
       props.hasOwnProperty("info") &&
@@ -212,7 +212,7 @@ function SearchTickets(props) {
    * @param {number} status 
    * @returns jsx component
    * 
-   * status = 1 - desctop
+   * status = 1 - desktop
    * status = 2 - mobile
    */
   const getSearchTicketsBtn = (status) => {
@@ -255,11 +255,7 @@ function SearchTickets(props) {
   // const optionsLocations = locations.length ? locations : [];
 
   const getAutocomplateValue = (nameField) => {
-    return locations.find(location => {
-      console.log('defaultValue find', {locations, location, formData, if: location._id === formData[`${nameField}`]});
-      // return "Одесса";
-      return location._id === formData[`${nameField}`]
-    })
+    return locations.find(location => location._id === formData[`${nameField}`])
   }
 
   const fromValue = getAutocomplateValue("startLocation")
@@ -303,25 +299,10 @@ function SearchTickets(props) {
                   id="toCity1"
                   className={`${classes.select} ${classes.searchField} ${styles.searchField} first_el`}
                   noOptionsText="Не найдено"
-                  loadingText="Зпгрузка..."
+                  loading={pending}
+                  loadingText="Загрузка..."
                   value={fromValue && fromValue.hasOwnProperty('name') ? fromValue.name : null}
                   options={optionsLocations}
-                  // defaultValue={formData.startLocation}
-                  // defaultValue={optionsLocations.find(location => {
-                  //   console.log('defaultValue find', {location, formData});
-                  //   return location._id === formData.startLocation;
-                  // })} //"Одесса"
-                  // value={formData.startLocation}
-                  // getOptionLabel={(option) => {
-                  //   console.log('getOptionLabel', option)
-                  //   return option.name
-                  // }}
-                  // getOptionSelected={(option) => option.__v === formData.startLocation}
-                  // getOptionSelected={(option) => {
-                  //   console.log('getOptionSelected', option)
-                  //   // return option.__v === "60daf3428228e4315e12c1ad"
-                  //   return option === "Одесса"
-                  // }}
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "startLocation")}
                   renderInput={(params) => (
                     <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
@@ -335,7 +316,8 @@ function SearchTickets(props) {
                   id="toCity2"
                   className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
                   noOptionsText="Не найдено"
-                  loadingText="Зпгрузка..."
+                  loading={pending}
+                  loadingText="Загрузка..."
                   value={toValue && toValue.hasOwnProperty('name') ? toValue.name : null}
                   options={optionsLocations}
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
