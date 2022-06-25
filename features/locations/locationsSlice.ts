@@ -6,9 +6,15 @@ import {
 import type { RootState } from '../../app/store'
 import { API } from "@/utils/config"
 
+export interface LocationState {
+  district: string,
+  name: string,
+  __v: number,
+  _id: string
+}
 
-export type LocationsState = {
-  data: Array<T>
+export interface LocationsState {
+  data: Array<LocationState>
   pending: boolean
   error: boolean
 }
@@ -22,22 +28,14 @@ const initialState: LocationsState = {
 export const getLocations = createAsyncThunk('locations/locations', async () => {
   const response = await fetch(`${API}/locations`)
   const locations = await response.json()
-  console.log({getLocations: locations})
+  
   return locations
 })
 
 export const locationsSlice = createSlice({
   name: 'locations',
   initialState,
-  reducers: {
-    // locationsLoading: (state, action: PayloadAction<boolean>) => {
-    //   state.loading = action.payload
-    // },
-    // locationsReceived: (state, action: PayloadAction<Array<T>>) => {
-    //   state.locations = action.payload
-    //   state.loading = false
-    // },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(getLocations.pending, state => {
@@ -53,11 +51,6 @@ export const locationsSlice = createSlice({
       })
   }
 })
-
-// export const {
-//   locationsLoading,
-//   locationsReceived, 
-// } = locationsSlice.actions
 
 export const selectLocations = (state: RootState) => state.locations
 
