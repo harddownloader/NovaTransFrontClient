@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import Container from '@mui/material/Container'
 // icons
-import HelpIcon from "@mui/icons-material/Help"
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import classes from "./Header.module.scss"
 import { API_ROOT } from "../../utils/config"
 // images
@@ -62,7 +62,7 @@ const Header = (props) => {
             <h1 className={`${classes.pointer}`}>NovaTrans</h1>
           </Link>
           <section className={styles.rightToolbar}>
-            <HelpIcon className={classes.icon} />
+            <HelpOutlineIcon className={classes.icon} />
             <Box display={{ xs: "none", md: "block" }} m={1}>
               <Typography variant="h6" color="inherit" align="right">
                 Служба поддержки
