@@ -12,6 +12,9 @@ import Grid from "@mui/material/Grid";
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import InputAdornment from '@mui/material/InputAdornment'
+import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined'
+import SouthEastOutlinedIcon from '@mui/icons-material/SouthEastOutlined'
 // actions
 // import { getAllLocations } from "@/actions/location"
 // store
@@ -180,13 +183,8 @@ function SearchTickets(props) {
   }, [data]);
 
   const dummytransition = () => {
-    // console.log('dummytransition', {
-    //   pathname: "/buses",
-    //   query: formData
-    // })
     Router.push({
-      // pathname: "/buses",
-      pathname: "/busesMaterial",
+      pathname: "/buses",
       query: formData,
     });
   };
@@ -242,7 +240,7 @@ function SearchTickets(props) {
               formData?.journeyDate
             )}
             startIcon={<SearchIcon/>}
-            fullWidth={isNotMobile ? false : true}
+            fullWidth
           >
             Найти билет
           </Button>
@@ -283,7 +281,7 @@ function SearchTickets(props) {
               paragraph
               style={{ color: "white" }}
             >
-              по Украине, Польше и Европе
+              по Украине, Молдавии, Румынии и Болгарии
             </Typography>
           </Container>
         ) : <></>}
@@ -305,7 +303,19 @@ function SearchTickets(props) {
                   options={optionsLocations}
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "startLocation")}
                   renderInput={(params) => (
-                    <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
+                    <TextField
+                      {...params}
+                      InputProps={{
+                        ...params?.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <NorthEastOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                      label="Откуда"
+                      className={`${classes.searchFieldrenderedInput} first_input_el`}
+                    />
                   )}
                 />
             </Grid>
@@ -323,7 +333,19 @@ function SearchTickets(props) {
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
                   style={{borderRadius: '0px'}}
                   renderInput={(params) => (
-                    <TextField {...params} label="Куда" className={`${classes.searchFieldrenderedInput} middle_input_el`} />
+                    <TextField
+                      {...params}
+                      InputProps={{
+                        ...params?.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SouthEastOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                      label="Куда"
+                      className={`${classes.searchFieldrenderedInput} middle_input_el`}
+                    />
                   )}
                 />
             </Grid>
@@ -394,7 +416,19 @@ function SearchTickets(props) {
                   value={fromReturn}
                   onChange={(val, newValue) => onChangeDirectionField(newValue, "startBackLocation")}
                   renderInput={(params) => (
-                    <TextField {...params} label="Откуда" className={`${classes.searchFieldrenderedInput} first_input_el`} />
+                    <TextField
+                      {...params}
+                      InputProps={{
+                        ...params?.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <NorthEastOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                      label="Откуда"
+                      className={`${classes.searchFieldrenderedInput} first_input_el`}
+                    />
                   )}
                 />
               </Grid>
@@ -410,7 +444,19 @@ function SearchTickets(props) {
                   value={fromReturn}
                   onChange={(val, newValue) => onChangeDirectionField(newValue, "endBackLocation")}
                   renderInput={(params) => (
-                    <TextField {...params} label="Куда" className={`${classes.searchFieldrenderedInput} middle_input_el`} />
+                    <TextField
+                      {...params}
+                      InputProps={{
+                        ...params?.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SouthEastOutlinedIcon />
+                          </InputAdornment>
+                        )
+                      }}
+                      label="Куда"
+                      className={`${classes.searchFieldrenderedInput} middle_input_el`}
+                    />
                   )}
                 />
               </Grid>
@@ -421,15 +467,16 @@ function SearchTickets(props) {
                   isLastElementInRow
                 />
               </Grid>
-
-              {/* search btn */}
-              {getSearchTicketsBtn(2)}
-
             </Grid>
           </Container> : <></>}
         {/* two part end*/}
+
+        {/* search btn */}
+        <Container>
+          {getSearchTicketsBtn(2)}
+        </Container>
       </div>
   );
 }
 
-export default SearchTickets;
+export default SearchTickets
