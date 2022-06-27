@@ -1,16 +1,17 @@
-import "date-fns";
-import React, { useState, useRef, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import ruLocale from "date-fns/locale/ru";
-import DatePicker from '@mui/lab/DatePicker';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import "date-fns"
+import React, { useState, useRef, useEffect } from "react"
+import Grid from "@mui/material/Grid"
+import ruLocale from "date-fns/locale/ru"
+import DatePicker from '@mui/lab/DatePicker'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
 // styles
-import styles from "@/styles/DataPicker.module.scss";
+import { makeStyles } from '@mui/styles'
+import styles from "./DataPicker.module.scss"
 import searchTicketsStyles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
-// import { makeStyles } from '@mui/styles';
-import TextField from '@mui/material/TextField';
-
+import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 
 export default function MaterialUIPickers(props) {
   const [selectedDate, setSelectedDate] = useState(props.value);
@@ -38,7 +39,10 @@ export default function MaterialUIPickers(props) {
       refDatePicker.current.hasOwnProperty('lastChild') &&
       refDatePicker.current.lastChild &&
       refDatePicker.current.lastChild.hasOwnProperty('style')
-    ) refDatePicker.current.lastChild.style='border-radius: 0 4px 4px 0'
+    ) {
+      
+      refDatePicker.current.lastChild.style='borderRadius: 0 4px 4px 0'
+    }
   })
 
   return (
@@ -63,14 +67,23 @@ export default function MaterialUIPickers(props) {
           onClose={() => setIsOpen(false)}
           open={isOpen}
           onOpen={() => setIsOpen(true)}
-            renderInput={(props) => {
-              return <TextField
+          renderInput={(props) => {
+            return <TextField
                 {...props}
+                InputProps={{
+                  ...props?.InputProps,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CalendarTodayIcon />
+                    </InputAdornment>
+                  ),
+                  endAdornment: null
+                }}
                 className={`${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`}
                 onClick={(e) => setIsOpen(true)}
               />
             }
-            }
+          }
         />
       </LocalizationProvider>
     </Grid>
