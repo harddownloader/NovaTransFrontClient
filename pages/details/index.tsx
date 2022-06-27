@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import Router from "next/router"
-import { NextPage } from 'next'
+import { NextPage, GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 import { dec } from "../../utils/encdec"
 import { postBookSeat } from "../../actions/book"
 import Header from '../../components/HeaderMaterial/Header'
@@ -367,13 +367,19 @@ const Details: NextPage<DetailsProps> = ({
   )
 }
 
-export async function getServerSideProps(context) {
-  const query = context.query
-  const info = dec(query.info)
+export const getServerSideProps: GetServerSideProps = async(context) => {
+  const infoString: any = context?.query?.info
+  const info: DetailsProps = dec(infoString)
   if (info) {
     return {
-        props: {
-        ...info,
+      props: {
+        // ...info,
+        fare: info.fare,
+        seat: info.seat,
+        journeyDate: info.journeyDate,
+        start: info.start,
+        end: info.end,
+        slug: info.slug,
         referer: context?.req?.headers?.referer || null
       }
     }
