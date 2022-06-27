@@ -15,8 +15,7 @@ import styles from "@/styles/WhyAreWe.module.scss";
 // icons
 import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-
+import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined'
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
@@ -49,7 +48,7 @@ const items = [
   },
   {
     image: (
-      <ConfirmationNumberIcon
+      <ConfirmationNumberOutlinedIcon
         fontSize="large"
         className="why-are-we__icon"
         color="primary"
