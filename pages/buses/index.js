@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Header from "../../components/HeaderMaterial/Header";
 import SearchTickets from "../../components/Home/SearchTickets/SearchTickets";
+import Footer from "@/components/Footer/Footer"
 // material
 import CssBaseline from "@mui/material/CssBaseline";
 // store
@@ -59,16 +60,31 @@ const Buses = ({ resp, info }) => {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </Param>
   );
 };
 
 Buses.getInitialProps = async ({
-  query: { startLocation, endLocation, journeyDate },
+  query: {
+    startLocation,
+    endLocation,
+    journeyDate,
+    returnStartLocation,
+    returnEndLocation,
+    returnJourneyDate
+  },
 }) => {
-  const info = { startLocation, endLocation, journeyDate };
-  const resp = await searchBus(info);
-  return { resp, info };
-};
+  const info = {
+    startLocation,
+    endLocation,
+    journeyDate,
+    returnStartLocation,
+    returnEndLocation,
+    returnJourneyDate
+  }
+  const resp = await searchBus(info)
+  return { resp, info }
+}
 
-export default Buses;
+export default Buses

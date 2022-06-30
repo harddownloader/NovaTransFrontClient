@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import SingleCard from "./singleCard";
 
 
-const Cards = ({ buses=[] }) => {
+const Cards = ({ buses: {oneWayTickets=[], returnTickets=[]} }) => {
+
+  const returnTicket = useMemo(() => {
+    returnTickets.length && returnTickets.length > 1
+      ? returnTickets[0]
+      : null
+  }, [returnTickets])
 
   const markup =
-    buses.length <= 0 ? (
+    oneWayTickets.length <= 0 ? (
       <h2>Рейс еще не запланирован</h2>
     ) : (
       <div className="cards">
-        <div>
-          {buses.length > 0 && buses.map(bus => (
-            <SingleCard key={bus._id} bus={bus} />
+          {oneWayTickets.length > 0 && oneWayTickets.map(bus => (
+            <div key={bus._id}>
+              <SingleCard  bus={bus} />
+              {returnTicket && <SingleCard key={bus._id} bus={returnTicket} />}
+            </div>
           ))}
-        </div>
       </div>
     );
 
