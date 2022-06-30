@@ -63,11 +63,11 @@ const SingleCard = (props) => {
     setVisibleDetailsModal(false)
   }
 
-  const handleUserBooked = (seat) => {
+  const handleUserBooked = (seats) => {
     // let arr = [...this.state.userBooked]
     // arr.push(seat)
     // this.setState({userBooked: arr})
-    encryptInfo(seat)
+    encryptInfo(seats)
   }
 
   const handleSuccess = (info) => {
@@ -77,7 +77,7 @@ const SingleCard = (props) => {
     })
   }
 
-  const encryptInfo = (seat) => {
+  const encryptInfo = (seats) => {
     const {
       startLocation,
       endLocation,
@@ -90,7 +90,7 @@ const SingleCard = (props) => {
     const end = endLocation.name
     // const travelName = travel.name
     // const info = { start, end, fare, journeyDate, travelName, seat, slug }
-    const info = { start, end, fare, journeyDate, seat, slug }
+    const info = { start, end, fare, journeyDate, seats, slug }
     const resp = enc(info)
     handleSuccess(resp)
   }
@@ -283,19 +283,17 @@ const SingleCard = (props) => {
                 <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                   <div className={styles.time_start}>
                     <div type="from" className={styles.time}>
-                      {bus?.departure_time}
+                      {ticketDescription?.start?.time}
                       <div>
                         <span className={styles.date}>
-                          {bus
-                            ? getLocaleDate(bus.journeyDate)
-                            : null}
+                          {ticketDescription?.start?.date &&
+                            getLocaleDate(ticketDescription?.start?.date)}
                         </span>
                         <span className={styles.dateYear}>
-                          {bus
-                            ? new Date(
-                                bus.journeyDate
-                              ).getFullYear()
-                            : null}
+                          {ticketDescription?.start?.date &&
+                            new Date(
+                              ticketDescription?.start?.date
+                            ).getFullYear()}
                         </span>
                       </div>
                     </div>
@@ -320,19 +318,18 @@ const SingleCard = (props) => {
                 <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                   <div className={styles.time_end}>
                     <div type="to" className={styles.time}>
-                      {bus ? bus.arrival_time : null}
+                      {ticketDescription?.end?.time}
                       <div>
                         <span className={styles.date}>
-                          {bus
-                            ? getLocaleDate(bus.arrivalDate)
-                            : null}
+                          {ticketDescription?.end?.date &&
+                            getLocaleDate(ticketDescription?.end?.date)
+                          }
                         </span>
                         <span className={styles.dateYear}>
-                          {bus
-                            ? new Date(
-                                bus.arrivalDate
-                              ).getFullYear()
-                            : null}
+                          {ticketDescription?.end?.date &&
+                            new Date(
+                              ticketDescription?.end?.date
+                            ).getFullYear()}
                         </span>
                       </div>
                     </div>
