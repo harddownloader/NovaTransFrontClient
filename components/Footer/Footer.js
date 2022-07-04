@@ -1,16 +1,16 @@
-import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import { makeStyles } from '@mui/styles';
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import React from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import Link from "@mui/material/Link"
+import { makeStyles } from '@mui/styles'
+import Container from "@mui/material/Container"
+import Box from "@mui/material/Box"
 // icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook"
+import InstagramIcon from "@mui/icons-material/Instagram"
 // styles
-import styles from "@/styles/Footer.module.scss";
+import styles from "@/styles/Footer.module.scss"
 // images
 const footer = "/static/img/logos/logo_with_location_blue.png"
 
@@ -24,7 +24,7 @@ function Copyright() {
       {new Date().getFullYear()}
       {"."}
     </Typography>
-  );
+  )
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(6),
     },
   },
-}));
+}))
 
 const tiers = [
   {
@@ -112,14 +112,14 @@ const tiers = [
     buttonText: "Contact us",
     buttonVariant: "outlined",
   },
-];
+]
 
 const pages = [
   {
     title: "Информация",
     description: ["О Нас", "Вопросы и ответы", "Договор оферты", "Контакты"],
   },
-];
+]
 
 const cosials = [
   {
@@ -135,10 +135,10 @@ const cosials = [
       },
     ],
   },
-];
+]
 
 export default function Pricing() {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <React.Fragment>
@@ -230,5 +230,5 @@ export default function Pricing() {
       </Container>
       {/* End footer */}
     </React.Fragment>
-  );
+  )
 }
