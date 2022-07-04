@@ -12,8 +12,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 // styles
 import styles from "@/styles/Footer.module.scss";
 // images
-const footer =
-  "/static/img/logos/logo_fiolet_and_black_vertical_cliped_200x200.png";
+const footer = "/static/img/logos/logo_with_location_blue.png"
 
 function Copyright() {
   return (
