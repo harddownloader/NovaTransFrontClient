@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography"
+import Link from "@mui/material/Link"
 
 class Copyright extends Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   render() {
@@ -19,8 +19,8 @@ class Copyright extends Component {
         {new Date().getFullYear()}
         {"."}
       </Typography>
-    );
+    )
   }
 }
 
-export default Copyright;
+export default Copyright
