@@ -10,7 +10,7 @@ import Box from "@mui/material/Box"
 import FacebookIcon from "@mui/icons-material/Facebook"
 import InstagramIcon from "@mui/icons-material/Instagram"
 // styles
-import styles from "@/styles/Footer.module.scss"
+import styles from "./Footer.module.scss"
 // images
 const footer = "/static/img/logos/logo_with_location_blue.png"
 
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardHeader: {
     backgroundColor:
-      theme.palette.type === "light"
+      theme.palette.mode === "light"
         ? theme.palette.grey[200]
         : theme.palette.grey[700],
   },
@@ -74,45 +74,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const tiers = [
-  {
-    title: "Free",
-    price: "0",
-    description: [
-      "10 users included",
-      "2 GB of storage",
-      "Help center access",
-      "Email support",
-    ],
-    buttonText: "Sign up for free",
-    buttonVariant: "outlined",
-  },
-  {
-    title: "Pro",
-    subheader: "Most popular",
-    price: "15",
-    description: [
-      "20 users included",
-      "10 GB of storage",
-      "Help center access",
-      "Priority email support",
-    ],
-    buttonText: "Get started",
-    buttonVariant: "contained",
-  },
-  {
-    title: "Enterprise",
-    price: "30",
-    description: [
-      "50 users included",
-      "30 GB of storage",
-      "Help center access",
-      "Phone & email support",
-    ],
-    buttonText: "Contact us",
-    buttonVariant: "outlined",
-  },
-]
 
 const pages = [
   {
@@ -121,7 +82,7 @@ const pages = [
   },
 ]
 
-const cosials = [
+const socials = [
   {
     title: "Мы в социальных сетях",
     links: [
@@ -151,7 +112,6 @@ export default function Pricing() {
               src={footer}
               alt="logo NovaTrans"
               height="75"
-              className={classes.icon}
             />
             <Typography
               // variant="subtitle1"
@@ -198,7 +158,7 @@ export default function Pricing() {
             </Grid>
           ))}
 
-          {cosials.map((cosial, index) => (
+          {socials.map((cosial, index) => (
             <Grid
               item
               xs={12}
