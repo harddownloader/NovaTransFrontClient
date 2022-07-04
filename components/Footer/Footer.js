@@ -141,7 +141,7 @@ export default function Pricing() {
   const classes = useStyles()
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
@@ -229,6 +229,6 @@ export default function Pricing() {
         </Box>
       </Container>
       {/* End footer */}
-    </React.Fragment>
+    </>
   )
 }
