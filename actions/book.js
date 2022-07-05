@@ -26,3 +26,35 @@ export const postBookSeat = async (slug, body) => {
   const response = await resp.json()
   return response
 }
+
+/**
+ * 
+ * @param {Object} body 
+ * @returns 
+ * 
+ * body: {
+ *  userauth?
+ *  
+ *  name: 'John',
+ *  email: 'john@gmail.com',
+ *  phone: 1823673827712,
+ *  address: 'Lendersa 8'
+ *  tickets: [
+ *    {
+ *      seats: ['A1', 'A2'],
+ *      slug: 'toronto-boston'
+ *    }
+ *  ]
+ * }
+ */
+export const postMultiBookSeat = async (body) => {
+  const resp = await fetch(`${API}/bookings/milti-book/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  })
+  const response = await resp.json()
+  return response
+}
