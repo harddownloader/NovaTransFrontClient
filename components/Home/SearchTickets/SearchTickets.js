@@ -122,9 +122,8 @@ const useStyles = makeStyles((theme) => {
 
 
 function SearchTickets(props) {
-  
-  const theme = useTheme();
-  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'));
+  const theme = useTheme()
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
 
   const dispatch = useAppDispatch()
   const {
@@ -158,16 +157,16 @@ function SearchTickets(props) {
   const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
     const newValueObj = locations.find(location => location.name === newValue)
     setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
-  };
+  }
 
   const onChangeDate = (val, inputName) => {
     const journeyDate = format(val, "yyyy-MM-dd")
     setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
-  };
+  }
 
   useEffect(() => {
     if (data.length && !pending) setLocations(data)
-  }, [data]);
+  }, [data])
 
   useEffect(() => {
     if (!isBackTicketFildsShow) {
@@ -184,8 +183,8 @@ function SearchTickets(props) {
     Router.push({
       pathname: "/buses",
       query: formData,
-    });
-  };
+    })
+  }
 
 
   /**
@@ -229,10 +228,10 @@ function SearchTickets(props) {
           </Button>
         </Box>
       </Grid>
-    );
+    )
   }
 
-  const optionsLocations = locations.length ? locations.map(location => location.name) : [];
+  const optionsLocations = locations.length ? locations.map(location => location.name) : []
 
   const getAutocomplateValue = (nameField) => {
     return locations.find(location => location._id === formData[`${nameField}`])
@@ -463,7 +462,7 @@ function SearchTickets(props) {
           {getSearchTicketsBtn(2)}
         </Container>
       </div>
-  );
+  )
 }
 
 export default SearchTickets
