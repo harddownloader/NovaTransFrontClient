@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => {
     },
     rightToolbar: {
       marginLeft: "auto",
-      marginRight: -12,
       display: "flex",
       alignItems: "center",
     }
