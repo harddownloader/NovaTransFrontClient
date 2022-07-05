@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => {
 
 interface HeaderPorps {
   isDarkStyle?: boolean
-  containerWidth: false | Breakpoint
+  containerWidth?: false | Breakpoint
 }
 
 const Header = ({
