@@ -6,6 +6,8 @@ import Grid from '@mui/material/Grid'
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import classes from './SeatModal.module.scss'
 import DialogHOC from './Modal/DialogHOC'
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
 
 
 export default function SeatModal(props) {
@@ -13,28 +15,35 @@ export default function SeatModal(props) {
 
   const { sold = [] , booked = [] } = props
   const [arr, setArr] = useState([0, 2.5, 5, 7.5, 10, 12.5, 15])
-  const [oddA, setOddA] = useState(["A1", "A3", "A5", "A7", "A9", "A11", "A13", "A15"])
+  // const [oddA, setOddA] = useState(["A1", "A3", "A5", "A7", "A9", "A11", "A13", "A15"])
+  const [oddA, setOddA] = useState(["A1", "A3", "A5", "A7", "A9", "A11", "A13"])
   const [evenA, setEvenA] = useState(["A2", "A4", "A6", "A8", "A10", "A12", "A14"])
-  const [oddB, setOddB] = useState(["B1", "B3", "B5", "B7", "B9", "B11", "B13", "B15"])
+  // const [oddB, setOddB] = useState(["B1", "B3", "B5", "B7", "B9", "B11", "B13", "B15"])
+  const [oddB, setOddB] = useState(["B1", "B3", "B5", "B7", "B9", "B11", "B13"])
   const [evenB, setEvenB] = useState(["B2", "B4", "B6", "B8", "B10", "B12", "B14"])
   const [isConfirmVisible, setIsConfirmVisible] = useState(false)
-  const [currentSeat, setCurrentSeat] = useState(null)
+  const [currentSeats, setCurrentSeats] = useState([])
 
-  useEffect(() => {
-    if (currentSeat) {
-      setIsConfirmVisible(true)
-    }
-  }, [currentSeat])
+  // useEffect(() => {
+  //   if (currentSeat) {
+  //     setIsConfirmVisible(true)
+  //   }
+  // }, [currentSeat])
 
   const handleClose = (e) => {
-    e.stopPropagation()
-    setCurrentSeat({})
+    if(e) e.stopPropagation()
+    setCurrentSeats({})
     props.handleCancel(e)
   }
 
-  const handleClick = async (e, seat) => {
+  const handleClick = (e, seat) => {
     e.stopPropagation()
-    setCurrentSeat(seat)
+    const currentSeatTmp = currentSeats
+    const isSeatInListIndx = currentSeatTmp.findIndex(currentSeat => currentSeat === seat)
+    if (isSeatInListIndx !== -1) currentSeatTmp.splice(isSeatInListIndx, 1)
+    else currentSeatTmp.push(seat)
+
+    setCurrentSeats([...currentSeatTmp])
   }
 
   const getSeatClass = (position) => {
@@ -42,9 +51,11 @@ export default function SeatModal(props) {
       sold.includes(position)
         ? `${classes.soldButton}`
         : booked.includes(position)
-        ? `${classes.bookedButton}`
-        : ''
-    } ${classes.button} ${isMobileVesion ? classes.mobileButton : '' }`
+          ? `${classes.bookedButton}`
+          : currentSeats.includes(position)
+            ? `${classes.selectedButton}`
+            : ''
+    } ${classes.button} ${classes.seatBtn} ${isMobileVesion ? classes.mobileButton : '' }`
   }
 
   const getSeatBtnStatus = (position) => {
@@ -52,6 +63,11 @@ export default function SeatModal(props) {
       sold.includes(position) ||
       booked.includes(position)
     )
+  }
+
+  const confirmButtonHandler = () => {
+    handleClose()
+    props.handleUserBooked(currentSeats)
   }
 
   return (
@@ -67,36 +83,61 @@ export default function SeatModal(props) {
           contentText={'Подтвердите пожалуйста свою бронь'}
           confirmButtonText={'Забронировать'}
           cancelButtonText={'Отмена'}
-          confirmButtonHandler={() => props.handleUserBooked(currentSeat)}
+          confirmButtonHandler={confirmButtonHandler}
         />
       }
       childrenFooter={
-        <div className={`${classes.seat_modal_footer} ${isMobileVesion ? '' : classes.seat_modal_footer__desktop}`}>
-          <IconButton
-            color="primary"
-            aria-label="seat"
-            component="span"
-            className={`${classes.button} ${isMobileVesion ? classes.mobileButton : '' }`}
-          >
-            <WeekendOutlinedIcon />&nbsp;Доступно
-          </IconButton>
-          <IconButton
-            color="primary"
-            aria-label="seat"
-            component="span"
-            className={`${classes.button} ${classes.bookedButton} ${isMobileVesion ? classes.mobileButton : '' }`}
-          >
-            <WeekendOutlinedIcon />&nbsp;Забронировано
-          </IconButton>
-          <IconButton
-            color="primary"
-            aria-label="seat"
-            component="span"
-            className={`${classes.button} ${classes.soldButton} ${isMobileVesion ? classes.mobileButton : '' }`}
-          >
-            <WeekendOutlinedIcon />&nbsp;Продано
-          </IconButton>
-        </div>
+        <>
+          <div className={`${classes.seat_modal_footer} ${isMobileVesion ? '' : classes.seat_modal_footer__desktop}`}>
+            <IconButton
+              color="primary"
+              aria-label="seat"
+              component="span"
+              className={`${classes.button} ${isMobileVesion ? classes.mobileButton : '' }`}
+            >
+              <WeekendOutlinedIcon />&nbsp;Доступно
+            </IconButton>
+            <IconButton
+              color="primary"
+              aria-label="seat"
+              component="span"
+              className={`${classes.button} ${classes.bookedButton} ${isMobileVesion ? classes.mobileButton : '' }`}
+            >
+              <WeekendOutlinedIcon />&nbsp;Забронировано
+            </IconButton>
+            <IconButton
+              color="primary"
+              aria-label="seat"
+              component="span"
+              className={`${classes.button} ${classes.soldButton} ${isMobileVesion ? classes.mobileButton : '' }`}
+            >
+              <WeekendOutlinedIcon />&nbsp;Продано
+            </IconButton>
+          </div>
+
+          <div className={`${classes.seat_modal_footer} ${isMobileVesion ? '' : classes.seat_modal_footer__desktop}`}>
+            <Typography variant="body2" gutterBottom>
+              Выбранные места:
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              {currentSeats.map(seat => `${seat} `)}
+            </Typography>
+
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={() => setIsConfirmVisible(true)}
+              disabled={!Boolean(
+                Array.isArray(currentSeats) &&
+                currentSeats.length
+              )}
+              fullWidth
+            >
+              Заказать
+            </Button>
+          </div>
+        </>
       }
     >
       <Grid
@@ -105,9 +146,9 @@ export default function SeatModal(props) {
       >
         <Grid
           item
-          xs={2}
-          sm={2}
-          md={2}
+          xs={4}
+          sm={4}
+          md={4}
         >
           {arr.map((le, i) => {
             return (
@@ -147,9 +188,9 @@ export default function SeatModal(props) {
         ></Grid>
         <Grid
           item
-          xs={2}
-          sm={2}
-          md={2}
+          xs={4}
+          sm={4}
+          md={4}
         >
           {arr.map((le, i) => {
             return (
