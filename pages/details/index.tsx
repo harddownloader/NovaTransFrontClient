@@ -45,12 +45,6 @@ interface DetailsProps {
 }
 
 const Details: NextPage<OrderProps> = ({
-  // fare,
-  // seats,
-  // journeyDate,
-  // start,
-  // end,
-  // slug,
   oneWayTicketsOrder,
   returnTicketsOrder,
   referer,
@@ -142,8 +136,6 @@ const Details: NextPage<OrderProps> = ({
   }
 
   const handleSubmit = async () => {
-    // oneWayTicketsOrder
-    // returnTicketsOrder
     let resp
     if (oneWayTicketsOrder && !returnTicketsOrder) {
       const seatNumbers = oneWayTicketsOrder.seats
@@ -468,47 +460,17 @@ export const getServerSideProps: GetServerSideProps = async(context) => {
     return {
       props: {
         ...orderProps
-        // ...info,
-        // fare: info.fare,
-        // seats: info.seats,
-        // journeyDate: info.journeyDate,
-        // start: info.start,
-        // end: info.end,
-        // slug: info.slug,
-        // referer: context?.req?.headers?.referer || null
       }
     }
   }
 
   return {
     props: {
-      // fare: null,
-      // seats: null,
-      // journeyDate: null,
-      // start: null,
-      // end: null,
-      // slug: null,
       oneWayTicketsOrder: null,
       returnTicketsOrder: null,
       referer: context?.req?.headers?.referer || null
     }
   }
 }
-
-// Details.getInitialProps = ({ query }): any => {
-//   const info = dec(query.info)
-//   if (info) {
-//     return info
-//   }
-
-//   return {
-//     fare: null,
-//     seat: null,
-//     journeyDate: null,
-//     start: null,
-//     end: null,
-//     slug: null,
-//   }
-// }
 
 export default Details
