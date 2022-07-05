@@ -21,11 +21,6 @@ const useStyles = makeStyles((theme) => {
   return {
     icon: {
       marginRight: theme.spacing(2),
-    },
-    rightToolbar: {
-      marginLeft: "auto",
-      display: "flex",
-      alignItems: "center",
     }
   }
 })
@@ -84,7 +79,7 @@ const Header = ({
           <Link href='/'>
             <h1 className={`${classes.heading} ${classes.pointer}`}>NovaTrans</h1>
           </Link>
-          <section className={styles.rightToolbar}>
+          <section className={classes.rightToolbar}>
             <LangMenu isDarkStyle={isDarkStyle} />
           </section>
         </Toolbar>

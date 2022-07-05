@@ -21,3 +21,9 @@
 .pointer {
   @include pointer;
 }
+
+.rightToolbar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
