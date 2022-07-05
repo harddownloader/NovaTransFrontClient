@@ -6,6 +6,7 @@ import Link from "@mui/material/Link"
 import { makeStyles } from '@mui/styles'
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
+import Copyright from './Copyright'
 // icons
 import FacebookIcon from "@mui/icons-material/Facebook"
 import InstagramIcon from "@mui/icons-material/Instagram"
@@ -14,18 +15,6 @@ import styles from "./Footer.module.scss"
 // images
 const footer = "/static/img/logos/logo_with_location_blue.png"
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        NovaTrans
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  )
-}
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -98,7 +87,7 @@ const socials = [
   },
 ]
 
-export default function Pricing() {
+export default function Footer() {
   const classes = useStyles()
 
   return (
