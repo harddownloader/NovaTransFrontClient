@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Hero = () => {
   return (
@@ -6,8 +6,8 @@ const Hero = () => {
       <div className="hero" style={styles.hero}></div>
       <div style={styles.overlayDiv}></div>
     </>
-  );
-};
+  )
+}
 
 const styles = {
   hero: {
@@ -27,6 +27,6 @@ const styles = {
     zIndex: 0,
     opacity: 0.4
   }
-};
+}
 
-export default Hero;
+export default Hero
