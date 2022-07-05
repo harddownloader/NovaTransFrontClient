@@ -12,13 +12,10 @@ import Toolbar from "@mui/material/Toolbar"
 import Container from '@mui/material/Container'
 import classes from "./Header.module.scss"
 import LangMenu from './LangMenu'
+import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this was exported from mui breakpoint type for Container maxWidth, that path may change in the future
 // images
-// const logo = "/static/img/logos/logo.png"
-// const logo = "/static/img/logos/bus_logo.png"
 const logo = "/static/img/logos/logo_with_location_blue.png"
-// const logo = "/static/img/logos/logo_without_location_white.png"
-// const logo = "/static/img/logos/logo_without_location_blue_white.png"
-// logo_without_location_blue_white.png
+
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -34,12 +31,15 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-const Header = (props) => {
-  const {
-    isDarkStyle,
-    containerWidth="md",
-  } = props
+interface HeaderPorps {
+  isDarkStyle?: boolean
+  containerWidth: false | Breakpoint
+}
 
+const Header = ({
+  isDarkStyle=false,
+  containerWidth="md"
+}: HeaderPorps) => {
   const styles = useStyles()
   const [open, setOpen] = React.useState(true)
   
