@@ -96,14 +96,25 @@ export default function Footer() {
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
         <Grid container  justifyContent="space-evenly">
-          <Grid item xs={12} sm={3} md={3} className={styles.footer__company}>
+          <Grid
+            item
+            xs={12} sm={3} md={3}
+            className={`${styles.footer__company} ${styles.info_block}`}
+          >
             <img
               src={footer}
               alt="logo NovaTrans"
               height="75"
             />
             <Typography
-              // variant="subtitle1"
+              className={styles.logo_heading}
+              variant="h6"
+              color="textPrimary"
+              gutterBottom
+            >
+              NovaTrans
+            </Typography>
+            <Typography
               color="textSecondary"
               gutterBottom
               className={styles.footer__logo_description}
@@ -118,8 +129,7 @@ export default function Footer() {
               sm={3}
               md={6}
               key={index}
-              className={styles.footer__pages_list}
-              sx={{ pl: index === 0 ? 3 : 0 }}
+              className={`${styles.footer__pages_list} ${styles.info_block}`}
             >
               <Typography
                 variant="h6"
@@ -154,7 +164,7 @@ export default function Footer() {
               sm={3}
               md={3}
               key={index}
-              className={styles.social_list_container}
+              className={`${styles.social_list_container} ${styles.info_block}`}
             >
               <Typography variant="h6" color="textPrimary" gutterBottom>
                 {cosial.title}
