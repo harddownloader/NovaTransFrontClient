@@ -249,7 +249,7 @@ function SearchTickets(props) {
           <Container maxWidth="md" className={styles.welcome_block}>
             <Typography
               component="h1"
-              variant="h2"
+              variant={isNotMobile ? "h2" : "h4"}
               align="center"
               // color="textPrimary"
               gutterBottom
@@ -258,7 +258,7 @@ function SearchTickets(props) {
               Билеты на автобус
             </Typography>
             <Typography
-              variant="h5"
+              variant={isNotMobile ? "h5" : "h6"}
               align="center"
               // color="textSecondary"
               paragraph
