@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import Router from "next/router"
-import { NextPage, GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
+import {
+  NextPage,
+  GetStaticProps,
+  GetStaticPaths,
+  GetServerSideProps
+} from 'next'
 import { dec } from "../../utils/encdec"
-import { postBookSeat } from "../../actions/book"
+import { postBookSeat, postMultiBookSeat } from "../../actions/book"
 import Header from '../../components/HeaderMaterial/Header'
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import PoperCard from '@/components/Card/PoperCard'
@@ -26,10 +31,11 @@ import { validateEmail } from '@/utils/validation/email'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import classes from './Details.module.scss'
 import { useIMask } from 'react-imask'
+import Footer from "@/components/Footer/Footer"
 
 interface DetailsProps {
   fare: number | null,
-  seat: string | null,
+  seats: Array<string> | null,
   journeyDate: string | null,
   start: string | null,
   end: string | null,
@@ -38,13 +44,15 @@ interface DetailsProps {
   referer: string | null,
 }
 
-const Details: NextPage<DetailsProps> = ({
-  fare,
-  seat,
-  journeyDate,
-  start,
-  end,
-  slug,
+const Details: NextPage<OrderProps> = ({
+  // fare,
+  // seats,
+  // journeyDate,
+  // start,
+  // end,
+  // slug,
+  oneWayTicketsOrder,
+  returnTicketsOrder,
   referer,
 }): JSX.Element => {
   // const [dataSource, setDataSource] = useState([])
@@ -55,7 +63,7 @@ const Details: NextPage<DetailsProps> = ({
   const [email, setEmail] = useState<string>('')
   const [isEmailValid, setIsEmailValid] = useState<boolean>(null)
 
-  const [phone, setPhone] = useState<string>('')
+  const [isPhoneFieldWasFocused, setIsPhoneFieldWasFocused] = useState<boolean>(false)
   const [isPhoneValid, setIsPhoneValuid] = useState<boolean>(null)
 
   const [address, setAdress] = useState<string>('lipoviy_adress')
@@ -75,12 +83,12 @@ const Details: NextPage<DetailsProps> = ({
 
   useEffect(() => {
     if (
-      !fare ||
-      !seat ||
-      !journeyDate ||
-      !start ||
-      !end ||
-      !slug
+      !oneWayTicketsOrder.fare ||
+      !oneWayTicketsOrder.seats ||
+      !oneWayTicketsOrder.journeyDate ||
+      !oneWayTicketsOrder.start ||
+      !oneWayTicketsOrder.end ||
+      !oneWayTicketsOrder.slug
     ) Router.push({ pathname: '/' })
   }, [])
 
@@ -108,15 +116,15 @@ const Details: NextPage<DetailsProps> = ({
     return isValid
   }
 
-  const handleNumber = (number: string) => {
-    setPhone(number)
-  }
-
   const phoneNumberErrorHandler = (value: string): boolean => {
-    const isValid = Boolean(value?.length >= 17)
+    const isValid = Boolean(value?.length >= 12)
     if (isPhoneValid !== isValid) setIsPhoneValuid(isValid)
     return isValid
   }
+
+  useMemo(() => {
+    phoneNumberErrorHandler(unmaskedValue)
+  }, [unmaskedValue])
 
   const handlerEmail = (email: string) => {
     emailErrorHandler(email)
@@ -134,15 +142,43 @@ const Details: NextPage<DetailsProps> = ({
   }
 
   const handleSubmit = async () => {
-    const seatNumber = seat
-    const info = {
-      name,
-      phone,
-      address,
-      email,
-      seatNumber
-    }
-    const resp = await postBookSeat(slug, info)
+    // oneWayTicketsOrder
+    // returnTicketsOrder
+    let resp
+    if (oneWayTicketsOrder && !returnTicketsOrder) {
+      const seatNumbers = oneWayTicketsOrder.seats
+      const slug = oneWayTicketsOrder.slug
+
+      const body = {
+        name,
+        phone: unmaskedValue.replace(/[^0-9 ]/g, "").trim(),
+        address,
+        email,
+        seatNumber: JSON.stringify(seatNumbers)
+      }
+      
+      resp = await postBookSeat(slug, body)
+    } else if(oneWayTicketsOrder && returnTicketsOrder) {
+      const body = {
+        name,
+        phone: unmaskedValue.replace(/[^0-9 ]/g, "").trim(),
+        address,
+        email,
+        tickets: [
+          {
+            seatNumber: JSON.stringify(oneWayTicketsOrder.seats),
+            slug: oneWayTicketsOrder.slug
+          },
+          {
+            seatNumber: JSON.stringify(returnTicketsOrder.seats),
+            slug: returnTicketsOrder.slug
+          },
+        ]
+      }
+
+      resp = await postMultiBookSeat(body)
+    } else console.error(`You haven't orders info for saving`)
+
     if (!resp.error) {
       sweetAlert("success")
     } else {
@@ -168,6 +204,32 @@ const Details: NextPage<DetailsProps> = ({
       else setErrorText('Вы ввели не корректные данные')
       return setIsErrorVisible(true)
     }
+  }
+
+  const getPaymentContent = () => {
+    const paymentContent = []
+    if (returnTicketsOrder) {
+      paymentContent.push({
+        title: "Стоимость билетов основного рейса",
+        text: `${oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length}грн.`
+      }, {
+        title: "Стоимость обратного билета",
+        text: `${returnTicketsOrder.fare * returnTicketsOrder.seats.length}грн.`
+      }, {
+        title: "Итого",
+        text: `${(oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length) + (returnTicketsOrder.fare * returnTicketsOrder.seats.length)}грн.`
+      })
+    } else {
+      paymentContent.push({
+        title: "Стоимость билета",
+        text: `${oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length}грн.`
+      }, {
+        title: "Итого",
+        text: `${(oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length)}грн.`
+      })
+    }
+
+    return paymentContent
   }
 
   return (
@@ -253,12 +315,11 @@ const Details: NextPage<DetailsProps> = ({
                   label="Ваш Телефон"
                   variant="outlined"
                   fullWidth
-                  onChange={e => handleNumber(e.target.value)}
-                  inputRef={(() => {
-                    if (ref?.current?.value) phoneNumberErrorHandler(ref.current.value)
-                    return ref
-                  })()}
-                  error={isPhoneValid !== null && !isPhoneValid}
+                  onFocus={() => {
+                    if(!isPhoneFieldWasFocused) setIsPhoneFieldWasFocused(true)
+                  }}
+                  inputRef={ref}
+                  error={isPhoneFieldWasFocused && !isPhoneValid}
                 />
               </Grid>
 
@@ -308,36 +369,52 @@ const Details: NextPage<DetailsProps> = ({
           md={6}
           lg={6}
         >
-          <PoperCard
+          {oneWayTicketsOrder && <PoperCard
             heading={"Информация о рейсе"}
             content={[
               {
                 title: "Рейс",
-                text: `${start} - ${end}`
+                text: `${oneWayTicketsOrder.start} - ${oneWayTicketsOrder.end}`
               },
               {
                 title: "Дата",
-                text: `${journeyDate}`
+                text: `${oneWayTicketsOrder.journeyDate}`
               },
               {
                 title: "Места",
-                text: `${seat}`
+                text: oneWayTicketsOrder.seats.map(seat => `${seat} `)
               },
+              {
+                title: "Цена за билет",
+                text: `${oneWayTicketsOrder.fare}грн.`
+              }
             ]}
-          />
+          />}
+          {returnTicketsOrder && <PoperCard
+            heading={"Информация об обратном рейсе"}
+            content={[
+              {
+                title: "Рейс",
+                text: `${returnTicketsOrder.start} - ${returnTicketsOrder.end}`
+              },
+              {
+                title: "Дата",
+                text: `${returnTicketsOrder.journeyDate}`
+              },
+              {
+                title: "Места",
+                text: returnTicketsOrder.seats.map(seat => `${seat} `)
+              },
+              {
+                title: "Цена за билет",
+                text: `${returnTicketsOrder.fare}грн.`
+              }
+            ]}
+          />}
 
           <PoperCard
             heading={"Платежная информация"}
-            content={[
-              {
-                title: "Стоимость билета",
-                text: `${fare}`
-              },
-              {
-                title: "Итого",
-                text: `${fare}`
-              }
-            ]}
+            content={getPaymentContent()}
           />
         </Grid>
         <Grid
@@ -356,6 +433,7 @@ const Details: NextPage<DetailsProps> = ({
         ></Grid>
       </Grid>
     </Container>
+    <Footer />
     {isErrorVisible && <ConfirmModal
       isVisible={isErrorVisible}
       changeVisibility={() => setIsErrorVisible(false)}
@@ -367,32 +445,51 @@ const Details: NextPage<DetailsProps> = ({
   )
 }
 
+type OrderProps = {
+  oneWayTicketsOrder: DetailsProps
+  returnTicketsOrder?: DetailsProps
+  referer: string | null
+}
+
 export const getServerSideProps: GetServerSideProps = async(context) => {
-  const infoString: any = context?.query?.info
-  const info: DetailsProps = dec(infoString)
-  if (info) {
+  const orderString: any = context?.query?.order
+  const order: OrderProps = dec(orderString)
+
+  if (order && order?.oneWayTicketsOrder) {
+    const orderProps: OrderProps = {
+      oneWayTicketsOrder: order?.oneWayTicketsOrder ? order.oneWayTicketsOrder : null,
+      referer: context?.req?.headers?.referer || null
+    }
+
+    if (order?.returnTicketsOrder) {
+      orderProps.returnTicketsOrder = order.returnTicketsOrder
+    }
+
     return {
       props: {
+        ...orderProps
         // ...info,
-        fare: info.fare,
-        seat: info.seat,
-        journeyDate: info.journeyDate,
-        start: info.start,
-        end: info.end,
-        slug: info.slug,
-        referer: context?.req?.headers?.referer || null
+        // fare: info.fare,
+        // seats: info.seats,
+        // journeyDate: info.journeyDate,
+        // start: info.start,
+        // end: info.end,
+        // slug: info.slug,
+        // referer: context?.req?.headers?.referer || null
       }
     }
   }
 
   return {
     props: {
-      fare: null,
-      seat: null,
-      journeyDate: null,
-      start: null,
-      end: null,
-      slug: null,
+      // fare: null,
+      // seats: null,
+      // journeyDate: null,
+      // start: null,
+      // end: null,
+      // slug: null,
+      oneWayTicketsOrder: null,
+      returnTicketsOrder: null,
       referer: context?.req?.headers?.referer || null
     }
   }
