@@ -31,7 +31,7 @@ function App(props) {
   }, [])
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Header />
 
@@ -50,7 +50,7 @@ function App(props) {
       />}
 
       <Footer />
-    </React.Fragment>
+    </>
   )
 }
 
