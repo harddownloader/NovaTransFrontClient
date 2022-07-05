@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-// import Filters from "./filters";
-import Cards from "./cards";
-import { searchBus } from "../../actions/location";
-import Param from "../../utils/checkQueryParam";
-import Loading from "../../components/Loading";
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Header from "../../components/HeaderMaterial/Header";
-import SearchTickets from "../../components/Home/SearchTickets/SearchTickets";
+import React, { useState, useEffect } from "react"
+// import Filters from "./filters"
+import Cards from "./cards"
+import { searchBus } from "../../actions/location"
+import Param from "../../utils/checkQueryParam"
+import Loading from "../../components/Loading"
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Header from "../../components/HeaderMaterial/Header"
+import SearchTickets from "../../components/Home/SearchTickets/SearchTickets"
 import Footer from "@/components/Footer/Footer"
 // material
-import CssBaseline from "@mui/material/CssBaseline";
+import CssBaseline from "@mui/material/CssBaseline"
 // store
 import {
   useAppDispatch,
@@ -32,13 +32,13 @@ const Buses = ({ resp, info }) => {
   } = useAppSelector(selectLocations)
 
   useEffect(() => {
-    fetchBuses();
+    fetchBuses()
     if (!data?.length && !pending) dispatch(getLocations())
-  }, [resp]);
+  }, [resp])
 
   const fetchBuses = () => {
-    setBuses(resp);
-  };
+    setBuses(resp)
+  }
 
   return (
     <Param info={info}>
@@ -62,8 +62,8 @@ const Buses = ({ resp, info }) => {
       </Container>
       <Footer />
     </Param>
-  );
-};
+  )
+}
 
 Buses.getInitialProps = async ({
   query: {
