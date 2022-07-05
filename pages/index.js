@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Header from "@/components/HeaderMaterial/Header";
-import SearchTickets from "@/components/Home/SearchTickets/SearchTickets";
-import WhyAreWe from "@/components/Home/WhyAreWe";
-import AboutDrivers from "@/components/Home/AboutDrivers";
-import Footer from "@/components/Footer/Footer";
+import React, { useState, useEffect } from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import Header from "@/components/HeaderMaterial/Header"
+import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
+import WhyAreWe from "@/components/Home/WhyAreWe"
+import AboutDrivers from "@/components/Home/AboutDrivers"
+import Footer from "@/components/Footer/Footer"
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 // store
 import {
@@ -28,10 +28,10 @@ function App(props) {
 
   useEffect(() => {
     if (!data?.length && !pending) dispatch(getLocations())
-  }, []);
+  }, [])
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Header />
 
@@ -50,16 +50,16 @@ function App(props) {
       />}
 
       <Footer />
-    </React.Fragment>
-  );
+    </>
+  )
 }
 
 App.getInitialProps = ({ query }) => {
   if (query?.alert) {
-    const alert = JSON.parse(query.alert);
-    return {alert};
+    const alert = JSON.parse(query.alert)
+    return {alert}
   }
-  return {};
-};
+  return {}
+}
 
-export default App;
+export default App

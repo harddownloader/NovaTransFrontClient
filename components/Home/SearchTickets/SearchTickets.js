@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 // time and data
-import { format } from "date-fns";
+import { format } from "date-fns"
 // makestales
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@mui/styles'
 // next
-import Router from "next/router";
+import Router from "next/router"
 // material
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import TextField from '@mui/material/TextField';
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import TextField from '@mui/material/TextField'
+import Button from "@mui/material/Button"
+import Box from "@mui/material/Box"
 import InputAdornment from '@mui/material/InputAdornment'
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined'
 import SouthEastOutlinedIcon from '@mui/icons-material/SouthEastOutlined'
@@ -27,46 +27,41 @@ import {
   selectLocations,
 } from '@/features/locations/locationsSlice'
 // checkbox
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Checkbox from "@mui/material/Checkbox"
 // pickers
-import MaterialUIPickers from "../../Pickers/DatePicker";
-// select
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-// import FormHelperText from '@mui/material/FormHelperText';
-import Select from "@mui/material/Select";
-import Autocomplete from "@mui/material/Autocomplete";
+import MaterialUIPickers from "../../Pickers/DatePicker"
+// import FormHelperText from '@mui/material/FormHelperText'
+import Select from "@mui/material/Select"
+import Autocomplete from "@mui/material/Autocomplete"
 
 // styles
-import styles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
-import { NaturePeopleOutlined } from "@mui/icons-material";
-import SearchIcon from '@mui/icons-material/Search';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-
+import styles from './SearchTickets.module.scss'
+import SearchIcon from '@mui/icons-material/Search'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import Collapse from '@mui/material/Collapse'
+import { blue } from '@mui/material/colors'
 
 // images
-const BgImage = "/static/img/backgrounds/bg-winter.jpg";
+const BgImage = "/static/img/backgrounds/bg-winter.jpg"
 
-const { Option } = Select;
+const { Option } = Select
 
 const useStyles = makeStyles((theme) => {
   return {
   // container
-  heroContent: {
+  heroContent: props => ({
     backgroundColor: theme.palette.background.paper,
     backgroundImage: `url(${BgImage})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center bottom",
     backgroundSize: "cover",
-    paddingTop: "50px",
-    paddingBottom: "114px",
-    marginTop: "-80px",
+    marginTop: "-85px",
 
-    padding: theme.spacing(8, 0, 6),
-  },
+    padding: props.isBackTicketFildsShow ? theme.spacing(6, 0, 14) : theme.spacing(1, 0, 1),
+  }),
   // grid select
   gridSelect: {
     padding: "0 !important",
@@ -123,13 +118,12 @@ const useStyles = makeStyles((theme) => {
       borderRadius: "0px",
     },
   }
-}});
+}})
 
 
 function SearchTickets(props) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'));
+  const theme = useTheme()
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
 
   const dispatch = useAppDispatch()
   const {
@@ -138,72 +132,60 @@ function SearchTickets(props) {
     error,
   } = useAppSelector(selectLocations)
 
-  // select-----------------
-  // обратно
-  const [fromReturn, setFromReturn] = useState("");
-  const [toReturn, setToReturn] = useState("");
   // checkbox------------------
-  const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(true);
+  const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(
+    (!props?.info?.returnStartLocation && props?.info?.startLocation) ? false : true
+  )
+  const classes = useStyles({isBackTicketFildsShow})
 
   // a list of cities
   const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
+  const todayDateWithFormat = new Date().toISOString().split('T')[0]
   const [formData, setFormData] = useState({
-    startLocation: props.info ? props.info.startLocation : null,
-    endLocation: props.info ? props.info.endLocation : null,
-    journeyDate: props.info ? props.info.journeyDate : null
-  });
+    startLocation: props?.info?.startLocation ? props.info.startLocation : null,
+    endLocation: props?.info?.endLocation ? props.info.endLocation : null,
+    journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : todayDateWithFormat,
 
-  // const handleChangeFromReturn = (event) => {
-  //   setFromReturn(event.target.value);
-  // };
-  // const handleChangeToReturn = (event) => {
-  //   console.log('handleChangeToReturn val', event.target.value);
-  //   setToReturn(event.target.value);
-  // };
+    returnStartLocation: props?.info?.returnStartLocation ? props.info.returnStartLocation : null,
+    returnEndLocation: props?.info?.returnEndLocation ? props.info.returnEndLocation : null,
+    returnJourneyDate: props?.info?.returnJourneyDate ? new Date(props.info.returnJourneyDate) : todayDateWithFormat,
+  })
   // end select-----------------
 
   // туда
   const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
     const newValueObj = locations.find(location => location.name === newValue)
     setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
-  };
+  }
 
-  // const onChangeTo = (val) => {
-  //   setFormData({ ...formData, ...{ endLocation: val.target.value } });
-  // };
-
-  const onChangeDate = (val) => {
-    const journeyDate = format(val, "yyyy-MM-dd");
-    setFormData({ ...formData, ...{ journeyDate } });
-  };
+  const onChangeDate = (val, inputName) => {
+    const journeyDate = format(val, "yyyy-MM-dd")
+    setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
+  }
 
   useEffect(() => {
     if (data.length && !pending) setLocations(data)
-  }, [data]);
+  }, [data])
+
+  useEffect(() => {
+    if (!isBackTicketFildsShow) {
+      setFormData({
+        ...formData,
+        returnStartLocation: null,
+        returnEndLocation: null,
+        returnJourneyDate: null,
+      })
+    }
+  }, [isBackTicketFildsShow])
 
   const dummytransition = () => {
     Router.push({
       pathname: "/buses",
       query: formData,
-    });
-  };
+    })
+  }
 
-  let defaultOptionValue = null;
-
-  // нужна ли тут на самом деле эта функция это вопрос
-  const getDefaultSelectValue = (type) => {
-    if (
-      props &&
-      props.hasOwnProperty("info") &&
-      props.info.hasOwnProperty(type)
-    ) {
-      return props.info.type;
-    } else {
-      // return ''
-      return [];
-    }
-  };
 
   /**
    * 
@@ -246,11 +228,10 @@ function SearchTickets(props) {
           </Button>
         </Box>
       </Grid>
-    );
+    )
   }
 
-  const optionsLocations = locations.length ? locations.map(location => location.name) : [];
-  // const optionsLocations = locations.length ? locations : [];
+  const optionsLocations = locations.length ? locations.map(location => location.name) : []
 
   const getAutocomplateValue = (nameField) => {
     return locations.find(location => location._id === formData[`${nameField}`])
@@ -258,6 +239,8 @@ function SearchTickets(props) {
 
   const fromValue = getAutocomplateValue("startLocation")
   const toValue = getAutocomplateValue("endLocation")
+  const returnFromValue = getAutocomplateValue("returnStartLocation")
+  const returnToValue = getAutocomplateValue("returnEndLocation")
 
   return (
       <div className={classes.heroContent}>
@@ -266,20 +249,20 @@ function SearchTickets(props) {
           <Container maxWidth="md" className={styles.welcome_block}>
             <Typography
               component="h1"
-              variant="h2"
+              variant={isNotMobile ? "h2" : "h4"}
               align="center"
-              color="textPrimary"
+              // color="textPrimary"
               gutterBottom
-              style={{ color: "white" }}
+              className={styles.heading}
             >
               Билеты на автобус
             </Typography>
             <Typography
-              variant="h5"
+              variant={isNotMobile ? "h5" : "h6"}
               align="center"
-              color="textSecondary"
+              // color="textSecondary"
               paragraph
-              style={{ color: "white" }}
+              className={styles.heading}
             >
               по Украине, Молдавии, Румынии и Болгарии
             </Typography>
@@ -289,7 +272,6 @@ function SearchTickets(props) {
         {/* thither */}
         <Container maxWidth="md" className={`${styles.search_tickets} ${props.type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
           <Grid container gap={0}>
-            {/* <Grid item xs={3} sm={3} md={3}></Grid> */}
             {/* откуда */}
             <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
               <Autocomplete
@@ -299,7 +281,7 @@ function SearchTickets(props) {
                   noOptionsText="Не найдено"
                   loading={pending}
                   loadingText="Загрузка..."
-                  value={fromValue && fromValue.hasOwnProperty('name') ? fromValue.name : null}
+                  value={fromValue?.name ? fromValue.name : null}
                   options={optionsLocations}
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "startLocation")}
                   renderInput={(params) => (
@@ -328,7 +310,7 @@ function SearchTickets(props) {
                   noOptionsText="Не найдено"
                   loading={pending}
                   loadingText="Загрузка..."
-                  value={toValue && toValue.hasOwnProperty('name') ? toValue.name : null}
+                  value={toValue?.name ? toValue.name : null}
                   options={optionsLocations}
                   onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
                   style={{borderRadius: '0px'}}
@@ -354,8 +336,8 @@ function SearchTickets(props) {
               className={`${classes.gridSelect}`}
             >
               <MaterialUIPickers
-                value={props.info ? new Date(props.info.journeyDate) : new Date()}
-                onChangeDate={onChangeDate}
+                value={formData.journeyDate}
+                onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
                 classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                 isLastElementInRow
               />
@@ -363,14 +345,11 @@ function SearchTickets(props) {
 
             {/* search btn */}
             {getSearchTicketsBtn(1)}
-
-            {/* <Grid item xs={3}></Grid> */}
           </Grid>
 
           {/* back tickets checkbox */}
-          {props.type !== "searchPage" ? (
-            <Grid container gap={3} justifyContent="center">
-              <Grid item xs={6} className={styles.returnBackCheckboxWrap}>
+            <Grid container gap={3} justifyContent={isNotMobile ? "start" : "center"}>
+              <Grid item xs={10} sm={10} md={6} className={styles.returnBackCheckboxWrap}>
                 <FormGroup row>
                   <FormControlLabel
                     control={
@@ -379,6 +358,12 @@ function SearchTickets(props) {
                         onChange={(e) => setIsBackTicketFildsShow(!isBackTicketFildsShow)}
                         color="primary"
                         className={styles.returnBackCheckbox}
+                        sx={{
+                          color: blue[700],
+                          '&.Mui-checked': {
+                            color: blue[700],
+                          },
+                        }}
                       />
                     }
                     className={styles.customFormControlClass}
@@ -390,13 +375,11 @@ function SearchTickets(props) {
                 </FormGroup>
               </Grid>
             </Grid>
-          ) : <></>}
           {/* checkox end */}
         </Container>
 
         {/* back */}
-        {(props.type !== "searchPage" && isBackTicketFildsShow) ? 
-        // {props.type !== "searchPage" ? (
+        <Collapse in={isBackTicketFildsShow}>
           <Container
             maxWidth="md"
             className={`search-tickets ${styles.return_trip} ${
@@ -413,8 +396,8 @@ function SearchTickets(props) {
                   noOptionsText="Не найдено"
                   loadingText="Загрузка..."
                   options={optionsLocations}
-                  value={fromReturn}
-                  onChange={(val, newValue) => onChangeDirectionField(newValue, "startBackLocation")}
+                  value={returnFromValue?.name ? returnFromValue.name : null}
+                  onChange={(val, newValue) => onChangeDirectionField(newValue, "returnStartLocation")}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -441,8 +424,8 @@ function SearchTickets(props) {
                   noOptionsText="Не найдено"
                   loadingText="Загрузка..."
                   options={optionsLocations}
-                  value={fromReturn}
-                  onChange={(val, newValue) => onChangeDirectionField(newValue, "endBackLocation")}
+                  value={returnToValue?.name ? returnToValue.name : null}
+                  onChange={(val, newValue) => onChangeDirectionField(newValue, "returnEndLocation")}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -463,12 +446,15 @@ function SearchTickets(props) {
 
               <Grid item xs={12} sm={12} md={3}>
                 <MaterialUIPickers
-                  classes={`${classes.select} ${classes.searchField}`}
+                  classes={`${classes.select} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                   isLastElementInRow
+                  value={formData.returnJourneyDate}
+                  onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
                 />
               </Grid>
             </Grid>
-          </Container> : <></>}
+          </Container>
+          </Collapse> 
         {/* two part end*/}
 
         {/* search btn */}
@@ -476,7 +462,7 @@ function SearchTickets(props) {
           {getSearchTicketsBtn(2)}
         </Container>
       </div>
-  );
+  )
 }
 
 export default SearchTickets

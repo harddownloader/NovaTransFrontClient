@@ -1,46 +1,69 @@
+.logo_heading {
+  font-weight: 600;
+}
+
+.info_block {}
+
 .footer__company{
   text-align: center;
 }
+
 .footer__logo_description {
   font-size: 1rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
   line-height: normal;
 }
-.footer__pages_list{
 
+.footer__pages_list {}
+
+.footer__pages_list {
+  padding-left: 1.5rem;
 }
+
 .pages_list__title{
 
 }
+
 .pages_list__item{
 
 }
+
 .social_list_container {
   
 }
 .social_list__text {
   display: flex;
 }
+
 .social_link__item{
   display: flex;
 }
+
 .social_link__icon{
   margin-right: 5px;
 }
 
 @media only screen and (max-width: 575px) {
+  .info_block {
+    margin-top: 1rem;
+  }
+
+  .footer__pages_list {
+    padding-left: 0;
+  }
+
   // центрируем для мобильной версии
   .footer__pages_list,
   .footer__socials {
     text-align: center;
   }
+
   .social_list_container {
     text-align: center;
-    margin-top: 15px;
   }
+
   .social_link__item{
     justify-content: center;
   }
-  
 }

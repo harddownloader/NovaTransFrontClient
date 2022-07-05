@@ -1,32 +1,20 @@
-import React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
-import { makeStyles } from '@mui/styles';
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
+import React from "react"
+import CssBaseline from "@mui/material/CssBaseline"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import Link from "@mui/material/Link"
+import { makeStyles } from '@mui/styles'
+import Container from "@mui/material/Container"
+import Box from "@mui/material/Box"
+import Copyright from './Copyright'
 // icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook"
+import InstagramIcon from "@mui/icons-material/Instagram"
 // styles
-import styles from "@/styles/Footer.module.scss";
+import styles from "./Footer.module.scss"
 // images
-const footer =
-  "/static/img/logos/logo_fiolet_and_black_vertical_cliped_200x200.png";
+const footer = "/static/img/logos/logo_with_location_blue.png"
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        NovaTrans
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -53,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardHeader: {
     backgroundColor:
-      theme.palette.type === "light"
+      theme.palette.mode === "light"
         ? theme.palette.grey[200]
         : theme.palette.grey[700],
   },
@@ -73,56 +61,17 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(6),
     },
   },
-}));
+}))
 
-const tiers = [
-  {
-    title: "Free",
-    price: "0",
-    description: [
-      "10 users included",
-      "2 GB of storage",
-      "Help center access",
-      "Email support",
-    ],
-    buttonText: "Sign up for free",
-    buttonVariant: "outlined",
-  },
-  {
-    title: "Pro",
-    subheader: "Most popular",
-    price: "15",
-    description: [
-      "20 users included",
-      "10 GB of storage",
-      "Help center access",
-      "Priority email support",
-    ],
-    buttonText: "Get started",
-    buttonVariant: "contained",
-  },
-  {
-    title: "Enterprise",
-    price: "30",
-    description: [
-      "50 users included",
-      "30 GB of storage",
-      "Help center access",
-      "Phone & email support",
-    ],
-    buttonText: "Contact us",
-    buttonVariant: "outlined",
-  },
-];
 
 const pages = [
   {
     title: "Информация",
     description: ["О Нас", "Вопросы и ответы", "Договор оферты", "Контакты"],
   },
-];
+]
 
-const cosials = [
+const socials = [
   {
     title: "Мы в социальных сетях",
     links: [
@@ -136,26 +85,36 @@ const cosials = [
       },
     ],
   },
-];
+]
 
-export default function Pricing() {
-  const classes = useStyles();
+export default function Footer() {
+  const classes = useStyles()
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
         <Grid container  justifyContent="space-evenly">
-          <Grid item xs={12} sm={3} md={3} className={styles.footer__company}>
+          <Grid
+            item
+            xs={12} sm={3} md={3}
+            className={`${styles.footer__company} ${styles.info_block}`}
+          >
             <img
               src={footer}
               alt="logo NovaTrans"
               height="75"
-              className={classes.icon}
             />
             <Typography
-              // variant="subtitle1"
+              className={styles.logo_heading}
+              variant="h6"
+              color="textPrimary"
+              gutterBottom
+            >
+              NovaTrans
+            </Typography>
+            <Typography
               color="textSecondary"
               gutterBottom
               className={styles.footer__logo_description}
@@ -170,8 +129,7 @@ export default function Pricing() {
               sm={3}
               md={6}
               key={index}
-              className={styles.footer__pages_list}
-              sx={{ pl: index === 0 ? 3 : 0 }}
+              className={`${styles.footer__pages_list} ${styles.info_block}`}
             >
               <Typography
                 variant="h6"
@@ -199,14 +157,14 @@ export default function Pricing() {
             </Grid>
           ))}
 
-          {cosials.map((cosial, index) => (
+          {socials.map((cosial, index) => (
             <Grid
               item
               xs={12}
               sm={3}
               md={3}
               key={index}
-              className={styles.social_list_container}
+              className={`${styles.social_list_container} ${styles.info_block}`}
             >
               <Typography variant="h6" color="textPrimary" gutterBottom>
                 {cosial.title}
@@ -230,6 +188,6 @@ export default function Pricing() {
         </Box>
       </Container>
       {/* End footer */}
-    </React.Fragment>
-  );
+    </>
+  )
 }

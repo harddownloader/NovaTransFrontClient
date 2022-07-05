@@ -1,5 +1,7 @@
 @import '../../styles/mixins/Common.scss';
 
+.collapse_alert {}
+
 .container {
   padding: 10px 0;
 }
@@ -12,10 +14,16 @@
   color: #424242;
 }
 
+.heading {
+  font-weight: 500;
+}
+
 .pointer {
   @include pointer;
 }
 
-.invent_img {
-  filter: invert(85%);
+.rightToolbar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 }

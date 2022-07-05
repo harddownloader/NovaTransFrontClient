@@ -16,6 +16,16 @@ import stCollapse from "./SingleCard.Collapse.module.scss"
 
 
 const SingleCard = (props) => {
+  const {
+    searchingWithReturnTicket,
+    isReturnTicket,
+    orders,
+    handleBook,
+  } = props
+
+  const purchasedTicket = Boolean(orders?.oneWayTicketsOrder && !isReturnTicket)
+  const purchasedReturnTicket = Boolean(orders?.returnTicketsOrder && isReturnTicket)
+
   const theme = useTheme()
   const isMobileVesion = !useMediaQuery(theme.breakpoints.up('sm'))
 
@@ -46,7 +56,7 @@ const SingleCard = (props) => {
   }
 
   const handleCancel = (e) => {
-    e.stopPropagation()
+    if (e) e.stopPropagation()
     setVisibleSeatModal(false)
   }
 
@@ -63,21 +73,7 @@ const SingleCard = (props) => {
     setVisibleDetailsModal(false)
   }
 
-  const handleUserBooked = (seat) => {
-    // let arr = [...this.state.userBooked]
-    // arr.push(seat)
-    // this.setState({userBooked: arr})
-    encryptInfo(seat)
-  }
-
-  const handleSuccess = (info) => {
-    Router.push({
-      pathname: "/details",
-      query: { info },
-    })
-  }
-
-  const encryptInfo = (seat) => {
+  const handleUserBooked = (seats) => {
     const {
       startLocation,
       endLocation,
@@ -90,8 +86,42 @@ const SingleCard = (props) => {
     const end = endLocation.name
     // const travelName = travel.name
     // const info = { start, end, fare, journeyDate, travelName, seat, slug }
-    const info = { start, end, fare, journeyDate, seat, slug }
-    const resp = enc(info)
+    const info = { start, end, fare, journeyDate, seats, slug }
+
+    if (
+      !searchingWithReturnTicket ||
+      (
+        (searchingWithReturnTicket && orders?.returnTicketsOrder && !isReturnTicket) ||
+        (searchingWithReturnTicket && orders?.oneWayTicketsOrder && isReturnTicket)
+      )
+    ) {
+      let order = {}
+      !searchingWithReturnTicket
+        ? order.oneWayTicketsOrder = {...info}
+        : isReturnTicket
+          ? order = {
+            oneWayTicketsOrder: {...orders.oneWayTicketsOrder},
+            returnTicketsOrder: {...info}
+          }
+          : order = {
+            oneWayTicketsOrder: {...info},
+            returnTicketsOrder: {...orders.returnTicketsOrder}
+          }
+      return encryptInfo(order)
+    }
+
+    return handleBook(info)
+  }
+
+  const handleSuccess = (order) => {
+    Router.push({
+      pathname: "/details",
+      query: { order },
+    })
+  }
+
+  const encryptInfo = (order) => {
+    const resp = enc(order)
     handleSuccess(resp)
   }
 
@@ -117,7 +147,8 @@ const SingleCard = (props) => {
                 <span>
                   Рейс №{" "}
                   <span className={stCollapse.bold}>
-                    {bus?.name} Борисполь (аэропорт) - Одесса
+                    {bus?.name}
+                    {/* Борисполь (аэропорт) - Одесса */}
                   </span>
                   , по маршруту{" "}
                   <span className={stCollapse.bold}>
@@ -126,7 +157,14 @@ const SingleCard = (props) => {
                 </span>
                 <span>
                   , на{" "}
-                  <span className={stCollapse.bold}>21 июля 2021</span>{" "}
+                  <span className={stCollapse.bold}>
+                    {
+                    ticketDescription?.start?.date &&
+                    `${getLocaleDate(ticketDescription?.start?.date)} ${new Date(
+                      ticketDescription?.start?.date
+                    ).getFullYear()}`
+                    }
+                  </span>{" "}
                   года
                 </span>
                 <span>
@@ -247,8 +285,24 @@ const SingleCard = (props) => {
     const diffDays = Math.floor(milliseconds / 86400000) // days
     const diffHrs = Math.floor((milliseconds % 86400000) / 3600000) // hours
     const diffMins = Math.round(((milliseconds % 86400000) % 3600000) / 60000) // minutes
-    console.log(diffDays + " дней, " + diffHrs + " часов, " + diffMins + " минут")
     return `${diffDays ? diffDays + 'д.' : ''}  ${diffHrs ? diffHrs + 'ч.' : ''}  ${diffMins + 'мин.'}`
+  }
+
+  /**
+   * return: string
+   */
+  const getOurSeats = () => {
+    if (isReturnTicket && orders?.returnTicketsOrder?.seats?.length) {
+      const totalPayments = orders.returnTicketsOrder.seats.length * orders.returnTicketsOrder.fare
+      return `Итого: ${totalPayments}грн. / Ваши места: ${orders?.returnTicketsOrder.seats.map((ticket) => {
+        return `${ticket} \n`
+      })}`
+    } else if (!isReturnTicket && orders?.oneWayTicketsOrder?.seats?.length) {
+      const totalPayments = orders.oneWayTicketsOrder.seats.length * orders.oneWayTicketsOrder.fare
+      return `Итого: ${totalPayments}грн. / Ваши места: ${orders?.oneWayTicketsOrder.seats.map((ticket) => {
+        return `${ticket} `
+      })}`
+    } else return ''
   }
 
   return (
@@ -257,9 +311,10 @@ const SingleCard = (props) => {
         <div className={styles.wrapper}>
           <span
             type="only"
-            className={`${styles.badge} ${styles.badge_type1}`}
+            className={`${styles.badge} ${ (purchasedTicket || purchasedReturnTicket) ? styles.badge_type3 : styles.badge_type1}`}
           >
-            Эксклюзивная цена
+            {(purchasedTicket || purchasedReturnTicket)
+                ? `${getOurSeats()}` : `Эксклюзивная цена`}
           </span>
           {/* <span
             type="eticket"
@@ -268,7 +323,14 @@ const SingleCard = (props) => {
             Можно не печатать
           </span> */}
         </div>
-        <div type="only" className={styles.preview}>
+        <div
+          type="only"
+          className={`${styles.preview} ${
+            (purchasedTicket || purchasedReturnTicket)
+              ? styles.success_border
+              : styles.blue_border
+          }`}
+        >
           <span className={`${styles.badge} ${styles.bg_success}`}></span>
           <div className={`${styles.gridBody} ${styles.grid}`}>
             <div className={styles.gridLeft}>
@@ -283,19 +345,17 @@ const SingleCard = (props) => {
                 <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                   <div className={styles.time_start}>
                     <div type="from" className={styles.time}>
-                      {bus?.departure_time}
+                      {ticketDescription?.start?.time}
                       <div>
                         <span className={styles.date}>
-                          {bus
-                            ? getLocaleDate(bus.journeyDate)
-                            : null}
+                          {ticketDescription?.start?.date &&
+                            getLocaleDate(ticketDescription?.start?.date)}
                         </span>
                         <span className={styles.dateYear}>
-                          {bus
-                            ? new Date(
-                                bus.journeyDate
-                              ).getFullYear()
-                            : null}
+                          {ticketDescription?.start?.date &&
+                            new Date(
+                              ticketDescription?.start?.date
+                            ).getFullYear()}
                         </span>
                       </div>
                     </div>
@@ -320,19 +380,18 @@ const SingleCard = (props) => {
                 <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                   <div className={styles.time_end}>
                     <div type="to" className={styles.time}>
-                      {bus ? bus.arrival_time : null}
+                      {ticketDescription?.end?.time}
                       <div>
                         <span className={styles.date}>
-                          {bus
-                            ? getLocaleDate(bus.arrivalDate)
-                            : null}
+                          {ticketDescription?.end?.date &&
+                            getLocaleDate(ticketDescription?.end?.date)
+                          }
                         </span>
                         <span className={styles.dateYear}>
-                          {bus
-                            ? new Date(
-                                bus.arrivalDate
-                              ).getFullYear()
-                            : null}
+                          {ticketDescription?.end?.date &&
+                            new Date(
+                              ticketDescription?.end?.date
+                            ).getFullYear()}
                         </span>
                       </div>
                     </div>
@@ -365,11 +424,14 @@ const SingleCard = (props) => {
                 </div>
                 <div className={styles.buttonWrapper}>
                   <button
-                    className={styles.btn__submit}
+                    className={`${styles.btn__submit} ${(purchasedTicket || purchasedReturnTicket) ? styles.ticket_bought : ''}`}
                     role="button"
-                    onClick={showSeatModal}
+                    onClick={(purchasedTicket || purchasedReturnTicket) ? (e) => {
+                      e.stopPropagation
+                      handleBook(null)
+                    } : showSeatModal}
                   >
-                    <span className="">Выбрать</span>
+                    <span className="">{(purchasedTicket || purchasedReturnTicket) ? `Отменить` : `Выбрать`}</span>
                   </button>
                 </div>
               </div>
@@ -379,7 +441,7 @@ const SingleCard = (props) => {
             <div className={styles.grid}>
               <div className={styles.gridLeft}>
                 <div className={styles.flex}>
-                  <div className={styles.toggle}>
+                  <div className={`${styles.toggle} ${(purchasedTicket || purchasedReturnTicket) ? styles.success_color : styles.blue_color}`}>
                     <span className={styles.toggleWrapp} onClick={handleExpandClick}>
                       { expanded ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon /> }
                       { expanded ? 'Свернуть' : 'Детали рейса' }
@@ -406,11 +468,14 @@ const SingleCard = (props) => {
               <div className={styles.gridDivider8}></div>
               <div className={`${styles.gridRight9} ${styles.gridRight}`}>
                 <button
-                  className={`${styles.btn__submit} ${styles.btn__submit_mobile}`}
+                  className={`${styles.btn__submit} ${styles.btn__submit_mobile} ${(purchasedTicket || purchasedReturnTicket) ? styles.cancel_color : ''}`}
                   role="button"
-                  onClick={showSeatModal}
+                  onClick={(purchasedTicket || purchasedReturnTicket) ? (e) => {
+                    e.stopPropagation
+                    handleBook(null)
+                  } : showSeatModal}
                 >
-                  <span className="">{bus?.fare} грн</span>
+                  <span className="">{(purchasedTicket || purchasedReturnTicket) ? `Отменить` : `${bus?.fare} грн`}</span>
                 </button>
               </div>
             </div>
