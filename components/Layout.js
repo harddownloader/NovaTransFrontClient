@@ -1,16 +1,14 @@
-import React from 'react';
-import Header from './Header';
-import 'antd/dist/antd.css';
+import React from 'react'
+import Header from '@/components/HeaderMaterial/Header'
 
 
 const Layout = ({ children }) => {
-    console.log(children)
-    return (
-        <React.Fragment>
-            <Header />
-            {children}
-        </React.Fragment>
-    );
-};
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  )
+}
 
-export default Layout;
+export default Layout
