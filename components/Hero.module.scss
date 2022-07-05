@@ -1,0 +1,18 @@
+.hero {
+  // background: url("../static/img/bus.jpg");
+  background-color: #fff;
+  height: 92vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.overlay {
+  height: 92vh;
+  background: #000;
+  width: 100%;
+  position: absolute;
+  top: 4rem;
+  left: 0;
+  z-index: 0;
+  opacity: 0.4;
+}
