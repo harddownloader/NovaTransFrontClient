@@ -32,8 +32,6 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 // pickers
 import MaterialUIPickers from "../../Pickers/DatePicker"
-// import FormHelperText from '@mui/material/FormHelperText'
-import Select from "@mui/material/Select"
 import Autocomplete from "@mui/material/Autocomplete"
 
 // styles
@@ -47,12 +45,12 @@ import { blue } from '@mui/material/colors'
 // images
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
 
-const { Option } = Select
-
 const useStyles = makeStyles((theme) => {
   return {
   // container
-  heroContent: props => ({
+  heroContent: (props: {
+    isBackTicketFildsShow: boolean
+  }) => ({
     backgroundColor: theme.palette.background.paper,
     backgroundImage: `url(${BgImage})`,
     backgroundRepeat: "no-repeat",

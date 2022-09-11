@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import Header from "@/components/HeaderMaterial/Header"
 import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
 import WhyAreWe from "@/components/Home/WhyAreWe"
+import PopularTrips from "@/components/PopularTrips"
 import AboutDrivers from "@/components/Home/AboutDrivers"
 import Footer from "@/components/Footer/Footer"
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
@@ -37,7 +38,8 @@ function App(props) {
 
       <main>
         <SearchTickets />
-        <WhyAreWe /> 
+        <WhyAreWe />
+        {/*<PopularTrips />*/}
         <AboutDrivers />
       </main>
 
