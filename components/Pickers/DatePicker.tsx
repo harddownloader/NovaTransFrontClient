@@ -6,7 +6,6 @@ import DatePicker from '@mui/lab/DatePicker'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 // styles
-import { makeStyles } from '@mui/styles'
 import styles from "./DataPicker.module.scss"
 import searchTicketsStyles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
 import TextField from '@mui/material/TextField'
@@ -14,17 +13,17 @@ import InputAdornment from '@mui/material/InputAdornment'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 
 export default function MaterialUIPickers(props) {
-  const [selectedDate, setSelectedDate] = useState(props.value);
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(props.value)
+  const [isOpen, setIsOpen] = useState(false)
 
-  const refDatePicker = useRef(null);
+  const refDatePicker = useRef(null)
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
-    props.onChangeDate(date);
-  };
+    setSelectedDate(date)
+    props.onChangeDate(date)
+  }
 
-  const { isLastElementInRow } = props;
+  const { isLastElementInRow } = props
 
   useEffect(() => {
     /**
@@ -87,5 +86,5 @@ export default function MaterialUIPickers(props) {
         />
       </LocalizationProvider>
     </Grid>
-  );
+  )
 }

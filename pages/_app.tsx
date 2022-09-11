@@ -4,7 +4,6 @@ import { createTheme } from '@mui/material/styles'
 // import App from 'next/app'
 import { Provider } from 'react-redux'
 import  { AppProps } from 'next/app'
-import './about/test.css'
 import '@/styles/global.scss'
 import store from '../app/store'
 
