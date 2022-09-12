@@ -73,7 +73,7 @@ const pages = [
 
 const socials = [
   {
-    title: "Мы в социальных сетях",
+    title: "Соц сети",
     links: [
       {
         name: "Facebook",
@@ -107,7 +107,7 @@ export default function Footer() {
               <img
                 src={logo}
                 alt="logo Good Bus"
-                height="75"
+                height={50}
               />
             </div>
             <div
@@ -116,7 +116,7 @@ export default function Footer() {
               <img
                 src={headingImg}
                 alt="logo Good Bus"
-                height={20}
+                height={15}
               />
             </div>
             <Typography
@@ -124,7 +124,7 @@ export default function Footer() {
               gutterBottom
               className={styles.footer__logo_description}
             >
-              Ваш надежный перевозчик.
+              Если перевозки -<br /> то мы
             </Typography>
           </Grid>
           {pages.map((page, index) => (
