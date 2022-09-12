@@ -13,8 +13,8 @@ import InstagramIcon from "@mui/icons-material/Instagram"
 // styles
 import styles from "./Footer.module.scss"
 // images
-const footer = "/static/img/logos/logo_with_location_blue.png"
-
+const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
+const headingImg = "/static/img/logos/goodBusNaming2.jpg"
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -101,19 +101,24 @@ export default function Footer() {
             xs={12} sm={3} md={3}
             className={`${styles.footer__company} ${styles.info_block}`}
           >
-            <img
-              src={footer}
-              alt="logo NovaTrans"
-              height="75"
-            />
-            <Typography
-              className={styles.logo_heading}
-              variant="h6"
-              color="textPrimary"
-              gutterBottom
+            <div
+              className={styles.footer_logo_wrapper}
             >
-              NovaTrans
-            </Typography>
+              <img
+                src={logo}
+                alt="logo Good Bus"
+                height="75"
+              />
+            </div>
+            <div
+              className={styles.footer_logo_wrapper}
+            >
+              <img
+                src={headingImg}
+                alt="logo Good Bus"
+                height={20}
+              />
+            </div>
             <Typography
               color="textSecondary"
               gutterBottom
