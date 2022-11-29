@@ -19,7 +19,7 @@ import {
 
 function App(props) {
   const alert = props?.alert
-  const [isAlertVibible, setIsAlertVibible] = useState(Boolean(alert))
+  const [isAlertVisible, setIsAlertVisible] = useState(Boolean(alert))
   const dispatch = useAppDispatch()
   const {
     data,
@@ -43,9 +43,9 @@ function App(props) {
         <AboutDrivers />
       </main>
 
-      {isAlertVibible && <ConfirmModal
-        isVisible={isAlertVibible}
-        changeVisibility={() => setIsAlertVibible(!isAlertVibible)}
+      {isAlertVisible && <ConfirmModal
+        isVisible={isAlertVisible}
+        changeVisibility={() => setIsAlertVisible(!isAlertVisible)}
         titleText={alert?.alertTitle}
         contentText={alert?.alertText}
         cancelButtonText={'ОК'}
@@ -63,5 +63,13 @@ App.getInitialProps = ({ query }) => {
   }
   return {}
 }
+
+// export async function getServerSideProps(context) {
+//   fetch locations
+//
+//   return {
+//     props: {}, // will be passed to the page component as props
+//   }
+// }
 
 export default App
