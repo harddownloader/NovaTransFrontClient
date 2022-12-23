@@ -4,6 +4,7 @@
 
 .container {
   padding: 10px 0;
+  background: #1976d2;
 }
 
 .lightColors {
@@ -14,9 +15,21 @@
   color: #424242;
 }
 
-.heading {
-  font-weight: 500;
+.logo_wrap {
+  background: #ffffff;
+  //border: 1px solid #1976d2;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
 }
+
+//.heading {
+//  font-weight: 500;
+//  color: black;
+//  font-family: fantasy;
+//  color: #1976d2;
+//}
 
 .pointer {
   @include pointer;
