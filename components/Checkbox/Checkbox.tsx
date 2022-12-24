@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import React, { useState } from "react"
+import FormGroup from "@mui/material/FormGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Checkbox from "@mui/material/Checkbox"
 // styles
-import styles from "@/styles/Checkbox.scss";
+import styles from "@/styles/Checkbox.module.scss"
 
 export default function CheckboxLabels() {
   const [state, setState] = useState({
@@ -11,11 +11,11 @@ export default function CheckboxLabels() {
     checkedB: true,
     checkedF: true,
     checkedG: true,
-  });
+  })
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+    setState({ ...state, [event.target.name]: event.target.checked })
+  }
 
   return (
     <FormGroup row>
@@ -31,5 +31,5 @@ export default function CheckboxLabels() {
         label="Обратный билет"
       />
     </FormGroup>
-  );
+  )
 }

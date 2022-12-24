@@ -33,6 +33,27 @@ const Cards = ({
     })
   }
 
+  const sortByDateTime = (first, second) => {
+    if(
+      first?.wayStations &&
+      Array.isArray(first.wayStations) &&
+      first.wayStations.length &&
+      second?.wayStations &&
+      Array.isArray(second.wayStations) &&
+      second.wayStations.length
+    ) {
+      const firstStart = first.wayStations[0]
+      const secondStart = second.wayStations[0]
+
+      const firstDateTime = new Date(`${firstStart.date}T${firstStart.time}:00`)
+      const secondDateTime = new Date(`${secondStart.date}T${secondStart.time}:00`)
+
+      return firstDateTime > secondDateTime ? 1 : -1
+    }
+
+    return 0
+  }
+
   const isOweWayTickets = Boolean(oneWayTickets && oneWayTickets.length)
   const isReturnTickets = Boolean(returnTickets && returnTickets.length)
 
@@ -64,7 +85,9 @@ const Cards = ({
                 else return false
               }
               return true
-            }).map((ticket) => (
+            })
+            .sort(sortByDateTime)
+            .map((ticket) => (
               <SingleCard
                 key={ticket._id}
                 bus={ticket}
@@ -98,7 +121,9 @@ const Cards = ({
                 else return false
               }
               return true
-            }).map((ticket) => (
+            })
+            .sort(sortByDateTime)
+            .map((ticket) => (
             <SingleCard
               key={ticket._id}
               bus={ticket}

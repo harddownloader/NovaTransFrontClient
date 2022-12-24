@@ -8,8 +8,16 @@
   text-align: center;
 }
 
+.footer_logo_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
 .footer__logo_description {
-  font-size: 1rem;
+  margin: 0.5rem 0rem;
+  font-size: 0.9rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 400;
   line-height: normal;

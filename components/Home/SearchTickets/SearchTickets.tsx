@@ -32,8 +32,6 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
 // pickers
 import MaterialUIPickers from "../../Pickers/DatePicker"
-// import FormHelperText from '@mui/material/FormHelperText'
-import Select from "@mui/material/Select"
 import Autocomplete from "@mui/material/Autocomplete"
 
 // styles
@@ -47,12 +45,12 @@ import { blue } from '@mui/material/colors'
 // images
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
 
-const { Option } = Select
-
 const useStyles = makeStyles((theme) => {
   return {
   // container
-  heroContent: props => ({
+  heroContent: (props: {
+    isBackTicketFildsShow: boolean
+  }) => ({
     backgroundColor: theme.palette.background.paper,
     backgroundImage: `url(${BgImage})`,
     backgroundRepeat: "no-repeat",
@@ -119,6 +117,8 @@ const useStyles = makeStyles((theme) => {
     },
   }
 }})
+
+const currentDateObj = new Date()
 
 
 function SearchTickets(props) {
@@ -337,6 +337,7 @@ function SearchTickets(props) {
             >
               <MaterialUIPickers
                 value={formData.journeyDate}
+                minDate={currentDateObj}
                 onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
                 classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                 isLastElementInRow
@@ -449,6 +450,7 @@ function SearchTickets(props) {
                   classes={`${classes.select} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                   isLastElementInRow
                   value={formData.returnJourneyDate}
+                  minDate={currentDateObj}
                   onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
                 />
               </Grid>

@@ -14,13 +14,14 @@ import classes from "./Header.module.scss"
 import LangMenu from './LangMenu'
 import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this was exported from mui breakpoint type for Container maxWidth, that path may change in the future
 // images
-const logo = "/static/img/logos/logo_with_location_blue.png"
+const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
+const headingImg = "/static/img/logos/goodBusNaming2.jpg"
 
 
 const useStyles = makeStyles((theme) => {
   return {
     icon: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(1),
     }
   }
 })
@@ -61,24 +62,32 @@ const Header = ({
       </Collapse>
 
       <AppBar
-        color="transparent"
+        // color="transparent"
         elevation={0}
         position="relative"
         className={`${classes.container} ${isDarkStyle ? classes.darkColors : classes.lightColors}`}
       >
       <Container maxWidth={containerWidth}>
         <Toolbar disableGutters>
-          <Link href='/'>
-            <img
-              src={logo}
-              alt="Logo NovaTrans"
-              height={50}
-              className={`${styles.icon} ${classes.pointer}`}
-            />
-          </Link>
-          <Link href='/'>
-            <h1 className={`${classes.heading} ${classes.pointer}`}>NovaTrans</h1>
-          </Link>
+          <div className={classes.logo_wrap}>
+            <Link href='/'>
+              <img
+                src={logo}
+                alt="Logo Good Bus"
+                height={40}
+                className={`${styles.icon} ${classes.pointer}`}
+              />
+            </Link>
+            <Link href='/'>
+              {/*<h1 className={`${classes.heading} ${classes.pointer}`}>Good Bus</h1>*/}
+              <img
+                src={headingImg}
+                alt="Logo Good Bus"
+                height={24}
+              />
+            </Link>
+          </div>
+
           <section className={classes.rightToolbar}>
             <LangMenu isDarkStyle={isDarkStyle} />
           </section>
