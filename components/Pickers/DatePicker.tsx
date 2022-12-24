@@ -1,16 +1,17 @@
-import "date-fns"
+import { isValid } from "date-fns"
 import React, { useState, useRef, useEffect } from "react"
 import Grid from "@mui/material/Grid"
 import ruLocale from "date-fns/locale/ru"
-import DatePicker from '@mui/lab/DatePicker'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // styles
 import styles from "./DataPicker.module.scss"
 import searchTicketsStyles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+
 
 export default function MaterialUIPickers(props) {
   const [selectedDate, setSelectedDate] = useState(props.value)
@@ -19,11 +20,12 @@ export default function MaterialUIPickers(props) {
   const refDatePicker = useRef(null)
 
   const handleDateChange = (date) => {
-    setSelectedDate(date)
-    props.onChangeDate(date)
+    const isValidDate = isValid(date)
+    if (isValidDate) setSelectedDate(date)
+    if (isValidDate) props.onChangeDate(date)
   }
 
-  const { isLastElementInRow } = props
+  const { isLastElementInRow, minDate } = props
 
   useEffect(() => {
     /**
@@ -48,17 +50,21 @@ export default function MaterialUIPickers(props) {
     <Grid container justifyContent="space-around">
       <LocalizationProvider dateAdapter={AdapterDateFns} locale={ruLocale}>
         <DatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
+
+          // --- OLD PROPERTIES ---
+          // disableToolbar={true}
+          // variant="inline"
+          // format="MM/dd/yyyy"
           // margin="normal"
-          id="date-picker-inline"
+          // id="date-picker-inline"
+          // KeyboardButtonProps={{
+          //   "aria-label": "change date",
+          // }}
+
           label="Дата поездки"
           value={selectedDate}
           onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
+          minDate={minDate}
           className={
             `${styles.date_picker__container} ${props.classes}` // props.classes - I don't know why, but that's doesn't work
           }

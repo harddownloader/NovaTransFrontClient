@@ -118,6 +118,8 @@ const useStyles = makeStyles((theme) => {
   }
 }})
 
+const currentDateObj = new Date()
+
 
 function SearchTickets(props) {
   const theme = useTheme()
@@ -335,6 +337,7 @@ function SearchTickets(props) {
             >
               <MaterialUIPickers
                 value={formData.journeyDate}
+                minDate={currentDateObj}
                 onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
                 classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                 isLastElementInRow
@@ -447,6 +450,7 @@ function SearchTickets(props) {
                   classes={`${classes.select} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
                   isLastElementInRow
                   value={formData.returnJourneyDate}
+                  minDate={currentDateObj}
                   onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
                 />
               </Grid>
