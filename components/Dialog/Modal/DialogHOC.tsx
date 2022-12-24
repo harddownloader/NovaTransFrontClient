@@ -8,10 +8,16 @@ import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import Slide from '@mui/material/Slide'
+import { SlideProps } from "@mui/material";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
+
+/*
+* https://github.com/mui/material-ui/issues/32601
+* */
+const Transition = React.forwardRef((props: SlideProps, ref) => (
+  <Slide direction="up" ref={ref} {...props} />
+));
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
