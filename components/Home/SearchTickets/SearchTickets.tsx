@@ -41,6 +41,8 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import { blue } from '@mui/material/colors'
+import { Searchform } from "@/interfaces/searchform"
+import { futureAnyFix } from "@/interfaces/futureAnyFix"
 
 // images
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
@@ -142,7 +144,7 @@ function SearchTickets(props) {
   const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
   const todayDateWithFormat = new Date().toISOString().split('T')[0]
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Searchform | futureAnyFix>({
     startLocation: props?.info?.startLocation ? props.info.startLocation : null,
     endLocation: props?.info?.endLocation ? props.info.endLocation : null,
     journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : todayDateWithFormat,

@@ -6,10 +6,16 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import Slide from '@mui/material/Slide'
+import { SlideProps } from "@mui/material";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />
-})
+
+/*
+* https://github.com/mui/material-ui/issues/32601
+* */
+const Transition = React.forwardRef((props: SlideProps, ref) => (
+  <Slide direction="up" ref={ref} {...props} />
+));
+
 
 export default function ConfirmModal(props) {
   const {

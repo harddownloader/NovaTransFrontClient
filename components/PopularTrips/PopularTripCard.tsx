@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import styles from "../../pages/buses/SingleCard.module.scss";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Collapse from "@mui/material/Collapse";
-import stCollapse from "../../pages/buses/SingleCard.Collapse.module.scss";
-import {useTheme} from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import React, { useState } from 'react'
+import styles from "../../pages/buses/SingleCard.module.scss"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+import Collapse from "@mui/material/Collapse"
+import stCollapse from "../../pages/buses/SingleCard.Collapse.module.scss"
+import { useTheme } from "@mui/material/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { futureAnyFix } from "@/interfaces/futureAnyFix"
 
 const PopularTripCard = (props) => {
   const {
@@ -26,17 +27,22 @@ const PopularTripCard = (props) => {
   const [visibleDetailsModal, setVisibleDetailsModal] = useState(false)
   const [userBooked, setUserBooked] = useState([])
   const [bus, setBus] = useState(props.bus)
-  const [ticketDescription, setTicketDescription] = useState(false)
+  const [ticketDescription, setTicketDescription] = useState<futureAnyFix>(null)
   const [isLoading , setIsLoading] = useState(true)
-                         }
-  const showDetailModal = () => {}
+
+  const showDetailModal = (e: futureAnyFix) => {}
+  const showSeatModal = () => {}
+  const getOurSeats = () => null
+  const getLocaleDate = (date: string) => null
+  const handleExpandClick = () => {}
+
 
   return (
     <div className={styles.ticket}>
       <div className={styles.root} onClick={(e) => showDetailModal(e)}>
         <div className={styles.wrapper}>
           <span
-            type="only"
+            // type="only"
             className={`${styles.badge} ${ (purchasedTicket || purchasedReturnTicket) ? styles.badge_type3 : styles.badge_type1}`}
           >
             {(purchasedTicket || purchasedReturnTicket)
@@ -50,7 +56,7 @@ const PopularTripCard = (props) => {
           </span> */}
         </div>
         <div
-          type="only"
+          // type="only"
           className={`${styles.preview} ${
             (purchasedTicket || purchasedReturnTicket)
               ? styles.success_border
@@ -70,7 +76,10 @@ const PopularTripCard = (props) => {
               <div className={styles.items}>
                 <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                   <div className={styles.time_start}>
-                    <div type="from" className={styles.time}>
+                    <div
+                      // type="from"
+                      className={styles.time}
+                    >
                       {ticketDescription?.start?.time}
                       <div>
                         <span className={styles.date}>
@@ -105,7 +114,10 @@ const PopularTripCard = (props) => {
                 </div>
                 <div className={`${styles.pointItemWrapper} ${styles.itemWrap}`}>
                   <div className={styles.time_end}>
-                    <div type="to" className={styles.time}>
+                    <div
+                      // type="to"
+                      className={styles.time}
+                    >
                       {ticketDescription?.end?.time}
                       <div>
                         <span className={styles.date}>
@@ -211,7 +223,8 @@ const PopularTripCard = (props) => {
           {/*</Collapse>*/}
         </div>
       </div>
+    </div>
   );
-};
+}
 
-export default PopularTripCard;
+export default PopularTripCard
