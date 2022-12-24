@@ -75,7 +75,7 @@ export default function DialogHOC({ children, ...props }) {
         aria-labelledby="customized-dialog-title"
         open={props.visible}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <BootstrapDialogTitle onClose={handleClose}>
           {title}
         </BootstrapDialogTitle>
         <DialogContent dividers>
