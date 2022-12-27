@@ -48,9 +48,9 @@ export default function SeatModal(props) {
 
   const getSeatClass = (position) => {
     return `${
-      sold.includes(position)
+      sold.map(seat => seat.name).includes(position)
         ? `${classes.soldButton}`
-        : booked.includes(position)
+        : booked.map(seat => seat.name).includes(position)
           ? `${classes.bookedButton}`
           : currentSeats.includes(position)
             ? `${classes.selectedButton}`
@@ -60,8 +60,8 @@ export default function SeatModal(props) {
 
   const getSeatBtnStatus = (position) => {
     return Boolean(
-      sold.includes(position) ||
-      booked.includes(position)
+      sold.map(seat => seat.name).includes(position) ||
+      booked.map(seat => seat.name).includes(position)
     )
   }
 
