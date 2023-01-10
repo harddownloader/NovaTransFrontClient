@@ -79,13 +79,13 @@ const SingleCard = (props) => {
       endLocation,
       fare,
       journeyDate,
-      // travel,
+      // category,
       slug
     } = props.bus
     const start = startLocation.name
     const end = endLocation.name
-    // const travelName = travel.name
-    // const info = { start, end, fare, journeyDate, travelName, seat, slug }
+    // const categoryName = category.name
+    // const info = { start, end, fare, journeyDate, categoryName, seat, slug }
     const info = { start, end, fare, journeyDate, seats, slug }
 
     if (
