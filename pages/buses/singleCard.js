@@ -75,15 +75,16 @@ const SingleCard = (props) => {
 
   const handleUserBooked = (seats) => {
     const {
-      startLocation,
-      endLocation,
+      wayStations,
       fare,
-      journeyDate,
       // category,
       slug
     } = props.bus
-    const start = startLocation.name
-    const end = endLocation.name
+    const firstPoint = wayStations[0]
+    const lastPoint = wayStations[wayStations.length - 1]
+    const start = firstPoint.city
+    const end = lastPoint.city
+    const journeyDate = firstPoint.date
     // const categoryName = category.name
     // const info = { start, end, fare, journeyDate, categoryName, seat, slug }
     const info = { start, end, fare, journeyDate, seats, slug }
