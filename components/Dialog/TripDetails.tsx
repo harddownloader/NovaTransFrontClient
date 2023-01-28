@@ -7,7 +7,7 @@ import CardInfo from '@/components/Card/CardInfo'
 
 
 export default function TripDetails(props) {
-  const { tripDetails, isMobileVesion } = props
+  const { tripDetails, isMobileVersion } = props
 
   const handleClose = (e) => {
     props.handleCancel(e)
