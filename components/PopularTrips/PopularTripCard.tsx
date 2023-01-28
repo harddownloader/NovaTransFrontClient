@@ -20,7 +20,7 @@ const PopularTripCard = (props) => {
   const purchasedReturnTicket = Boolean(orders?.returnTicketsOrder && isReturnTicket)
 
   const theme = useTheme()
-  const isMobileVesion = !useMediaQuery(theme.breakpoints.up('sm'))
+  const isMobileVersion = !useMediaQuery(theme.breakpoints.up('sm'))
 
   const [expanded, setExpanded] = useState(false)
   const [visibleSeatModal, setVisibleSeatModal] = useState(false)

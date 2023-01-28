@@ -63,13 +63,13 @@ export default function DialogHOC({ children, ...props }) {
     childrenFooter,
     confirm,
     handleClose,
-    isMobileVesion
+    isMobileVersion
   } = props
 
   return (
     <div>
       <BootstrapDialog
-        fullScreen={isMobileVesion}
+        fullScreen={isMobileVersion}
         TransitionComponent={Transition}
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
