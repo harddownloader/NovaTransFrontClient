@@ -1,34 +1,72 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, Fragment } from 'react'
 import IconButton from '@mui/material/IconButton'
 import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined'
-import Grid from '@mui/material/Grid'
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import classes from './SeatModal.module.scss'
 import DialogHOC from '@/components/Dialog/Modal/DialogHOC'
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
+import {
+  getBusElementDriver,
+  getBusElementWC,
+  getBusElementDoor,
+  getBusElementBar,
+  getEmptyBlock,
+} from './busBlockElements'
 
 
-const rowsCount = [0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25]
-const oddA = ["A1", "A3", "A5", "A7", "A9", "A11", "A13"]
-const evenA = ["A2", "A4", "A6", "A8", "A10", "A12", "A14"]
-const oddB = ["B1", "B3", "B5", "B7", "B9", "B11", "B13"]
-const evenB = ["B2", "B4", "B6", "B8", "B10", "B12", "B14"]
+const gridStyle = (countBlocksInRow) => ({
+  display: 'grid',
+  gridTemplateColumns: `repeat(${countBlocksInRow}, 1fr)`,
+  gridColumnGap: '0rem',
+  gridRowGap: '0rem',
+})
+
+const seatsConfig = {
+  seatsCount: 59,
+  countBlocksInRow: 6,
+  countSeatsInRow: 4,
+  rows: null,
+  countFreeSeatsInRow: 2,
+  busElements: {
+    driverCoordinates: 0,
+    firstDoorCoordinates: 4,
+    secondDoorCoordinates: 46,
+    wcCoordinates: 40,
+    barCoordinates: 52,
+  },
+  seatsForBusElements: 8, // the number is put down by the selection method
+  additionalRowsForBusElements: 3, // this is the number of additional rows to place the bus elements
+}
+
+const seatsCount = seatsConfig.seatsCount
+
+const getNumberOfRows = () => {
+  let rows = Math.floor(seatsCount / seatsConfig.countSeatsInRow)
+  const remainder = seatsCount % seatsConfig.countSeatsInRow
+
+  if ( remainder !== 0 ) {
+    rows += 1
+  }
+
+  return rows + seatsConfig.additionalRowsForBusElements
+}
+
+seatsConfig.rows = getNumberOfRows()
+
+const allFreeSeats = seatsConfig.rows * seatsConfig.countFreeSeatsInRow
+const allBlocksCount = seatsConfig.seatsCount + allFreeSeats + seatsConfig.seatsForBusElements
+
 
 
 export function SeatModal(props) {
   const { isMobileVersion } = props
 
   const { sold = [] , booked = [] } = props
+  const { countBlocksInRow, busElements } = seatsConfig
 
   const [isConfirmVisible, setIsConfirmVisible] = useState(false)
   const [currentSeats, setCurrentSeats] = useState([])
-
-  // useEffect(() => {
-  //   if (currentSeat) {
-  //     setIsConfirmVisible(true)
-  //   }
-  // }, [currentSeat])
 
   const handleClose = (e) => {
     if(e) e.stopPropagation()
@@ -39,8 +77,8 @@ export function SeatModal(props) {
   const handleClick = (e, seat) => {
     e.stopPropagation()
     const currentSeatTmp = currentSeats
-    const isSeatInListIndx = currentSeatTmp.findIndex(currentSeat => currentSeat === seat)
-    if (isSeatInListIndx !== -1) currentSeatTmp.splice(isSeatInListIndx, 1)
+    const isSeatInListIndex = currentSeatTmp.findIndex(currentSeat => currentSeat === seat)
+    if (isSeatInListIndex !== -1) currentSeatTmp.splice(isSeatInListIndex, 1)
     else currentSeatTmp.push(seat)
 
     setCurrentSeats([...currentSeatTmp])
@@ -70,21 +108,68 @@ export function SeatModal(props) {
     props.handleUserBooked(currentSeats)
   }
 
-  const getSeatsForSide = (col, row) => {
+  const getSeatsForSide = (seatNumber) => {
     return (
-      <IconButton
-        size="large"
-        color="primary"
-        aria-label="seat"
-        component="span"
-        disabled={getSeatBtnStatus(row[col])}
-        className={getSeatClass(row[col])}
-        onClick={(e) => handleClick(e, row[col])}
-      >
-        <WeekendOutlinedIcon />
-      </IconButton>
+      <div className={classes.seatBtnWrap}>
+        <IconButton
+          size="large"
+          color="primary"
+          aria-label="seat"
+          component="span"
+          disabled={getSeatBtnStatus(seatNumber)}
+          className={getSeatClass(seatNumber)}
+          onClick={(e) => handleClick(e, seatNumber)}
+        >
+          <WeekendOutlinedIcon />
+        </IconButton>
+      </div>
     )
   }
+
+  const getCurrentBusElBlock = ({
+                                  driverCoordinates,
+                                  firstDoorCoordinates,
+                                  secondDoorCoordinates,
+                                  wcCoordinates,
+                                  barCoordinates,
+                                }, currentIndex) => {
+    let currentBusEl = null
+
+    switch (currentIndex) {
+      case driverCoordinates:
+        currentBusEl = getBusElementDriver(currentIndex)
+        break
+      case wcCoordinates:
+        currentBusEl = getBusElementWC(currentIndex)
+        break
+      case firstDoorCoordinates:
+        currentBusEl = getBusElementDoor(currentIndex)
+        break
+      case secondDoorCoordinates:
+        currentBusEl = getBusElementDoor(currentIndex)
+        break;
+      case barCoordinates:
+        currentBusEl = getBusElementBar(currentIndex)
+        break
+    }
+
+    return currentBusEl
+  }
+
+  const checkIsCurrentBlockEmpty = (currentIndex, countBlocksInRow) => {
+    const currentBlockNumber = currentIndex + 1
+    const remainderOfTheDivision = currentBlockNumber % countBlocksInRow
+
+    // if this is a corridor, them we put an empty block
+    const isCurrentBlockEmpty = (
+      remainderOfTheDivision === 3 ||
+      remainderOfTheDivision === 4
+    );
+
+    return isCurrentBlockEmpty
+  }
+
+  let seatsCounter = 0
 
   return (
     <DialogHOC
@@ -156,94 +241,47 @@ export function SeatModal(props) {
         </>
       }
     >
-      <Grid
-        container
-        className={classes.seat_dialog_row_wrapp}
-      >
-        <Grid
-          item
-          xs={4}
-          sm={4}
-          md={4}
-        >
-          {rowsCount.map((le, i) => {
-            return (
-              <div
-                className={classes.seat_side_row}
-                key={i}
-              >
-                {oddA[i] && getSeatsForSide(i, oddA)}
-                {/*<IconButton*/}
-                {/*  size="large"*/}
-                {/*  color="primary"*/}
-                {/*  aria-label="seat"*/}
-                {/*  component="span"*/}
-                {/*  disabled={getSeatBtnStatus(oddA[i])}*/}
-                {/*  className={getSeatClass(oddA[i])}*/}
-                {/*  onClick={(e) => handleClick(e, oddA[i])}*/}
-                {/*>*/}
-                {/*  <WeekendOutlinedIcon />*/}
-                {/*</IconButton>*/}
+      <div className={classes.wrapper}>
+        <div className={classes.busWrap}>
+          <div className={classes.busContent} style={gridStyle(countBlocksInRow)}>
+            {Array(allBlocksCount).fill(0).map((seat, i) => {
+              const currentBusEl = getCurrentBusElBlock({...busElements}, i)
 
-                {evenA[i] && getSeatsForSide(i, evenA)}
-                {/*<IconButton*/}
-                {/*  color="primary"*/}
-                {/*  aria-label="seat"*/}
-                {/*  component="span"*/}
-                {/*  disabled={getSeatBtnStatus(evenA[i])}*/}
-                {/*  className={getSeatClass(evenA[i])}*/}
-                {/*  onClick={(e) => handleClick(e, evenA[i])}*/}
-                {/*>*/}
-                {/*  <WeekendOutlinedIcon />*/}
-                {/*</IconButton>*/}
-              </div>
-            )
-          })}
-        </Grid>
-        <Grid
-          item
-          xs={3}
-        ></Grid>
-        <Grid
-          item
-          xs={4}
-          sm={4}
-          md={4}
-        >
-          {rowsCount.map((le, i) => {
-            return (
-              <div
-                className={classes.seat_side_row}
-                key={i}
-              >
-                {oddB[i] && getSeatsForSide(i, oddB)}
-                {/*<IconButton*/}
-                {/*  color="primary"*/}
-                {/*  aria-label="seat"*/}
-                {/*  component="span"*/}
-                {/*  disabled={getSeatBtnStatus(oddB[i])}*/}
-                {/*  className={getSeatClass(oddB[i])}*/}
-                {/*  onClick={(e) => handleClick(e, oddB[i])}*/}
-                {/*>*/}
-                {/*  <WeekendOutlinedIcon />*/}
-                {/*</IconButton>*/}
+              // we need to skip block insertion because the bus elements are 2 blocks wide
+              let content = null
+              if (
+                i === busElements.driverCoordinates + 1 ||
+                i === busElements.firstDoorCoordinates + 1 ||
+                i === busElements.secondDoorCoordinates + 1 ||
+                i === busElements.wcCoordinates + 1 ||
+                i === busElements.barCoordinates + 1
+              ) {
+                return content
+              }
 
-                {evenB[i] && getSeatsForSide(i, evenB)}
-                {/*<IconButton*/}
-                {/*  color="primary"*/}
-                {/*  aria-label="seat"*/}
-                {/*  component="span"*/}
-                {/*  disabled={getSeatBtnStatus(evenB[i])}*/}
-                {/*  className={getSeatClass(evenB[i])}*/}
-                {/*  onClick={(e) => handleClick(e, evenB[i])}*/}
-                {/*>*/}
-                {/*  <WeekendOutlinedIcon />*/}
-                {/*</IconButton>*/}
-              </div>
-            )
-          })}
-        </Grid>
-      </Grid>
+              const isCurrentBlockEmpty = checkIsCurrentBlockEmpty(i, countBlocksInRow)
+
+              if (currentBusEl) content = currentBusEl
+              else if (isCurrentBlockEmpty) content = getEmptyBlock()
+              else if (
+                !isCurrentBlockEmpty &&
+                !currentBusEl &&
+                seatsCounter + 1 <= seatsConfig.seatsCount
+              ) {
+                seatsCounter += 1
+                content = getSeatsForSide(seatsCounter)
+              }
+
+              return (
+                <Fragment key={i}>
+                  {content}
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
     </DialogHOC>
   )
 }
