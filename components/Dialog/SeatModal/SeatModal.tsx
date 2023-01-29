@@ -22,48 +22,19 @@ const gridStyle = (countBlocksInRow) => ({
   gridRowGap: '0rem',
 })
 
-const seatsConfig = {
-  seatsCount: 59,
-  countBlocksInRow: 6,
-  countSeatsInRow: 4,
-  rows: null,
-  countFreeSeatsInRow: 2,
-  busElements: {
-    driverCoordinates: 0,
-    firstDoorCoordinates: 4,
-    secondDoorCoordinates: 46,
-    wcCoordinates: 40,
-    barCoordinates: 52,
-  },
-  seatsForBusElements: 8, // the number is put down by the selection method
-  additionalRowsForBusElements: 3, // this is the number of additional rows to place the bus elements
-}
-
-const seatsCount = seatsConfig.seatsCount
-
-const getNumberOfRows = () => {
-  let rows = Math.floor(seatsCount / seatsConfig.countSeatsInRow)
-  const remainder = seatsCount % seatsConfig.countSeatsInRow
-
-  if ( remainder !== 0 ) {
-    rows += 1
-  }
-
-  return rows + seatsConfig.additionalRowsForBusElements
-}
-
-seatsConfig.rows = getNumberOfRows()
-
-const allFreeSeats = seatsConfig.rows * seatsConfig.countFreeSeatsInRow
-const allBlocksCount = seatsConfig.seatsCount + allFreeSeats + seatsConfig.seatsForBusElements
-
-
 
 export function SeatModal(props) {
-  const { isMobileVersion } = props
+  const {
+    isMobileVersion,
+    busSeats: {
+      countBlocksInRow,
+      busElements,
+      seatsCount,
+      allBlocksCount,
+    }
+  } = props
 
   const { sold = [] , booked = [] } = props
-  const { countBlocksInRow, busElements } = seatsConfig
 
   const [isConfirmVisible, setIsConfirmVisible] = useState(false)
   const [currentSeats, setCurrentSeats] = useState([])
@@ -266,7 +237,7 @@ export function SeatModal(props) {
               else if (
                 !isCurrentBlockEmpty &&
                 !currentBusEl &&
-                seatsCounter + 1 <= seatsConfig.seatsCount
+                seatsCounter + 1 <= seatsCount
               ) {
                 seatsCounter += 1
                 content = getSeatsForSide(seatsCounter)
