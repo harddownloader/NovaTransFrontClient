@@ -1,10 +1,11 @@
+@import '../../styles/_variables.scss';
 @import '../../styles/mixins/Common.scss';
 
 .collapse_alert {}
 
 .container {
   padding: 10px 0;
-  background: #1976d2;
+  background: $blue_color;
 }
 
 .lightColors {
@@ -17,7 +18,7 @@
 
 .logo_wrap {
   background: #ffffff;
-  //border: 1px solid #1976d2;
+  //border: 1px solid $blue_color;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -28,7 +29,7 @@
 //  font-weight: 500;
 //  color: black;
 //  font-family: fantasy;
-//  color: #1976d2;
+//  color: $blue_color;
 //}
 
 .pointer {
