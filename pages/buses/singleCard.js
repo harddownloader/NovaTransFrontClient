@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Alert from '@mui/material/Alert'
 import Collapse from "@mui/material/Collapse"
-import SeatModal from '@/components/Dialog/SeatModal'
+import { SeatModal } from '@/components/Dialog/SeatModal'
 import TripDetails from "@/components/Dialog/TripDetails"
 import Router from "next/router"
 import { API_ROOT } from "../../utils/config"
@@ -27,7 +27,7 @@ const SingleCard = (props) => {
   const purchasedReturnTicket = Boolean(orders?.returnTicketsOrder && isReturnTicket)
 
   const theme = useTheme()
-  const isMobileVesion = !useMediaQuery(theme.breakpoints.up('sm'))
+  const isMobileVersion = !useMediaQuery(theme.breakpoints.up('sm'))
 
   const [expanded, setExpanded] = useState(false)
   const [visibleSeatModal, setVisibleSeatModal] = useState(false)
@@ -63,7 +63,7 @@ const SingleCard = (props) => {
   // modal with trip details
   const showDetailModal = (e) => {
     e.stopPropagation()
-    if (!isMobileVesion) return
+    if (!isMobileVersion) return
     setVisibleDetailsModal(true)
     setIsLoading(false)
   }
@@ -487,20 +487,21 @@ const SingleCard = (props) => {
         </div>
       </div>
       {visibleSeatModal && <SeatModal
+        busSeats={bus?.busSeatsId}
         handleCancel={handleCancel}
         visible={visibleSeatModal}
         sold={bus.soldSeat}
         booked={bus.bookedSeat}
         handleUserBooked={handleUserBooked}
-        isMobileVesion={isMobileVesion}
+        isMobileVersion={isMobileVersion}
       />}
-      {isMobileVesion && visibleDetailsModal && <TripDetails
+      {isMobileVersion && visibleDetailsModal && <TripDetails
         handleCancel={handleDetailModalCancel}
         visible={visibleDetailsModal}
         tripDetails={getTripContent.bind(this, ticketDescription, bus)}
         fare={bus?.fare}
         showSeatModal={showSeatModal}
-        isMobileVesion={isMobileVesion}
+        isMobileVersion={isMobileVersion}
       />}
     </div>
   )

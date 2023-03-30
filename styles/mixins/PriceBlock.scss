@@ -1,3 +1,5 @@
+@import '../../styles/_variables.scss';
+
 @mixin price_wrapper {
   display: flex;
   -webkit-box-align: center;
@@ -50,7 +52,7 @@
   outline: 0px;
   position: relative;
   color: rgb(255, 255, 255);
-  background-color: #1976d2;
+  background-color: $blue_color;
   padding: 13px 30px;
   font-size: 16px;
   border-radius: 4px;
