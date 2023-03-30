@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { ReactNode } from 'react'
 import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -8,16 +7,14 @@ import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import Slide from '@mui/material/Slide'
-import { SlideProps } from "@mui/material";
-
+import { SlideProps } from "@mui/material"
 
 /*
 * https://github.com/mui/material-ui/issues/32601
 * */
 const Transition = React.forwardRef((props: SlideProps, ref) => (
   <Slide direction="up" ref={ref} {...props} />
-));
-
+))
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -28,7 +25,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }))
 
-const BootstrapDialogTitle = (props) => {
+export interface BootstrapDialogTitleProps {
+  children: ReactNode,
+  onClose: (e: React.MouseEvent<HTMLElement>) => void
+}
+
+const BootstrapDialogTitle = (props: BootstrapDialogTitleProps) => {
   const { children, onClose, ...other } = props
 
   return (
@@ -52,18 +54,24 @@ const BootstrapDialogTitle = (props) => {
   )
 }
 
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
+export interface DialogHOCProps {
+  children: ReactNode
+  title: string
+  childrenFooter: ReactNode
+  confirm: null | ReactNode
+  handleClose: (e: React.MouseEvent<HTMLElement>) => void
+  isMobileVersion: boolean
+  visible: boolean
 }
 
-export default function DialogHOC({ children, ...props }) {
+export function DialogHOC({ children, ...props }: DialogHOCProps) {
   const {
     title,
     childrenFooter,
     confirm,
     handleClose,
-    isMobileVersion
+    isMobileVersion,
+    visible,
   } = props
 
   return (
@@ -73,7 +81,7 @@ export default function DialogHOC({ children, ...props }) {
         TransitionComponent={Transition}
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={props.visible}
+        open={visible}
         maxWidth={'xl'}
       >
         <BootstrapDialogTitle onClose={handleClose}>
@@ -91,3 +99,5 @@ export default function DialogHOC({ children, ...props }) {
     </div>
   )
 }
+
+export default DialogHOC
