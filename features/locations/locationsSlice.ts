@@ -4,7 +4,7 @@ import {
   createAsyncThunk,
 } from '@reduxjs/toolkit'
 import type { RootState } from '../../app/store'
-import { API } from "@/utils/config"
+import { API } from "@/utils/const"
 
 export interface LocationState {
   district: string,
