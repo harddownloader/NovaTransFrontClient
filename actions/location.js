@@ -1,5 +1,5 @@
 import fetch from "isomorphic-unfetch"
-import { API } from "../utils/config"
+import { API } from "../utils/const"
 import queryString from "query-string"
 
 export const getAllLocations = async () => {
