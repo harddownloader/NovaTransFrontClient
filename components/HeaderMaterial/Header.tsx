@@ -15,7 +15,7 @@ import LangMenu from './LangMenu'
 import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this was exported from mui breakpoint type for Container maxWidth, that path may change in the future
 // images
 const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
-const headingImg = "/static/img/logos/goodBusNaming2.jpg"
+const headingImg = "/static/img/logos/NewTrans.png"
 
 
 const useStyles = makeStyles((theme) => {
@@ -73,7 +73,7 @@ const Header = ({
             <Link href='/'>
               <img
                 src={logo}
-                alt="Logo Good Bus"
+                alt="Logo"
                 height={40}
                 className={`${styles.icon} ${classes.pointer}`}
               />
@@ -82,7 +82,7 @@ const Header = ({
               {/*<h1 className={`${classes.heading} ${classes.pointer}`}>Good Bus</h1>*/}
               <img
                 src={headingImg}
-                alt="Logo Good Bus"
+                alt="Logo"
                 height={24}
               />
             </Link>

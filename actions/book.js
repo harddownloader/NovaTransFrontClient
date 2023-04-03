@@ -1,5 +1,5 @@
 import fetch from "isomorphic-unfetch"
-import { API } from "../utils/config"
+import { API } from "../utils/const"
 
 // slug - string
 // seats - array of strings

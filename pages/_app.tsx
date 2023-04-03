@@ -1,35 +1,37 @@
-import React from 'react'
+import React, { ReactElement, ReactNode } from 'react'
+import { NextPage } from "next"
+import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
+
+// mui
 import { styled, ThemeProvider } from '@mui/styles'
 import { createTheme } from '@mui/material/styles'
-// import App from 'next/app'
-import { Provider } from 'react-redux'
-import  { AppProps } from 'next/app'
+
+// assets
 import '@/styles/global.scss'
+
+// store
 import store from '../app/store'
 
 const theme = createTheme()
 
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
+
   return (
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
         </Provider>
       </ThemeProvider>
   )
 }
-
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
-
 

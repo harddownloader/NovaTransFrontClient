@@ -14,7 +14,7 @@ import InstagramIcon from "@mui/icons-material/Instagram"
 import styles from "./Footer.module.scss"
 // images
 const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
-const headingImg = "/static/img/logos/goodBusNaming2.jpg"
+const headingImg = "/static/img/logos/NewTrans.png"
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -64,10 +64,27 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const pages = [
+const pagesRows = [
   {
     title: "Информация",
-    description: ["О Нас", "Вопросы и ответы", "Договор оферты", "Контакты"],
+    list: [
+       {
+        title: "О Нас",
+        link: '/info/ru/about-us'
+      },
+      {
+        title: "Политика конфиденциальности",
+        link: '/info/ru/privacy-policy'
+      },
+      {
+        title: "Договор оферты",
+        link: '/info/ru/public-offer'
+      },
+      {
+        title: "Правила перевозок",
+        link: '/info/ru/transportation-rules'
+      }
+    ],
   },
 ]
 
@@ -78,10 +95,12 @@ const socials = [
       {
         name: "Facebook",
         icon: <FacebookIcon className="social-link__icon" color="primary" />,
+        link: '#',
       },
       {
         name: "Instagram",
         icon: <InstagramIcon className="social-link__icon" color="primary" />,
+        link: '#',
       },
     ],
   },
@@ -127,7 +146,7 @@ export default function Footer() {
               Если перевозки -<br /> то мы
             </Typography>
           </Grid>
-          {pages.map((page, index) => (
+          {pagesRows.map((pagesCol, index) => (
             <Grid
               item
               xs={12}
@@ -142,19 +161,19 @@ export default function Footer() {
                 gutterBottom
                 className={styles.pages_list__title}
               >
-                {page.title}
+                {pagesCol.title}
               </Typography>
               <ul>
-                {page.description.map((item, index) => (
+                {pagesCol.list.map((page, index) => (
                   <li key={index}>
                     <Link
-                      href="#"
+                      href={page.link}
                       variant="subtitle1"
                       color="textSecondary"
                       className={styles.pages_list__item}
                       underline="none"
                     >
-                      {item}
+                      {page.title}
                     </Link>
                   </li>
                 ))}
@@ -162,7 +181,7 @@ export default function Footer() {
             </Grid>
           ))}
 
-          {socials.map((cosial, index) => (
+          {socials.map((social, index) => (
             <Grid
               item
               xs={12}
@@ -171,20 +190,20 @@ export default function Footer() {
               key={index}
               className={`${styles.social_list_container} ${styles.info_block}`}
             >
-              <Typography variant="h6" color="textPrimary" gutterBottom>
-                {cosial.title}
-              </Typography>
-              <ul className={styles.social_list}>
-                {cosial.links.map((link, index) => (
-                  <li key={index} className={styles.social_link__item}>
-                    <Link href="#" underline="none" variant="subtitle1" color="textSecondary" >
-                      <Typography className={styles.social_list__text}>
-                        {link.icon} {link.name}
-                      </Typography>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {/*<Typography variant="h6" color="textPrimary" gutterBottom>*/}
+              {/*  {social.title}*/}
+              {/*</Typography>*/}
+              {/*<ul className={styles.social_list}>*/}
+              {/*  {social.links.map((link, index) => (*/}
+              {/*    <li key={index} className={styles.social_link__item}>*/}
+              {/*      <Link href={link.link} underline="none" variant="subtitle1" color="textSecondary" >*/}
+              {/*        <Typography className={styles.social_list__text}>*/}
+              {/*          {link.icon} {link.name}*/}
+              {/*        </Typography>*/}
+              {/*      </Link>*/}
+              {/*    </li>*/}
+              {/*  ))}*/}
+              {/*</ul>*/}
             </Grid>
           ))}
         </Grid>
