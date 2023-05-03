@@ -1,4 +1,11 @@
+@import './variables';
+
 .carousel__item{}
 .carousel__image {
   width: 100%;
+}
+
+// alice-carousel
+.alice-carousel__dots-item:not(.__custom):hover, .alice-carousel__dots-item:not(.__custom).__active {
+  background-color: $blue_color;
 }
