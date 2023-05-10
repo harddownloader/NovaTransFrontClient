@@ -1,11 +1,18 @@
-import React, { useState, Fragment } from 'react'
+import React, {
+  useState,
+  Fragment,
+  useEffect,
+} from 'react'
+
+// mui
 import IconButton from '@mui/material/IconButton'
 import WeekendOutlinedIcon from '@mui/icons-material/WeekendOutlined'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+
+// project components
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
-import classes from './SeatModal.module.scss'
 import DialogHOC from '@/components/Dialog/Modal/DialogHOC'
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
 import {
   getBusElementDriver,
   getBusElementWC,
@@ -13,6 +20,15 @@ import {
   getBusElementBar,
   getEmptyBlock,
 } from './busBlockElements'
+import { getBusSeats } from '@/actions/busesSeats'
+import { Preloader } from "@/components/Preloader"
+
+
+// types
+import { IBusSeats } from './types'
+
+// assets
+import classes from './SeatModal.module.scss'
 
 
 const gridStyle = (countBlocksInRow) => ({
@@ -22,22 +38,32 @@ const gridStyle = (countBlocksInRow) => ({
   gridRowGap: '0rem',
 })
 
-
 export function SeatModal(props) {
-  const {
-    isMobileVersion,
-    busSeats: {
-      countBlocksInRow,
-      busElements,
-      seatsCount,
-      allBlocksCount,
-    }
-  } = props
+  const { isMobileVersion } = props
 
   const { sold = [] , booked = [] } = props
 
-  const [isConfirmVisible, setIsConfirmVisible] = useState(false)
+  const [isConfirmVisible, setIsConfirmVisible] = useState<boolean>(false)
   const [currentSeats, setCurrentSeats] = useState([])
+  const [busSeats, setBusSeats] = useState<IBusSeats | null>(null)
+  useEffect(() => {
+    fetchAndSveBusSeatsOfTrip()
+  }, [])
+
+  const fetchAndSveBusSeatsOfTrip = async () => {
+    const busSeats = await getBusSeatsOfTrip()
+    await setBusSeats(busSeats)
+  }
+
+  const getBusSeatsOfTrip = async () => {
+    const busSeatID = '63d5c06ce8c94256fc1a79c9'
+    const busSeats = await getBusSeats(busSeatID)
+    console.log({
+      busSeats
+    })
+
+    return busSeats
+  }
 
   const handleClose = (e) => {
     if(e) e.stopPropagation()
@@ -140,7 +166,60 @@ export function SeatModal(props) {
     return isCurrentBlockEmpty
   }
 
+  const getContentForModal = (busSeats) => {
+    const {
+      countBlocksInRow,
+      busElements,
+      seatsCount,
+      allBlocksCount,
+    } = busSeats
+
+    return (
+      <div className={classes.wrapper}>
+        <div className={classes.busWrap}>
+          <div className={classes.busContent} style={gridStyle(countBlocksInRow)}>
+            {Array(allBlocksCount).fill(0).map((seat, i) => {
+              const currentBusEl = getCurrentBusElBlock({...busElements}, i)
+
+              // we need to skip block insertion because the bus elements are 2 blocks wide
+              let content = null
+              if (
+                i === busElements.driverCoordinates + 1 ||
+                i === busElements.firstDoorCoordinates + 1 ||
+                i === busElements.secondDoorCoordinates + 1 ||
+                i === busElements.wcCoordinates + 1 ||
+                i === busElements.barCoordinates + 1
+              ) {
+                return content
+              }
+
+              const isCurrentBlockEmpty = checkIsCurrentBlockEmpty(i, countBlocksInRow)
+
+              if (currentBusEl) content = currentBusEl
+              else if (isCurrentBlockEmpty) content = getEmptyBlock()
+              else if (
+                !isCurrentBlockEmpty &&
+                !currentBusEl &&
+                seatsCounter + 1 <= seatsCount
+              ) {
+                seatsCounter += 1
+                content = getSeatsForSide(seatsCounter)
+              }
+
+              return (
+                <Fragment key={i}>
+                  {content}
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
   let seatsCounter = 0
+
+
 
   return (
     <DialogHOC
@@ -212,49 +291,14 @@ export function SeatModal(props) {
         </>
       }
     >
-      <div className={classes.wrapper}>
-        <div className={classes.busWrap}>
-          <div className={classes.busContent} style={gridStyle(countBlocksInRow)}>
-            {Array(allBlocksCount).fill(0).map((seat, i) => {
-              const currentBusEl = getCurrentBusElBlock({...busElements}, i)
-
-              // we need to skip block insertion because the bus elements are 2 blocks wide
-              let content = null
-              if (
-                i === busElements.driverCoordinates + 1 ||
-                i === busElements.firstDoorCoordinates + 1 ||
-                i === busElements.secondDoorCoordinates + 1 ||
-                i === busElements.wcCoordinates + 1 ||
-                i === busElements.barCoordinates + 1
-              ) {
-                return content
-              }
-
-              const isCurrentBlockEmpty = checkIsCurrentBlockEmpty(i, countBlocksInRow)
-
-              if (currentBusEl) content = currentBusEl
-              else if (isCurrentBlockEmpty) content = getEmptyBlock()
-              else if (
-                !isCurrentBlockEmpty &&
-                !currentBusEl &&
-                seatsCounter + 1 <= seatsCount
-              ) {
-                seatsCounter += 1
-                content = getSeatsForSide(seatsCounter)
-              }
-
-              return (
-                <Fragment key={i}>
-                  {content}
-                </Fragment>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      {
+        busSeats
+          ? getContentForModal(busSeats)
+          : <Preloader />
+      }
 
     </DialogHOC>
   )
 }
 
-export default SeatModal;
+export default SeatModal
