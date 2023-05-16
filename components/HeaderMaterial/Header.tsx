@@ -1,6 +1,8 @@
 import React from "react"
 import Link from "next/link"
 // import Image from 'next/image'
+
+// mui
 import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import IconButton from '@mui/material/IconButton'
@@ -10,13 +12,15 @@ import { makeStyles } from '@mui/styles'
 import AppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
 import Container from '@mui/material/Container'
-import classes from "./Header.module.scss"
-import LangMenu from './LangMenu'
 import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this was exported from mui breakpoint type for Container maxWidth, that path may change in the future
-// images
-const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
-const headingImg = "/static/img/logos/NewTrans.png"
 
+// project components
+import LangMenu from './LangMenu'
+
+// assets
+import { PATH_TO_LOGO, WEBSITE_NAME } from "@/utils/const"
+import classes from "./Header.module.scss"
+const headingImg = "/static/img/logos/NewTrans.png"
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -72,17 +76,16 @@ const Header = ({
           <div className={classes.logo_wrap}>
             <Link href='/'>
               <img
-                src={logo}
-                alt="Logo"
+                src={PATH_TO_LOGO}
+                alt={`logo ${WEBSITE_NAME}`}
                 height={40}
                 className={`${styles.icon} ${classes.pointer}`}
               />
             </Link>
             <Link href='/'>
-              {/*<h1 className={`${classes.heading} ${classes.pointer}`}>Good Bus</h1>*/}
               <img
                 src={headingImg}
-                alt="Logo"
+                alt={`logo ${WEBSITE_NAME}`}
                 height={24}
               />
             </Link>

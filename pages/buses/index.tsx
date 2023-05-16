@@ -21,6 +21,7 @@ import {
   selectLocations,
 } from '@/features/locations/locationsSlice'
 import { TicketsList } from '../../interfaces/tickets'
+import { BaseSeo } from "@/components/seo/BaseSeo"
 
 
 const Buses = ({ resp, info }) => {
@@ -44,6 +45,10 @@ const Buses = ({ resp, info }) => {
 
   return (
     <Param info={info}>
+      <BaseSeo
+        title={`Поиск билетов`}
+        description={`Поиск билетов`}
+      />
       <CssBaseline />
       <Header isDarkStyle={false} containerWidth="md" />
       <SearchTickets type="searchPage" info={info} />

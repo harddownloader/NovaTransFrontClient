@@ -6,32 +6,34 @@ import {
   GetStaticPaths,
   GetServerSideProps
 } from 'next'
-import { dec } from "../../utils/encdec"
-import { postBookSeat, postMultiBookSeat } from "../../actions/book"
-import Header from '../../components/HeaderMaterial/Header'
-import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
-import PoperCard from '@/components/Card/PoperCard'
+import { useIMask } from 'react-imask'
+
+// mui
 import {
-  // Input,
   TextField,
   Paper,
   Typography,
-  Box,
-  Autocomplete,
-  // Select,
   Button,
   IconButton,
   Grid,
   Container,
-  MenuItem,
-  InputLabel,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { validateEmail } from '@/utils/validation/email'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import classes from './Details.module.scss'
-import { useIMask } from 'react-imask'
+
+// project components
+import Header from '@/components/HeaderMaterial/Header'
+import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
+import PoperCard from '@/components/Card/PoperCard'
 import Footer from "@/components/Footer/Footer"
+import { BaseSeo } from "@/components/seo/BaseSeo"
+
+// utils
+import { dec } from "@/utils/encdec"
+import { validateEmail } from '@/utils/validation/email'
+import { postBookSeat, postMultiBookSeat } from "../../actions/book"
+
+// assets
+import classes from './Details.module.scss'
 
 interface DetailsProps {
   fare: number | null,
@@ -226,6 +228,10 @@ const Details: NextPage<OrderProps> = ({
 
   return (
     <>
+      <BaseSeo
+        title={`Оформление заказа`}
+        description={`Оформление заказа`}
+      />
     <Header isDarkStyle containerWidth={"lg"} />
     <Container maxWidth="lg">
       <Grid

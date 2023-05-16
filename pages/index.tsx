@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react"
+
+// mui
 import CssBaseline from "@mui/material/CssBaseline"
+
+// project components
 import Header from "@/components/HeaderMaterial/Header"
 import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
 import WhyAreWe from "@/components/Home/WhyAreWe"
@@ -7,6 +11,11 @@ import PopularTrips from "@/components/PopularTrips"
 import AboutDrivers from "@/components/Home/AboutDrivers"
 import Footer from "@/components/Footer/Footer"
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
+import { BaseSeo } from "@/components/seo/BaseSeo"
+
+// utils
+import { WEBSITE_NAME } from "@/utils/const"
+
 // store
 import {
   useAppDispatch,
@@ -33,6 +42,10 @@ function App(props) {
 
   return (
     <>
+      <BaseSeo
+        title={`Купить билеты на автобус, заказать автобусные билеты онлайн`}
+        description={`Заказать или купить билет на автобус онлайн на сайте ${WEBSITE_NAME}. Онлайн бронирование билетов на автобусы . Забронировать автобусный билет на сайте ${WEBSITE_NAME}`}
+      />
       <CssBaseline />
       <Header />
 

@@ -4845,6 +4845,11 @@ next-images@^1.8.2:
     file-loader "^6.2.0"
     url-loader "^4.1.0"
 
+next-seo@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-6.0.0.tgz#4568dc61a44dbdf5fe5ff44156cd0ff8804889a2"
+  integrity sha512-jKKt1p1z4otMA28AyeoAONixVjdYmgFCWwpEFtu+DwRHQDllVX3RjtyXbuCQiUZEfQ9rFPBpAI90vDeLZlMBdg==
+
 next@^12.0.1:
   version "12.0.1"
   resolved "https://registry.npmjs.org/next/-/next-12.0.1.tgz"
