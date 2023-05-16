@@ -86,6 +86,7 @@ const Header = ({
               <img
                 src={headingImg}
                 alt={`logo ${WEBSITE_NAME}`}
+                className={`${classes.pointer}`}
                 height={24}
               />
             </Link>
