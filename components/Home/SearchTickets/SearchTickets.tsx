@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react"
-// time and data
-import { format } from "date-fns"
-// makestales
-import { makeStyles } from '@mui/styles'
-// next
+import { format } from "date-fns" // time and data
 import Router from "next/router"
-// material
+
+// mui
+import { makeStyles } from '@mui/styles'
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
@@ -15,8 +13,19 @@ import Box from "@mui/material/Box"
 import InputAdornment from '@mui/material/InputAdornment'
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined'
 import SouthEastOutlinedIcon from '@mui/icons-material/SouthEastOutlined'
-// actions
-// import { getAllLocations } from "@/actions/location"
+import FormGroup from "@mui/material/FormGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Checkbox from "@mui/material/Checkbox"
+import SearchIcon from '@mui/icons-material/Search'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import Collapse from '@mui/material/Collapse'
+import { blue } from '@mui/material/colors'
+
+// pickers
+import MaterialUIPickers from "../../Pickers/DatePicker"
+import Autocomplete from "@mui/material/Autocomplete"
+
 // store
 import {
   useAppDispatch,
@@ -26,26 +35,14 @@ import {
   getLocations,
   selectLocations,
 } from '@/features/locations/locationsSlice'
-// checkbox
-import FormGroup from "@mui/material/FormGroup"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Checkbox from "@mui/material/Checkbox"
-// pickers
-import MaterialUIPickers from "../../Pickers/DatePicker"
-import Autocomplete from "@mui/material/Autocomplete"
 
-// styles
-import styles from './SearchTickets.module.scss'
-import SearchIcon from '@mui/icons-material/Search'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
-import Collapse from '@mui/material/Collapse'
-import { blue } from '@mui/material/colors'
-import { Searchform } from "@/interfaces/searchform"
+// types
+import { ISearchForm } from "@/interfaces/searchform"
 import { futureAnyFix } from "@/interfaces/futureAnyFix"
 
-// images
+// assets
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
+import styles from './SearchTickets.module.scss'
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -144,7 +141,7 @@ function SearchTickets(props) {
   const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
   const todayDateWithFormat = new Date().toISOString().split('T')[0]
-  const [formData, setFormData] = useState<Searchform | futureAnyFix>({
+  const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
     startLocation: props?.info?.startLocation ? props.info.startLocation : null,
     endLocation: props?.info?.endLocation ? props.info.endLocation : null,
     journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : todayDateWithFormat,

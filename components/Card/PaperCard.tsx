@@ -5,20 +5,25 @@ import {
 } from '@mui/material'
 import classes from './PoperCard.module.scss'
 
-export default function PoperCard(props) {
+export function PaperCard(props) {
   const { heading, content } = props
 
   return (
     <Paper
       elevation={1}
-      className={classes.poper_card}>
-      <Typography variant="h5" gutterBottom component="div">
+      className={classes.paper_card}>
+      <Typography
+        variant="h5"
+        gutterBottom
+        component="div"
+        className={classes.heading}
+      >
         {heading}
       </Typography>
 
-      {content.map((textLine, indx) => (
+      {content.map((textLine, index) => (
         <Typography
-          key={indx}
+          key={index}
           variant="body1"
           gutterBottom
           component="div"

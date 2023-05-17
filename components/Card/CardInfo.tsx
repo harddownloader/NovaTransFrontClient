@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 import classes from './CardInfo.module.scss'
 
-export default function PoperCard(props) {
+export function CardInfo(props) {
   const {
     heading,
     children,
@@ -15,7 +15,8 @@ export default function PoperCard(props) {
   return (
     <Paper
       elevation={elevation}
-      className={classes.poper_card}>
+      className={classes.wrap}
+    >
       <Typography
         variant="h5"
         gutterBottom
