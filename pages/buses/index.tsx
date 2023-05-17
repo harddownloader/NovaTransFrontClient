@@ -75,34 +75,6 @@ const Buses = ({ resp, searchQuery }) => {
       </Grid>
     </>
   )
-
-  return (
-    <>
-      <BaseSeo
-        title={`Поиск билетов`}
-        description={`Поиск билетов`}
-      />
-      <CssBaseline />
-      <Header isDarkStyle={false} containerWidth="md" />
-      <SearchTickets type="searchPage" info={searchQuery} />
-      <Container maxWidth="md">
-        <Grid
-          container
-          className="tickets_wrapp"
-        >
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-          >
-            {loading ? <Loading /> : <Cards buses={buses} />}
-          </Grid>
-        </Grid>
-      </Container>
-      <Footer />
-    </>
-  )
 }
 
 Buses.getInitialProps = async ({
