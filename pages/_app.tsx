@@ -4,8 +4,11 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 
 // mui
-import { styled, ThemeProvider } from '@mui/styles'
-import { createTheme } from '@mui/material/styles'
+import {
+  StyledEngineProvider,
+  ThemeProvider,
+  createTheme
+} from '@mui/material/styles'
 
 // assets
 import '@/styles/global.scss'
@@ -26,12 +29,18 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: ReactElement) => page)
 
+  /*
+  * <StyledEngineProvider injectFirst>
+  * https://github.com/vercel/next.js/discussions/32565
+  * */
   return (
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           {getLayout(<Component {...pageProps} />)}
         </Provider>
       </ThemeProvider>
+    </StyledEngineProvider>
   )
 }
 
