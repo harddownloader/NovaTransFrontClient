@@ -1,16 +1,26 @@
-import React, { useState, useEffect } from "react"
-// import Filters from "./filters"
-import Cards from "./cards"
-import { searchBus } from "../../actions/location"
-import Param from "../../utils/checkQueryParam"
-import Loading from "@/components/Loading"
+import React, {
+  useState,
+  useEffect,
+  ReactElement
+} from "react"
+
+// mui
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
+import CssBaseline from "@mui/material/CssBaseline"
+
+// project components
+import Cards from "./cards"
+import Loading from "@/components/Loading"
 import Header from "@/components/HeaderMaterial/Header"
 import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
 import Footer from "@/components/Footer/Footer"
-// material
-import CssBaseline from "@mui/material/CssBaseline"
+import { BaseSeo } from "@/components/seo/BaseSeo"
+import { SearchTicketsLayout } from "@/components/Layouts/SearchTicketsLayout"
+
+// utils
+import { searchBus } from "@/actions/location"
+
 // store
 import {
   useAppDispatch,
@@ -20,12 +30,13 @@ import {
   getLocations,
   selectLocations,
 } from '@/features/locations/locationsSlice'
-import { TicketsList } from '../../interfaces/tickets'
-import { BaseSeo } from "@/components/seo/BaseSeo"
 
+// types
+import { TicketsList } from '@/interfaces/tickets'
+import { ISearchForm } from "@/interfaces/searchform"
 
-const Buses = ({ resp, info }) => {
-  const [buses, setBuses] = useState<TicketsList>({oneWayTickets: []})
+const Buses = ({ resp, searchQuery }) => {
+  const [buses, setBuses] = useState<TicketsList>({ oneWayTickets: [] })
   const [loading, setLoading] = useState(false)
   const dispatch = useAppDispatch()
   const {
@@ -44,14 +55,36 @@ const Buses = ({ resp, info }) => {
   }
 
   return (
-    <Param info={info}>
+    <>
+      <BaseSeo
+        title={`Поиск билетов`}
+        description={`Поиск билетов`}
+      />
+      <Grid
+        container
+        className="tickets_wrapp"
+      >
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+        >
+          {loading ? <Loading /> : <Cards buses={buses} />}
+        </Grid>
+      </Grid>
+    </>
+  )
+
+  return (
+    <>
       <BaseSeo
         title={`Поиск билетов`}
         description={`Поиск билетов`}
       />
       <CssBaseline />
       <Header isDarkStyle={false} containerWidth="md" />
-      <SearchTickets type="searchPage" info={info} />
+      <SearchTickets type="searchPage" info={searchQuery} />
       <Container maxWidth="md">
         <Grid
           container
@@ -68,30 +101,39 @@ const Buses = ({ resp, info }) => {
         </Grid>
       </Container>
       <Footer />
-    </Param>
+    </>
   )
 }
 
 Buses.getInitialProps = async ({
-  query: {
-    startLocation,
-    endLocation,
-    journeyDate,
-    returnStartLocation,
-    returnEndLocation,
-    returnJourneyDate
-  },
+  query,
+  res
 }) => {
-  const info = {
-    startLocation,
-    endLocation,
-    journeyDate,
-    returnStartLocation,
-    returnEndLocation,
-    returnJourneyDate
+  if (Object.keys(query).length <= 0) {
+    res.writeHead(301, {
+      Location: '/'
+    })
+    res.end()
   }
-  const resp = await searchBus(info)
-  return { resp, info }
+
+  const searchQuery: ISearchForm = {
+    startLocation: query.startLocation,
+    endLocation: query.endLocation,
+    journeyDate: query.journeyDate,
+    returnStartLocation: query.returnStartLocation,
+    returnEndLocation: query.returnEndLocation,
+    returnJourneyDate: query.returnJourneyDate,
+  }
+
+  const resp = await searchBus(searchQuery)
+  return { resp, searchQuery }
+}
+
+Buses.getLayout = function getLayout(page: ReactElement) {
+  return <SearchTicketsLayout
+    searchQuery={page.props.searchQuery}
+    contentMaxWidth={"md"}
+  >{page}</SearchTicketsLayout>
 }
 
 export default Buses

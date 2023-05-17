@@ -1,10 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Grid from '@mui/material/Grid'
-import classes from './TripDetails.module.scss'
-import DialogHOC from './Modal/DialogHOC'
-import CardInfo from '@/components/Card/CardInfo'
 
+// mui
+import Grid from '@mui/material/Grid'
+
+// project components
+import DialogHOC from './Modal/DialogHOC'
+import { CardInfo } from '@/components/Card/CardInfo'
+
+// assets
+import classes from './TripDetails.module.scss'
 
 export default function TripDetails(props) {
   const { tripDetails, isMobileVersion } = props

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  ReactElement,
+} from "react"
 import Router from "next/router"
-import {
-  NextPage,
-  GetStaticProps,
-  GetStaticPaths,
-  GetServerSideProps
-} from 'next'
+import { GetServerSideProps } from 'next'
 import { useIMask } from 'react-imask'
 
 // mui
@@ -16,24 +16,25 @@ import {
   Button,
   IconButton,
   Grid,
-  Container,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 // project components
-import Header from '@/components/HeaderMaterial/Header'
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
-import PoperCard from '@/components/Card/PoperCard'
-import Footer from "@/components/Footer/Footer"
+import { PaperCard } from '@/components/Card/PaperCard'
 import { BaseSeo } from "@/components/seo/BaseSeo"
+import { CommonLayout } from "@/components/Layouts"
 
 // utils
 import { dec } from "@/utils/encdec"
 import { validateEmail } from '@/utils/validation/email'
-import { postBookSeat, postMultiBookSeat } from "../../actions/book"
+import { postBookSeat, postMultiBookSeat } from "@/actions/book"
 
 // assets
 import classes from './Details.module.scss'
+
+// types
+import { NextPageWithLayout } from "../_app"
 
 interface DetailsProps {
   fare: number | null,
@@ -46,13 +47,11 @@ interface DetailsProps {
   referer: string | null,
 }
 
-const Details: NextPage<OrderProps> = ({
+export const Details: NextPageWithLayout<OrderProps> = ({
   oneWayTicketsOrder,
   returnTicketsOrder,
   referer,
 }): JSX.Element => {
-  // const [dataSource, setDataSource] = useState([])
-
   const [name, setName] = useState<string>('')
   const [isNameValid, setIsNameValid] = useState<boolean>(null)
 
@@ -60,9 +59,9 @@ const Details: NextPage<OrderProps> = ({
   const [isEmailValid, setIsEmailValid] = useState<boolean>(null)
 
   const [isPhoneFieldWasFocused, setIsPhoneFieldWasFocused] = useState<boolean>(false)
-  const [isPhoneValid, setIsPhoneValuid] = useState<boolean>(null)
+  const [isPhoneValid, setIsPhoneValid] = useState<boolean>(null)
 
-  const [address, setAdress] = useState<string>('lipoviy_adress')
+  const [address, setAddress] = useState<string>('lipoviy_adress')
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
   const [errorText, setErrorText] = useState<string>('')
   const [opts, setOpts] = useState({ mask: '+{380}(00)000-00-00' })
@@ -114,7 +113,7 @@ const Details: NextPage<OrderProps> = ({
 
   const phoneNumberErrorHandler = (value: string): boolean => {
     const isValid = Boolean(value?.length >= 12)
-    if (isPhoneValid !== isValid) setIsPhoneValuid(isValid)
+    if (isPhoneValid !== isValid) setIsPhoneValid(isValid)
     return isValid
   }
 
@@ -232,213 +231,218 @@ const Details: NextPage<OrderProps> = ({
         title={`Оформление заказа`}
         description={`Оформление заказа`}
       />
-    <Header isDarkStyle containerWidth={"lg"} />
-    <Container maxWidth="lg">
       <Grid
         container
         direction="row"
-        justifyContent="flex-start"
-        alignItems="center"
-        className="mb-2"
+        className={`${classes.heading_main_container}`}
       >
-        <IconButton
-          aria-label="back"
-          size="large"
-          onClick={() => {
-            if (referer !== null && referer.includes('/buses')) {
-              Router.back()
-            } else {
-              Router.push('/')
-            }
-          }}
-        >
-          <ArrowBackIcon fontSize="inherit" />
-        </IconButton>
-        <Typography variant="h4" component="div">
-          Оформление заказа
-        </Typography>
-      </Grid>
-      
-      <Grid
-        container
-        spacing={2}
-      >
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-        >
-          <Paper
-            elevation={1}
-            className={classes.card}
+        <Grid item xs={12} className={`${classes.heading_wrap}`}>
+          <IconButton
+            aria-label="back"
+            size="large"
+            onClick={() => {
+              if (referer !== null && referer.includes('/buses')) {
+                Router.back()
+              } else {
+                Router.push('/')
+              }
+            }}
           >
-            <Typography variant="h5" gutterBottom component="div">
-              Ваши данные
-            </Typography>
+            <ArrowBackIcon fontSize="inherit" />
+          </IconButton>
+          <Typography variant="h4" component="div">
+            Оформление заказа
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid
+            container
+            spacing={2}
+          >
             <Grid
-              container
-              spacing={2}
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
             >
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={6}
-                lg={6}
+              <Paper
+                elevation={1}
+                className={classes.card}
               >
-                <TextField
-                  id="name"
-                  className={`${classes.name_field} ${classes.order_field}`}
-                  label="Ваше Имя"
-                  variant="outlined"
-                  fullWidth
-                  onChange={e => handleName(e.target.value)}
-                  inputProps={{ maxLength: 60 }}
-                  value={name}
-                  error={isNameValid !== null && !isNameValid}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={6}
-                lg={6}
-              >
-                <TextField
-                  id="phone"
-                  className={`${classes.phone_field} ${classes.order_field}`}
-                  label="Ваш Телефон"
-                  variant="outlined"
-                  fullWidth
-                  onFocus={() => {
-                    if(!isPhoneFieldWasFocused) setIsPhoneFieldWasFocused(true)
-                  }}
-                  inputRef={ref}
-                  error={isPhoneFieldWasFocused && !isPhoneValid}
-                />
-              </Grid>
-
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-              >
-                <TextField
-                  name="email"
-                  id="email"
-                  className={`${classes.email_field} ${classes.order_field}`}
-                  label="Ваш Email"
-                  type="email"
-                  fullWidth
-                  onChange={e => handlerEmail(e.target.value)}
-                  value={email}
-                  error={isEmailValid !== null && !isEmailValid}
-                />
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={12}
-                md={12}
-                lg={12}
-              >
-                <Button
-                  size="large"
-                  fullWidth
-                  variant="contained"
-                  disabled={!getAllValidateStatus()}
-                  onClick={handleSubmit}
+                <Typography
+                  variant="h5"
+                  gutterBottom
+                  component="div"
+                  className={classes.sub_heading_wrap}
                 >
-                  Подтвердить покупку
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-        >
-          {oneWayTicketsOrder && <PoperCard
-            heading={"Информация о рейсе"}
-            content={[
-              {
-                title: "Рейс",
-                text: `${oneWayTicketsOrder.start} - ${oneWayTicketsOrder.end}`
-              },
-              {
-                title: "Дата",
-                text: `${oneWayTicketsOrder.journeyDate}`
-              },
-              {
-                title: "Места",
-                text: oneWayTicketsOrder.seats.map(seat => `${seat} `)
-              },
-              {
-                title: "Цена за билет",
-                text: `${oneWayTicketsOrder.fare}грн.`
-              }
-            ]}
-          />}
-          {returnTicketsOrder && <PoperCard
-            heading={"Информация об обратном рейсе"}
-            content={[
-              {
-                title: "Рейс",
-                text: `${returnTicketsOrder.start} - ${returnTicketsOrder.end}`
-              },
-              {
-                title: "Дата",
-                text: `${returnTicketsOrder.journeyDate}`
-              },
-              {
-                title: "Места",
-                text: returnTicketsOrder.seats.map(seat => `${seat} `)
-              },
-              {
-                title: "Цена за билет",
-                text: `${returnTicketsOrder.fare}грн.`
-              }
-            ]}
-          />}
+                  Ваши данные
+                </Typography>
+                <Grid
+                  container
+                  spacing={2}
+                >
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={6}
+                  >
+                    <TextField
+                      id="name"
+                      className={`${classes.name_field} ${classes.order_field}`}
+                      label="Ваше Имя"
+                      variant="outlined"
+                      fullWidth
+                      onChange={e => handleName(e.target.value)}
+                      inputProps={{ maxLength: 60 }}
+                      value={name}
+                      error={isNameValid !== null && !isNameValid}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={6}
+                  >
+                    <TextField
+                      id="phone"
+                      className={`${classes.phone_field} ${classes.order_field}`}
+                      label="Ваш Телефон"
+                      variant="outlined"
+                      fullWidth
+                      onFocus={() => {
+                        if(!isPhoneFieldWasFocused) setIsPhoneFieldWasFocused(true)
+                      }}
+                      inputRef={ref}
+                      error={isPhoneFieldWasFocused && !isPhoneValid}
+                    />
+                  </Grid>
 
-          <PoperCard
-            heading={"Платежная информация"}
-            content={getPaymentContent()}
-          />
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                  >
+                    <TextField
+                      name="email"
+                      id="email"
+                      className={`${classes.email_field} ${classes.order_field}`}
+                      label="Ваш Email"
+                      type="email"
+                      fullWidth
+                      onChange={e => handlerEmail(e.target.value)}
+                      value={email}
+                      error={isEmailValid !== null && !isEmailValid}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    lg={12}
+                  >
+                    <Button
+                      size="large"
+                      fullWidth
+                      variant="contained"
+                      disabled={!getAllValidateStatus()}
+                      onClick={handleSubmit}
+                    >
+                      Подтвердить покупку
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+            >
+              {oneWayTicketsOrder && <PaperCard
+                heading={"Информация о рейсе"}
+                content={[
+                  {
+                    title: "Рейс",
+                    text: `${oneWayTicketsOrder.start} - ${oneWayTicketsOrder.end}`
+                  },
+                  {
+                    title: "Дата",
+                    text: `${oneWayTicketsOrder.journeyDate}`
+                  },
+                  {
+                    title: "Места",
+                    text: oneWayTicketsOrder.seats.map(seat => `${seat} `)
+                  },
+                  {
+                    title: "Цена за билет",
+                    text: `${oneWayTicketsOrder.fare}грн.`
+                  }
+                ]}
+              />}
+              {returnTicketsOrder && <PaperCard
+                heading={"Информация об обратном рейсе"}
+                content={[
+                  {
+                    title: "Рейс",
+                    text: `${returnTicketsOrder.start} - ${returnTicketsOrder.end}`
+                  },
+                  {
+                    title: "Дата",
+                    text: `${returnTicketsOrder.journeyDate}`
+                  },
+                  {
+                    title: "Места",
+                    text: returnTicketsOrder.seats.map(seat => `${seat} `)
+                  },
+                  {
+                    title: "Цена за билет",
+                    text: `${returnTicketsOrder.fare}грн.`
+                  }
+                ]}
+              />}
+
+              <PaperCard
+                heading={"Платежная информация"}
+                content={getPaymentContent()}
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+            ></Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={4}
+              lg={4}
+            ></Grid>
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-        ></Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={4}
-          lg={4}
-        ></Grid>
       </Grid>
-    </Container>
-    <Footer />
-    {isErrorVisible && <ConfirmModal
-      isVisible={isErrorVisible}
-      changeVisibility={() => setIsErrorVisible(false)}
-      titleText={'Ошибка'}
-      contentText={errorText}
-      cancelButtonText={'ОК'}
-    />}
+
+
+      {isErrorVisible && <ConfirmModal
+        isVisible={isErrorVisible}
+        changeVisibility={() => setIsErrorVisible(false)}
+        titleText={'Ошибка'}
+        contentText={errorText}
+        cancelButtonText={'ОК'}
+      />}
     </>
   )
 }
@@ -477,6 +481,10 @@ export const getServerSideProps: GetServerSideProps = async(context) => {
       referer: context?.req?.headers?.referer || null
     }
   }
+}
+
+Details.getLayout = function getLayout(page: ReactElement) {
+  return <CommonLayout isDarkStyle containerWidth={"lg"}>{page}</CommonLayout>
 }
 
 export default Details

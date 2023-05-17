@@ -1,4 +1,4 @@
-export interface Searchform {
+export interface ISearchForm {
   startLocation: string | null,
   endLocation: string | null,
   journeyDate: Date | string | null,

@@ -1,16 +1,16 @@
 import fetch from "isomorphic-unfetch"
-import { API } from "../utils/const"
+import { API } from "@/utils/const"
 
 // slug - string
 // seats - array of strings
-export const postSoldSeat = async (slug, seats) => {
+export const postSoldSeat = async (slug: string, seats) => {
   // return axios.post(`/bookings/sold/${slug}`, { seatNumber: JSON.stringify(seats) })
   const response = await fetch(`/bookings/sold/${slug}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify({ seatNumber: JSON.stringify(seats) })
   }).then((data) => data.json())
 
   return response
@@ -24,7 +24,7 @@ export const postSoldSeat = async (slug, seats) => {
 //    email: string
 //    seatNumber: array(of strings) like string(because JSON.stringify(seatNumbers) )
 // }
-export const postBookSeat = async (slug, body) => {
+export const postBookSeat = async (slug: string, body) => {
   const response = await fetch(`${API}/bookings/book/${slug}`, {
     method: "POST",
     headers: {
