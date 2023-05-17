@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, {useState, useEffect, ReactElement} from "react"
 
 // mui
 import CssBaseline from "@mui/material/CssBaseline"
@@ -25,6 +25,8 @@ import {
   getLocations,
   selectLocations,
 } from '@/features/locations/locationsSlice'
+import {CommonLayout} from "@/components/Layouts";
+import Details from "./details";
 
 function App(props) {
   const alert = props?.alert
@@ -76,13 +78,5 @@ App.getInitialProps = ({ query }) => {
   }
   return {}
 }
-
-// export async function getServerSideProps(context) {
-//   fetch locations
-//
-//   return {
-//     props: {}, // will be passed to the page component as props
-//   }
-// }
 
 export default App
