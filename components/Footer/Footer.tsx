@@ -1,4 +1,6 @@
 import React from "react"
+
+// mui
 import CssBaseline from "@mui/material/CssBaseline"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
@@ -6,15 +8,20 @@ import Link from "@mui/material/Link"
 import { makeStyles } from '@mui/styles'
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
+
+// project components
 import Copyright from './Copyright'
+
 // icons
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
 import EmailIcon from '@mui/icons-material/Email'
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+
 // styles
 import styles from "./Footer.module.scss"
+
 // images
-const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
+import { PATH_TO_LOGO, WEBSITE_NAME } from "@/utils/const"
 const headingImg = "/static/img/logos/NewTrans.png"
 
 const useStyles = makeStyles((theme) => ({
@@ -89,8 +96,6 @@ const pagesRows = [
   },
 ]
 
-
-
 export default function Footer() {
   const classes = useStyles()
 
@@ -132,8 +137,8 @@ export default function Footer() {
               className={styles.footer_logo_wrapper}
             >
               <img
-                src={logo}
-                alt="logo Good Bus"
+                src={PATH_TO_LOGO}
+                alt={`logo ${WEBSITE_NAME}`}
                 height={50}
               />
             </div>
@@ -142,7 +147,7 @@ export default function Footer() {
             >
               <img
                 src={headingImg}
-                alt="logo Good Bus"
+                alt={`logo ${WEBSITE_NAME}`}
                 height={15}
               />
             </div>

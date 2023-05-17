@@ -7,26 +7,30 @@ import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this w
 // project components
 import Header from "@/components/HeaderMaterial/Header"
 import Footer from "@/components/Footer/Footer"
+import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
 
-export interface CommonLayoutProps {
+// types
+import { ISearchForm } from '@/interfaces/searchform'
+
+export interface SearchTicketsLayoutProps {
   children: ReactNode
   isDarkStyle?: boolean
   containerWidth?: Breakpoint
+  searchQuery: ISearchForm
   contentMaxWidth?: Breakpoint
 }
 
-export function CommonLayout({
+export function SearchTicketsLayout({
                                children,
                                isDarkStyle=false,
                                containerWidth="md",
                                contentMaxWidth="lg",
-}: CommonLayoutProps) {
+                               searchQuery
+                             }: SearchTicketsLayoutProps) {
   return (
     <>
-      <Header
-        isDarkStyle={isDarkStyle}
-        containerWidth={containerWidth}
-      />
+      <Header isDarkStyle={isDarkStyle} containerWidth={containerWidth} />
+      <SearchTickets type="searchPage" info={searchQuery} />
       <Container maxWidth={contentMaxWidth}>
         { children }
       </Container>
