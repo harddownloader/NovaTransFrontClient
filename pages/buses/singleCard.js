@@ -486,7 +486,7 @@ const SingleCard = (props) => {
         </div>
       </div>
       {visibleSeatModal && <SeatModal
-        busSeats={bus?.busSeatsId}
+        // busSeatsId={bus?.busSeatsId}
         handleCancel={handleCancel}
         visible={visibleSeatModal}
         sold={bus.soldSeat}

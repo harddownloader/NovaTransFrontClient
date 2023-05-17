@@ -1,4 +1,6 @@
 import React from "react"
+
+// mui
 import CssBaseline from "@mui/material/CssBaseline"
 import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
@@ -6,14 +8,20 @@ import Link from "@mui/material/Link"
 import { makeStyles } from '@mui/styles'
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
+
+// project components
 import Copyright from './Copyright'
+
 // icons
-import FacebookIcon from "@mui/icons-material/Facebook"
-import InstagramIcon from "@mui/icons-material/Instagram"
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
+import EmailIcon from '@mui/icons-material/Email'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+
 // styles
 import styles from "./Footer.module.scss"
+
 // images
-const logo = "/static/img/logos/AdobeStock_323576245-ai.png"
+import { PATH_TO_LOGO, WEBSITE_NAME } from "@/utils/const"
 const headingImg = "/static/img/logos/NewTrans.png"
 
 const useStyles = makeStyles((theme) => ({
@@ -88,33 +96,38 @@ const pagesRows = [
   },
 ]
 
-const socials = [
-  {
-    title: "Соц сети",
-    links: [
-      {
-        name: "Facebook",
-        icon: <FacebookIcon className="social-link__icon" color="primary" />,
-        link: '#',
-      },
-      {
-        name: "Instagram",
-        icon: <InstagramIcon className="social-link__icon" color="primary" />,
-        link: '#',
-      },
-    ],
-  },
-]
-
 export default function Footer() {
   const classes = useStyles()
+
+  const socials = [
+    {
+      title: "Контакты",
+      links: [
+        {
+          name: "+38097-356-96-96",
+          icon: <LocalPhoneIcon className={styles.social_link__icon} color="primary" />,
+          link: 'tel:380973569696',
+        },
+        {
+          name: "newtrans.comp@gmail.com",
+          icon: <EmailIcon className={styles.social_link__icon} color="primary" />,
+          link: 'mailto:newtrans.comp@gmail.com',
+        },
+        {
+          name: "Одеская обл., ул. Фрунзе 64",
+          icon: <LocationOnIcon className={styles.social_link__icon} color="primary" />,
+          link: '#',
+        }
+      ],
+    },
+  ]
 
   return (
     <>
       <CssBaseline />
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
-        <Grid container  justifyContent="space-evenly">
+        <Grid container justifyContent="space-evenly">
           <Grid
             item
             xs={12} sm={3} md={3}
@@ -124,8 +137,8 @@ export default function Footer() {
               className={styles.footer_logo_wrapper}
             >
               <img
-                src={logo}
-                alt="logo Good Bus"
+                src={PATH_TO_LOGO}
+                alt={`logo ${WEBSITE_NAME}`}
                 height={50}
               />
             </div>
@@ -134,7 +147,7 @@ export default function Footer() {
             >
               <img
                 src={headingImg}
-                alt="logo Good Bus"
+                alt={`logo ${WEBSITE_NAME}`}
                 height={15}
               />
             </div>
@@ -190,20 +203,20 @@ export default function Footer() {
               key={index}
               className={`${styles.social_list_container} ${styles.info_block}`}
             >
-              {/*<Typography variant="h6" color="textPrimary" gutterBottom>*/}
-              {/*  {social.title}*/}
-              {/*</Typography>*/}
-              {/*<ul className={styles.social_list}>*/}
-              {/*  {social.links.map((link, index) => (*/}
-              {/*    <li key={index} className={styles.social_link__item}>*/}
-              {/*      <Link href={link.link} underline="none" variant="subtitle1" color="textSecondary" >*/}
-              {/*        <Typography className={styles.social_list__text}>*/}
-              {/*          {link.icon} {link.name}*/}
-              {/*        </Typography>*/}
-              {/*      </Link>*/}
-              {/*    </li>*/}
-              {/*  ))}*/}
-              {/*</ul>*/}
+              <Typography variant="h6" color="textPrimary" gutterBottom>
+                {social.title}
+              </Typography>
+              <ul className={styles.social_list}>
+                {social.links.map((link, index) => (
+                  <li key={index} className={styles.social_link__item}>
+                    <Link href={link.link} underline="none" variant="subtitle1" color="textSecondary" >
+                      <Typography className={styles.social_list__text}>
+                        {link.icon} {link.name}
+                      </Typography>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </Grid>
           ))}
         </Grid>
