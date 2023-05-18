@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Link from "next/link"
 // import Image from 'next/image'
 
@@ -41,6 +41,12 @@ const Header = ({
 }: HeaderProps) => {
   const styles = useStyles()
   const [open, setOpen] = React.useState(true)
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+
+    }
+  }, [])
   
   return (
     <>
@@ -61,7 +67,7 @@ const Header = ({
           }
         >
           <AlertTitle>Правила перевозок обновленны</AlertTitle>
-          Мы обновили правила перевозок - мы пожете про это почитать <strong>здесь</strong>.
+          Мы обновили правила перевозок - мы пожете про это почитать <Link href={'/info/ru/transportation-rules'}><strong className={classes.pointer}>здесь</strong></Link>.
         </Alert>
       </Collapse>
 
