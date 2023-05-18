@@ -122,7 +122,6 @@ const useStyles = makeStyles((theme) => {
 
 const currentDateObj = new Date()
 
-
 function SearchTickets(props) {
   const theme = useTheme()
   const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
@@ -143,7 +142,7 @@ function SearchTickets(props) {
   // a list of cities
   const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
-  const todayDateWithFormat = convertDateObjToString(new Date())
+  const todayDateWithFormat = convertDateObjToString(currentDateObj)
   const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
     startLocation: props?.info?.startLocation ? props.info.startLocation : null,
     endLocation: props?.info?.endLocation ? props.info.endLocation : null,
