@@ -23,10 +23,6 @@ export function CommonLayout({
                                contentMaxWidth="lg",
                                contentDisableGutters=false
 }: CommonLayoutProps) {
-  console.log('CommonLayout props', {
-    contentMaxWidth,
-    contentDisableGutters
-  })
   return (
     <>
       <Header
