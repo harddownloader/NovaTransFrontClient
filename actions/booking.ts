@@ -68,7 +68,7 @@ export const postBookSeat = async (slug: string, body) => {
  * }
  */
 export const postMultiBookSeat = async (body) => {
-  const response = await fetch(`${API}/bookings/milti-book/`, {
+  const response = await fetch(`${API}/bookings/multi-book/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
