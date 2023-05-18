@@ -21,10 +21,10 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import { blue } from '@mui/material/colors'
-
-// pickers
-import MaterialUIPickers from "../../Pickers/DatePicker"
 import Autocomplete from "@mui/material/Autocomplete"
+
+// project components
+import MaterialUIPickers from "@/components/Pickers/DatePicker"
 
 // store
 import {
@@ -39,6 +39,9 @@ import {
 // types
 import { ISearchForm } from "@/interfaces/searchform"
 import { futureAnyFix } from "@/interfaces/futureAnyFix"
+
+// helpers
+import { convertDateObjToString } from "@/components/Home/SearchTickets/helpers"
 
 // assets
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
@@ -140,7 +143,7 @@ function SearchTickets(props) {
   // a list of cities
   const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
-  const todayDateWithFormat = new Date().toISOString().split('T')[0]
+  const todayDateWithFormat = convertDateObjToString(new Date())
   const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
     startLocation: props?.info?.startLocation ? props.info.startLocation : null,
     endLocation: props?.info?.endLocation ? props.info.endLocation : null,
@@ -179,9 +182,15 @@ function SearchTickets(props) {
   }, [isBackTicketFieldsShow])
 
   const searchTicketsRequestHandler = () => {
+    const requestBody = {
+      ...formData
+    }
+    if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
+    if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
+
     Router.push({
       pathname: "/buses",
-      query: formData,
+      query: requestBody,
     })
   }
 
