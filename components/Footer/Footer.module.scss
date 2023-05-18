@@ -33,8 +33,12 @@
 
 }
 
-.pages_list__item{
+.pages_list__item {
+  margin-bottom: 0.3em;
+}
 
+.pages_list__item_link {
+  font-size: 0.9em;
 }
 
 .social_list_container {
@@ -42,11 +46,12 @@
 }
 .social_list__text {
   display: flex;
+  font-size: 0.9em;
 }
 
 .social_link__item{
   display: flex;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
 }
 
 .social_link__icon{
