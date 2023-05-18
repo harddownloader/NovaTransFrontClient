@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-interface HeaderPorps {
+interface HeaderProps {
   isDarkStyle?: boolean
   containerWidth?: false | Breakpoint
 }
@@ -38,7 +38,7 @@ interface HeaderPorps {
 const Header = ({
   isDarkStyle=false,
   containerWidth="md"
-}: HeaderPorps) => {
+}: HeaderProps) => {
   const styles = useStyles()
   const [open, setOpen] = React.useState(true)
   
