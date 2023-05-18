@@ -4,7 +4,7 @@ import {
   Action
 } from '@reduxjs/toolkit'
 
-import locationsReducer from '@/features/locations/locationsSlice'
+import locationsReducer from '@/store/locations/locationsSlice'
 
 export function makeStore() {
   return configureStore({

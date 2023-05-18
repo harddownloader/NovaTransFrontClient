@@ -3,7 +3,7 @@ import {
   PayloadAction,
   createAsyncThunk,
 } from '@reduxjs/toolkit'
-import type { RootState } from '../../app/store'
+import type { RootState } from '@/store/store'
 import { API } from "@/utils/const"
 
 export interface LocationState {
@@ -26,9 +26,8 @@ const initialState: LocationsState = {
 }
 
 export const getLocations = createAsyncThunk('locations/locations', async () => {
-  const response = await fetch(`${API}/locations`)
-  const locations = await response.json()
-  
+  const locations = await fetch(`${API}/locations`).then((data) => data.json())
+
   return locations
 })
 

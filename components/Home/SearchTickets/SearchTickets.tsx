@@ -30,11 +30,11 @@ import Autocomplete from "@mui/material/Autocomplete"
 import {
   useAppDispatch,
   useAppSelector,
-} from '@/app/hooks'
+} from '@/store/hooks'
 import {
   getLocations,
   selectLocations,
-} from '@/features/locations/locationsSlice'
+} from '@/store/locations/locationsSlice'
 
 // types
 import { ISearchForm } from "@/interfaces/searchform"

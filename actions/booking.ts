@@ -1,16 +1,27 @@
 import fetch from "isomorphic-unfetch"
 import { API } from "@/utils/const"
 
+export const getBookingById = async (bookingId: string) => {
+  const booking = await fetch(`${API}/bookings/${bookingId}`)
+    .then((data) => data.json())
+    .catch((e) => {
+      console.warn(e)
+      return null
+    })
+
+  return booking
+}
+
 // slug - string
 // seats - array of strings
 export const postSoldSeat = async (slug: string, seats) => {
-  // return axios.post(`/bookings/sold/${slug}`, { seatNumber: JSON.stringify(seats) })
+  console.warn('postSoldSeat hasn\'t been tested before');
   const response = await fetch(`/bookings/sold/${slug}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ seatNumber: JSON.stringify(seats) })
+    body: JSON.stringify({ seatNumber: seats })
   }).then((data) => data.json())
 
   return response

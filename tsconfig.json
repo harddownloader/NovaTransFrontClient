@@ -12,8 +12,7 @@
       "@/styles/*": ["styles/*"],
       "@/actions/*": ["actions/*"],
       "@/utils/*": ["utils/*"],
-      "@/app/*": ["app/*"],
-      "@/features/*": ["features/*"],
+      "@/store/*": ["store/*"],
       "@/interfaces/*": ["interfaces/*"]
     },
     "allowJs": true,

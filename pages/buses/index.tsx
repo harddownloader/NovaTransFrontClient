@@ -5,31 +5,26 @@ import React, {
 } from "react"
 
 // mui
-import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import CssBaseline from "@mui/material/CssBaseline"
 
 // project components
 import Cards from "./cards"
 import Loading from "@/components/Loading"
-import Header from "@/components/HeaderMaterial/Header"
-import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
-import Footer from "@/components/Footer/Footer"
 import { BaseSeo } from "@/components/seo/BaseSeo"
 import { SearchTicketsLayout } from "@/components/Layouts/SearchTicketsLayout"
 
 // utils
-import { searchBus } from "@/actions/location"
+import { searchBus } from "@/actions/bus"
 
 // store
 import {
   useAppDispatch,
   useAppSelector,
-} from '@/app/hooks'
+} from '@/store/hooks'
 import {
   getLocations,
   selectLocations,
-} from '@/features/locations/locationsSlice'
+} from '@/store/locations/locationsSlice'
 
 // types
 import { TicketsList } from '@/interfaces/tickets'

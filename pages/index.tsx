@@ -20,11 +20,11 @@ import { WEBSITE_NAME } from "@/utils/const"
 import {
   useAppDispatch,
   useAppSelector,
-} from '@/app/hooks'
+} from '@/store/hooks'
 import {
   getLocations,
   selectLocations,
-} from '@/features/locations/locationsSlice'
+} from '@/store/locations/locationsSlice'
 import {CommonLayout} from "@/components/Layouts";
 import Details from "./details";
 
