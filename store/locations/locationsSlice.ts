@@ -33,7 +33,11 @@ export const getLocations = createAsyncThunk('locations/locations', async () => 
 export const locationsSlice = createSlice({
   name: 'locations',
   initialState,
-  reducers: {},
+  reducers: {
+    setLocations: (state, action) => {
+      state.data = [...action.payload]
+    }
+  },
   extraReducers: builder => {
     builder
       .addCase(getLocations.pending, state => {
@@ -51,5 +55,7 @@ export const locationsSlice = createSlice({
 })
 
 export const selectLocations = (state: RootState) => state.locations
+
+export const { setLocations } = locationsSlice.actions
 
 export default locationsSlice.reducer
