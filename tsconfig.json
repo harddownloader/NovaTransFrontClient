@@ -13,6 +13,7 @@
       "@/actions/*": ["actions/*"],
       "@/utils/*": ["utils/*"],
       "@/store/*": ["store/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/interfaces/*": ["interfaces/*"]
     },
     "allowJs": true,
