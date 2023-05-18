@@ -1,7 +1,6 @@
 import React from 'react'
 import Header from '@/components/HeaderMaterial/Header'
 
-
 const Layout = ({ children }) => {
   return (
     <>
@@ -11,4 +10,3 @@ const Layout = ({ children }) => {
   )
 }
 
-export default Layout
