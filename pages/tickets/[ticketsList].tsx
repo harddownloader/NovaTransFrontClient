@@ -19,18 +19,14 @@ export const TicketPage = ({ bookings }) => {
   return (
     <>
       <div className={classes.main_ticket_wrap}>
-        <Container
-          // maxWidth={'xl'}
-
-        >
-          <Grid
-            container
-          >
+        <Container>
+          <Grid container>
             <Grid
               item
               xs={12}
               sm={12}
               md={12}
+              lg={12}
             >
               <Typography
                 variant="h2"
@@ -40,13 +36,16 @@ export const TicketPage = ({ bookings }) => {
                 {bookings.lentgh === 1 ? "Ваш билет" : "Ваши билеты"}
               </Typography>
             </Grid>
+          </Grid>
+          <Grid container justifyContent={'center'}>
             {bookings.map((booking) => {
               return (
                 <Grid
                   item
                   xs={12}
                   sm={12}
-                  md={12}
+                  md={4}
+                  lg={4}
                   key={booking._id}
                 >
                   <main className={classes.ticket_system}>
