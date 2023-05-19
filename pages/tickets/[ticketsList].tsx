@@ -39,6 +39,7 @@ export const TicketPage = ({ bookings }) => {
           </Grid>
           <Grid container justifyContent={'center'}>
             {bookings.map((booking) => {
+              const lastPointIndex = booking.bus.wayStations.length -1
               return (
                 <Grid
                   item
@@ -64,7 +65,7 @@ export const TicketPage = ({ bookings }) => {
                           <div className={classes.route}>
                             <h2>{booking.bus.wayStations[0].city}{ /* NYC*/}</h2>
                             <AirportShuttleIcon className={classes.plane_icon} />
-                            <h2>{booking.bus.wayStations[booking.bus.wayStations.length -1].city}{/*ATL*/}</h2>
+                            <h2>{booking.bus.wayStations[lastPointIndex].city}{/*ATL*/}</h2>
                           </div>
                           <div className={classes.details}>
                             <div className={classes.item}>
@@ -80,12 +81,12 @@ export const TicketPage = ({ bookings }) => {
                               <h3>{booking.bus.wayStations[0]?.date} {booking.bus.wayStations[0]?.time}</h3>
                             </div>
                             <div className={classes.item}>
-                              <span>Время</span>
-                              <h3>15:03</h3>
+                              <span>Цена ₴</span>
+                              <h3>{booking.bus.fare}</h3>
                             </div>
                             <div className={classes.item}>
-                              <span>Luggage</span>
-                              <h3>Hand Luggage</h3>
+                              <span>Дата прибытия</span>
+                              <h3>{booking.bus.wayStations[lastPointIndex]?.date} {booking.bus.wayStations[lastPointIndex]?.time}</h3>
                             </div>
                             <div className={classes.item}>
                               <span>Место</span>
@@ -104,8 +105,8 @@ export const TicketPage = ({ bookings }) => {
                             />
                           </svg>
                           <div className={classes.description}>
-                            <h2>69Pixels</h2>
-                            <p>Show QR-code when requested</p>
+                            <h2>{WEBSITE_NAME}</h2>
+                            <p>QR код</p>
                           </div>
                         </div>
                       </div>
