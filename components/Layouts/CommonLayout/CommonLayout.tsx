@@ -12,7 +12,8 @@ export interface CommonLayoutProps {
   children: ReactNode
   isDarkStyle?: boolean
   containerWidth?: Breakpoint
-  contentMaxWidth?: Breakpoint
+  contentMaxWidth?: Breakpoint | false
+  contentDisableGutters?: boolean
 }
 
 export function CommonLayout({
@@ -20,6 +21,7 @@ export function CommonLayout({
                                isDarkStyle=false,
                                containerWidth="md",
                                contentMaxWidth="lg",
+                               contentDisableGutters=false
 }: CommonLayoutProps) {
   return (
     <>
@@ -27,7 +29,10 @@ export function CommonLayout({
         isDarkStyle={isDarkStyle}
         containerWidth={containerWidth}
       />
-      <Container maxWidth={contentMaxWidth}>
+      <Container
+        maxWidth={contentMaxWidth}
+        disableGutters={contentDisableGutters}
+      >
         { children }
       </Container>
       <Footer />

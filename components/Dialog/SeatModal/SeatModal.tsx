@@ -23,13 +23,11 @@ import {
 import { getBusSeats } from '@/actions/busesSeats'
 import { Preloader } from "@/components/Preloader"
 
-
 // types
 import { IBusSeats } from './types'
 
 // assets
 import classes from './SeatModal.module.scss'
-
 
 const gridStyle = (countBlocksInRow) => ({
   display: 'grid',
@@ -58,9 +56,6 @@ export function SeatModal(props) {
   const getBusSeatsOfTrip = async () => {
     const busSeatID = '63d5c06ce8c94256fc1a79c9'
     const busSeats = await getBusSeats(busSeatID)
-    console.log({
-      busSeats
-    })
 
     return busSeats
   }
@@ -217,9 +212,8 @@ export function SeatModal(props) {
       </div>
     )
   }
+
   let seatsCounter = 0
-
-
 
   return (
     <DialogHOC
@@ -239,54 +233,62 @@ export function SeatModal(props) {
       }
       childrenFooter={
         <>
-          <div className={`${classes.seat_modal_footer} ${isMobileVersion ? '' : classes.seat_modal_footer__desktop}`}>
-            <IconButton
-              color="primary"
-              aria-label="seat"
-              component="span"
-              className={`${classes.button} ${isMobileVersion ? classes.mobileButton : '' }`}
-            >
-              <WeekendOutlinedIcon />&nbsp;Доступно
-            </IconButton>
-            <IconButton
-              color="primary"
-              aria-label="seat"
-              component="span"
-              className={`${classes.button} ${classes.bookedButton} ${isMobileVersion ? classes.mobileButton : '' }`}
-            >
-              <WeekendOutlinedIcon />&nbsp;Забронировано
-            </IconButton>
-            <IconButton
-              color="primary"
-              aria-label="seat"
-              component="span"
-              className={`${classes.button} ${classes.soldButton} ${isMobileVersion ? classes.mobileButton : '' }`}
-            >
-              <WeekendOutlinedIcon />&nbsp;Продано
-            </IconButton>
-          </div>
+          <div className={classes.footer_wrapper}>
+            <div className={`${classes.seat_modal_footer} ${isMobileVersion ? '' : classes.seat_modal_footer__desktop}`}>
+              <IconButton
+                color="primary"
+                aria-label="seat"
+                component="span"
+                className={`${classes.button} ${isMobileVersion ? classes.mobileButton : '' }`}
+              >
+                <WeekendOutlinedIcon />&nbsp;Доступно
+              </IconButton>
+              <IconButton
+                color="primary"
+                aria-label="seat"
+                component="span"
+                className={`${classes.button} ${classes.bookedButton} ${isMobileVersion ? classes.mobileButton : '' }`}
+              >
+                <WeekendOutlinedIcon />&nbsp;Забронировано
+              </IconButton>
+              <IconButton
+                color="primary"
+                aria-label="seat"
+                component="span"
+                className={`${classes.button} ${classes.soldButton} ${isMobileVersion ? classes.mobileButton : '' }`}
+              >
+                <WeekendOutlinedIcon />&nbsp;Продано
+              </IconButton>
+            </div>
 
-          <div className={`${classes.seat_modal_footer} ${isMobileVersion ? '' : classes.seat_modal_footer__desktop}`}>
-            <Typography variant="body2" gutterBottom>
-              Выбранные места:
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {currentSeats.map(seat => `${seat} `)}
-            </Typography>
+            <div className={`${classes.seat_modal_footer} ${classes.seats_first_wrap} ${isMobileVersion ? '' : classes.seat_modal_footer__desktop}`}>
+              <div className={`${classes.seat_modal_footer} ${classes.seats_second_wrap}`}>
+                <div className={`${classes.seat_modal_footer} ${classes.seats_list_wrap}`}>
+                  <Typography variant="body2" gutterBottom>
+                    Выбранные места:
+                  </Typography>
+                  <div className={`${classes.seat_modal_footer} ${classes.seats_list__list_wrap}`}>
+                    {currentSeats.map(seat => (
+                      <div className={classes.selectedSeatNumber}>{seat}</div>
+                    ))}
+                  </div>
+                </div>
 
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={() => setIsConfirmVisible(true)}
-              disabled={!Boolean(
-                Array.isArray(currentSeats) &&
-                currentSeats.length
-              )}
-              fullWidth
-            >
-              Заказать
-            </Button>
+                <Button
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                  onClick={() => setIsConfirmVisible(true)}
+                  disabled={!Boolean(
+                    Array.isArray(currentSeats) &&
+                    currentSeats.length
+                  )}
+                  fullWidth
+                >
+                  Заказать
+                </Button>
+              </div>
+            </div>
           </div>
         </>
       }

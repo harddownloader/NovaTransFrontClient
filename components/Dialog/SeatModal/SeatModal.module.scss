@@ -1,5 +1,7 @@
 @import '../../../styles/_variables.scss';
 
+$bottom_offset: 0.5rem;
+
 // CONTAINERS
 .wrapper {
   position: relative;
@@ -41,9 +43,48 @@
 //}
 
 // FOOTER
-.seat_modal_footer {
-  width: 100%;
+.footer_wrapper {
+  display: flex;
   height: 100%;
+}
+
+.seat_modal_footer.seats_first_wrap {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: end;
+}
+
+.seat_modal_footer.seats_second_wrap {
+  width: 100%;
+
+  margin-bottom: $bottom_offset;
+}
+
+.seat_modal_footer.seats_list_wrap {
+  margin-bottom: 0.8rem;
+}
+
+.seat_modal_footer.seats_list__list_wrap {
+  display: grid;
+  counter-reset: grid-items;
+  position: relative;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+}
+
+$seat_padding: 0.5rem;
+$double_seat_padding: $seat_padding * 2;
+.selectedSeatNumber {
+  padding: $seat_padding;
+  margin: 0.3rem 0.3rem 0.3rem 0;
+  border-radius: 4px;
+  border: 1px solid $blue_color;
+  width: fit-content;
+  min-width: calc(#{$double_seat_padding} + 20px);
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .seat_modal_footer__desktop {
@@ -53,7 +94,7 @@
 }
 
 .button {
-  margin: .5rem;
+  margin: $bottom_offset;
 }
 
 $seat-height: 3.1rem;

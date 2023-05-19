@@ -5,37 +5,33 @@ import React, {
 } from "react"
 
 // mui
-import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import CssBaseline from "@mui/material/CssBaseline"
 
 // project components
 import Cards from "./cards"
 import Loading from "@/components/Loading"
-import Header from "@/components/HeaderMaterial/Header"
-import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
-import Footer from "@/components/Footer/Footer"
 import { BaseSeo } from "@/components/seo/BaseSeo"
 import { SearchTicketsLayout } from "@/components/Layouts/SearchTicketsLayout"
 
 // utils
-import { searchBus } from "@/actions/location"
+import { searchBus } from "@/actions/bus"
 
 // store
 import {
   useAppDispatch,
   useAppSelector,
-} from '@/app/hooks'
+} from '@/store/hooks'
 import {
   getLocations,
-  selectLocations,
-} from '@/features/locations/locationsSlice'
+  selectLocations, setLocations,
+} from '@/store/locations/locationsSlice'
 
 // types
 import { TicketsList } from '@/interfaces/tickets'
 import { ISearchForm } from "@/interfaces/searchform"
+import {getAllLocations} from "@/actions/location";
 
-const Buses = ({ resp, searchQuery }) => {
+const Buses = ({ resp, searchQuery, locations }) => {
   const [buses, setBuses] = useState<TicketsList>({ oneWayTickets: [] })
   const [loading, setLoading] = useState(false)
   const dispatch = useAppDispatch()
@@ -46,8 +42,15 @@ const Buses = ({ resp, searchQuery }) => {
   } = useAppSelector(selectLocations)
 
   useEffect(() => {
+    if (
+      locations.length === 0 &&
+      (!data?.length && !pending)
+    ) dispatch(getLocations())
+    else dispatch(setLocations(locations))
+  }, [])
+
+  useEffect(() => {
     fetchBuses()
-    if (!data?.length && !pending) dispatch(getLocations())
   }, [resp])
 
   const fetchBuses = () => {
@@ -77,15 +80,21 @@ const Buses = ({ resp, searchQuery }) => {
   )
 }
 
-Buses.getInitialProps = async ({
-  query,
-  res
-}) => {
+export const getServerSideProps = async (context) => {
+  const { query, res } = context
+  let props = {}
+
   if (Object.keys(query).length <= 0) {
     res.writeHead(301, {
       Location: '/'
     })
     res.end()
+  }
+
+  const locations = await getAllLocations()
+  if (locations) props = {
+    ...props,
+    locations
   }
 
   const searchQuery: ISearchForm = {
@@ -98,7 +107,15 @@ Buses.getInitialProps = async ({
   }
 
   const resp = await searchBus(searchQuery)
-  return { resp, searchQuery }
+
+  props = {
+    ...props,
+    resp, searchQuery
+  }
+
+  return {
+    props: props
+  }
 }
 
 Buses.getLayout = function getLayout(page: ReactElement) {

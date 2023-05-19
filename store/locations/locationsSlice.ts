@@ -3,8 +3,8 @@ import {
   PayloadAction,
   createAsyncThunk,
 } from '@reduxjs/toolkit'
-import type { RootState } from '../../app/store'
-import { API } from "@/utils/const"
+import type { RootState } from '@/store/store'
+import { getAllLocations } from '@/actions/location'
 
 export interface LocationState {
   district: string,
@@ -26,16 +26,18 @@ const initialState: LocationsState = {
 }
 
 export const getLocations = createAsyncThunk('locations/locations', async () => {
-  const response = await fetch(`${API}/locations`)
-  const locations = await response.json()
-  
+  const locations = await getAllLocations()
   return locations
 })
 
 export const locationsSlice = createSlice({
   name: 'locations',
   initialState,
-  reducers: {},
+  reducers: {
+    setLocations: (state, action) => {
+      state.data = [...action.payload]
+    }
+  },
   extraReducers: builder => {
     builder
       .addCase(getLocations.pending, state => {
@@ -53,5 +55,7 @@ export const locationsSlice = createSlice({
 })
 
 export const selectLocations = (state: RootState) => state.locations
+
+export const { setLocations } = locationsSlice.actions
 
 export default locationsSlice.reducer

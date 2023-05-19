@@ -21,24 +21,27 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import { blue } from '@mui/material/colors'
-
-// pickers
-import MaterialUIPickers from "../../Pickers/DatePicker"
 import Autocomplete from "@mui/material/Autocomplete"
+
+// project components
+import MaterialUIPickers from "@/components/Pickers/DatePicker"
 
 // store
 import {
   useAppDispatch,
   useAppSelector,
-} from '@/app/hooks'
+} from '@/store/hooks'
 import {
   getLocations,
   selectLocations,
-} from '@/features/locations/locationsSlice'
+} from '@/store/locations/locationsSlice'
 
 // types
 import { ISearchForm } from "@/interfaces/searchform"
 import { futureAnyFix } from "@/interfaces/futureAnyFix"
+
+// helpers
+import { convertDateObjToString } from "@/components/Home/SearchTickets/helpers"
 
 // assets
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
@@ -48,7 +51,7 @@ const useStyles = makeStyles((theme) => {
   return {
   // container
   heroContent: (props: {
-    isBackTicketFildsShow: boolean
+    isBackTicketFieldsShow: boolean
   }) => ({
     backgroundColor: theme.palette.background.paper,
     backgroundImage: `url(${BgImage})`,
@@ -57,7 +60,7 @@ const useStyles = makeStyles((theme) => {
     backgroundSize: "cover",
     marginTop: "-85px",
 
-    padding: props.isBackTicketFildsShow ? theme.spacing(6, 0, 14) : theme.spacing(1, 0, 1),
+    padding: props.isBackTicketFieldsShow ? theme.spacing(6, 0, 14) : theme.spacing(1, 0, 1),
   }),
   // grid select
   gridSelect: {
@@ -107,7 +110,7 @@ const useStyles = makeStyles((theme) => {
       borderRadius: "4px 0 0 4px",
     },
   },
-  searchFieldrenderedInput: {
+  searchFieldRenderedInput: {
     "&.first_input_el .MuiInputBase-root": {
       borderRadius: "4px 0 0 4px",
     },
@@ -118,7 +121,6 @@ const useStyles = makeStyles((theme) => {
 }})
 
 const currentDateObj = new Date()
-
 
 function SearchTickets(props) {
   const theme = useTheme()
@@ -132,15 +134,15 @@ function SearchTickets(props) {
   } = useAppSelector(selectLocations)
 
   // checkbox------------------
-  const [isBackTicketFildsShow, setIsBackTicketFildsShow] = useState(
+  const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(
     (!props?.info?.returnStartLocation && props?.info?.startLocation) ? false : true
   )
-  const classes = useStyles({isBackTicketFildsShow})
+  const classes = useStyles({isBackTicketFieldsShow: isBackTicketFieldsShow})
 
   // a list of cities
   const [locations, setLocations] = useState([])
   // данные для отправки запроса(откуда,куда, дата)
-  const todayDateWithFormat = new Date().toISOString().split('T')[0]
+  const todayDateWithFormat = convertDateObjToString(currentDateObj)
   const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
     startLocation: props?.info?.startLocation ? props.info.startLocation : null,
     endLocation: props?.info?.endLocation ? props.info.endLocation : null,
@@ -168,7 +170,7 @@ function SearchTickets(props) {
   }, [data])
 
   useEffect(() => {
-    if (!isBackTicketFildsShow) {
+    if (!isBackTicketFieldsShow) {
       setFormData({
         ...formData,
         returnStartLocation: null,
@@ -176,15 +178,20 @@ function SearchTickets(props) {
         returnJourneyDate: null,
       })
     }
-  }, [isBackTicketFildsShow])
+  }, [isBackTicketFieldsShow])
 
-  const dummytransition = () => {
+  const searchTicketsRequestHandler = () => {
+    const requestBody = {
+      ...formData
+    }
+    if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
+    if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
+
     Router.push({
       pathname: "/buses",
-      query: formData,
+      query: requestBody,
     })
   }
-
 
   /**
    * 
@@ -214,7 +221,7 @@ function SearchTickets(props) {
             size="large"
             color="primary"
             className={styles.search_btn}
-            onClick={dummytransition}
+            onClick={searchTicketsRequestHandler}
             disabled={!Boolean(
               formData?.startLocation &&
               formData?.endLocation &&
@@ -232,14 +239,14 @@ function SearchTickets(props) {
 
   const optionsLocations = locations.length ? locations.map(location => location.name) : []
 
-  const getAutocomplateValue = (nameField) => {
+  const getAutoCompleteValue = (nameField) => {
     return locations.find(location => location._id === formData[`${nameField}`])
   }
 
-  const fromValue = getAutocomplateValue("startLocation")
-  const toValue = getAutocomplateValue("endLocation")
-  const returnFromValue = getAutocomplateValue("returnStartLocation")
-  const returnToValue = getAutocomplateValue("returnEndLocation")
+  const fromValue = getAutoCompleteValue("startLocation")
+  const toValue = getAutoCompleteValue("endLocation")
+  const returnFromValue = getAutoCompleteValue("returnStartLocation")
+  const returnToValue = getAutoCompleteValue("returnEndLocation")
 
   return (
       <div className={classes.heroContent}>
@@ -295,7 +302,7 @@ function SearchTickets(props) {
                         )
                       }}
                       label="Откуда"
-                      className={`${classes.searchFieldrenderedInput} first_input_el`}
+                      className={`${classes.searchFieldRenderedInput} first_input_el`}
                     />
                   )}
                 />
@@ -325,7 +332,7 @@ function SearchTickets(props) {
                         )
                       }}
                       label="Куда"
-                      className={`${classes.searchFieldrenderedInput} middle_input_el`}
+                      className={`${classes.searchFieldRenderedInput} middle_input_el`}
                     />
                   )}
                 />
@@ -354,8 +361,8 @@ function SearchTickets(props) {
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={isBackTicketFildsShow}
-                        onChange={(e) => setIsBackTicketFildsShow(!isBackTicketFildsShow)}
+                        checked={isBackTicketFieldsShow}
+                        onChange={(e) => setIsBackTicketFieldsShow(!isBackTicketFieldsShow)}
                         color="primary"
                         className={styles.returnBackCheckbox}
                         sx={{
@@ -375,15 +382,15 @@ function SearchTickets(props) {
                 </FormGroup>
               </Grid>
             </Grid>
-          {/* checkox end */}
+          {/* checkbox end */}
         </Container>
 
         {/* back */}
-        <Collapse in={isBackTicketFildsShow}>
+        <Collapse in={isBackTicketFieldsShow}>
           <Container
             maxWidth="md"
             className={`search-tickets ${styles.return_trip} ${
-              isBackTicketFildsShow ? "activate" : ""
+              isBackTicketFieldsShow ? "activate" : ""
             }`}
           >
             <Grid container gap={0}>
@@ -410,7 +417,7 @@ function SearchTickets(props) {
                         )
                       }}
                       label="Откуда"
-                      className={`${classes.searchFieldrenderedInput} first_input_el`}
+                      className={`${classes.searchFieldRenderedInput} first_input_el`}
                     />
                   )}
                 />
@@ -438,7 +445,7 @@ function SearchTickets(props) {
                         )
                       }}
                       label="Куда"
-                      className={`${classes.searchFieldrenderedInput} middle_input_el`}
+                      className={`${classes.searchFieldRenderedInput} middle_input_el`}
                     />
                   )}
                 />
