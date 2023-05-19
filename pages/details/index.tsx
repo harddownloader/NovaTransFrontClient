@@ -28,7 +28,7 @@ import { CommonLayout } from "@/components/Layouts"
 // utils
 import { dec } from "@/utils/encdec"
 import { validateEmail } from '@/utils/validation/email'
-import { postBookSeat, postMultiBookSeat } from "@/actions/book"
+import { postBookSeat, postMultiBookSeat } from "@/actions/booking"
 
 // assets
 import classes from './Details.module.scss'

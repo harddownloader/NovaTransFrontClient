@@ -1,15 +1,21 @@
-import * as React from 'react'
+import React, { useState, MouseEvent } from 'react'
+
+// mui
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+
+// assets
 import classes from './LangMenu.module.scss'
 
-export default function LangMenu({ isDarkStyle }) {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+export const LangMenu = ({ isDarkStyle }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -36,9 +42,9 @@ export default function LangMenu({ isDarkStyle }) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>🇷🇺 Рус</MenuItem>
         <MenuItem onClick={handleClose} disabled>🇺🇦 Укр</MenuItem>
         <MenuItem onClick={handleClose} disabled>🇺🇸 Eng</MenuItem>
+        <MenuItem onClick={handleClose}>🇷🇺 Рус</MenuItem>
       </Menu>
     </div>
   )

@@ -178,12 +178,15 @@ export default function Footer() {
               </Typography>
               <ul>
                 {pagesCol.list.map((page, index) => (
-                  <li key={index}>
+                  <li
+                    key={index}
+                    className={styles.pages_list__item}
+                  >
                     <Link
                       href={page.link}
                       variant="subtitle1"
                       color="textSecondary"
-                      className={styles.pages_list__item}
+                      className={styles.pages_list__item_link}
                       underline="none"
                     >
                       {page.title}

@@ -14,7 +14,7 @@ import {
 import '@/styles/global.scss'
 
 // store
-import store from '../app/store'
+import store from '@/store/store'
 
 const theme = createTheme()
 

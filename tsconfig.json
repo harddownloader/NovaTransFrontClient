@@ -12,8 +12,8 @@
       "@/styles/*": ["styles/*"],
       "@/actions/*": ["actions/*"],
       "@/utils/*": ["utils/*"],
-      "@/app/*": ["app/*"],
-      "@/features/*": ["features/*"],
+      "@/store/*": ["store/*"],
+      "@/hooks/*": ["hooks/*"],
       "@/interfaces/*": ["interfaces/*"]
     },
     "allowJs": true,

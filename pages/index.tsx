@@ -14,22 +14,21 @@ import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import { BaseSeo } from "@/components/seo/BaseSeo"
 
 // utils
-import { WEBSITE_NAME } from "@/utils/const"
+import { WEBSITE_NAME} from "@/utils/const"
 
 // store
 import {
   useAppDispatch,
   useAppSelector,
-} from '@/app/hooks'
+} from '@/store/hooks'
 import {
   getLocations,
   selectLocations,
-} from '@/features/locations/locationsSlice'
-import {CommonLayout} from "@/components/Layouts";
-import Details from "./details";
+  setLocations,
+} from '@/store/locations/locationsSlice'
+import { getAllLocations } from "@/actions/location"
 
-function App(props) {
-  const alert = props?.alert
+function App({ alert=null, locations }) {
   const [isAlertVisible, setIsAlertVisible] = useState(Boolean(alert))
   const dispatch = useAppDispatch()
   const {
@@ -39,7 +38,11 @@ function App(props) {
   } = useAppSelector(selectLocations)
 
   useEffect(() => {
-    if (!data?.length && !pending) dispatch(getLocations())
+    if (
+      locations.length === 0 &&
+      (!data?.length && !pending)
+    ) dispatch(getLocations())
+    else dispatch(setLocations(locations))
   }, [])
 
   return (
@@ -71,12 +74,35 @@ function App(props) {
   )
 }
 
-App.getInitialProps = ({ query }) => {
+// App.getInitialProps = ({ query }) => {
+//   if (query?.alert) {
+//     const alert = JSON.parse(query.alert)
+//     return {alert}
+//   }
+//   return {}
+// }
+
+export const getServerSideProps = async (context) => {
+  const { query } = context
+  let props = {}
+
   if (query?.alert) {
     const alert = JSON.parse(query.alert)
-    return {alert}
+    props = {
+      ...props,
+      alert
+    }
   }
-  return {}
+
+  const locations = await getAllLocations()
+  if (locations) props = {
+    ...props,
+    locations
+  }
+
+  return {
+    props: props
+  }
 }
 
 export default App
