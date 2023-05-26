@@ -2,6 +2,7 @@ import React, {
   useState,
   useEffect,
   useMemo,
+  useRef,
   ReactElement,
 } from "react"
 import Router from "next/router"
@@ -17,18 +18,24 @@ import {
   IconButton,
   Grid,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 // project components
 import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import { PaperCard } from '@/components/Card/PaperCard'
 import { BaseSeo } from "@/components/seo/BaseSeo"
 import { CommonLayout } from "@/components/Layouts"
+import LiqPay from "./liqpay"
+import { Heading } from "./Heading"
 
 // utils
 import { dec } from "@/utils/encdec"
 import { validateEmail } from '@/utils/validation/email'
 import { postBookSeat, postMultiBookSeat } from "@/actions/booking"
+import {
+  PAYMENT_GATEWAY_PRIVATE_KEY,
+  PAYMENT_GATEWAY_PUBLIC_KEY,
+  WEBSITE_DOMAIN
+} from "@/utils/const"
 
 // assets
 import classes from './Details.module.scss'
@@ -36,21 +43,26 @@ import classes from './Details.module.scss'
 // types
 import { NextPageWithLayout } from "../_app"
 
+type TPaymentForm = { paymentForm: string }
+
 interface DetailsProps {
-  fare: number | null,
-  seats: Array<string> | null,
-  journeyDate: string | null,
-  start: string | null,
-  end: string | null,
-  slug: string | null,
-  iat: number | null,
-  referer: string | null,
+  fare: number | null
+  seats: Array<string> | null
+  journeyDate: string | null
+  start: string | null
+  end: string | null
+  slug: string | null
+  iat: number | null
+  referer: string | null
+  totalCost: number
+  naming: string
 }
 
-export const Details: NextPageWithLayout<OrderProps> = ({
+export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
   oneWayTicketsOrder,
   returnTicketsOrder,
   referer,
+  paymentForm,
 }): JSX.Element => {
   const [name, setName] = useState<string>('')
   const [isNameValid, setIsNameValid] = useState<boolean>(null)
@@ -61,7 +73,6 @@ export const Details: NextPageWithLayout<OrderProps> = ({
   const [isPhoneFieldWasFocused, setIsPhoneFieldWasFocused] = useState<boolean>(false)
   const [isPhoneValid, setIsPhoneValid] = useState<boolean>(null)
 
-  const [address, setAddress] = useState<string>('lipoviy_adress')
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
   const [errorText, setErrorText] = useState<string>('')
   const [opts, setOpts] = useState({ mask: '+{380}(00)000-00-00' })
@@ -75,6 +86,8 @@ export const Details: NextPageWithLayout<OrderProps> = ({
     typedValue,
     setTypedValue,
   } = useIMask(opts)
+
+  const checkoutFormBtnRef = useRef(null)
 
   useEffect(() => {
     if (
@@ -145,7 +158,6 @@ export const Details: NextPageWithLayout<OrderProps> = ({
       const body = {
         name,
         phone: unmaskedValue.replace(/[^0-9 ]/g, "").trim(),
-        address,
         email,
         seatNumber: JSON.stringify(seatNumbers)
       }
@@ -155,7 +167,6 @@ export const Details: NextPageWithLayout<OrderProps> = ({
       const body = {
         name,
         phone: unmaskedValue.replace(/[^0-9 ]/g, "").trim(),
-        address,
         email,
         tickets: [
           {
@@ -173,7 +184,10 @@ export const Details: NextPageWithLayout<OrderProps> = ({
     } else console.error(`You haven't orders info for saving`)
 
     if (!resp.error) {
-      sweetAlert("success")
+      // sweetAlert("success")
+      if (checkoutFormBtnRef?.current?.children?.[0]?.childNodes?.[2]) {
+        checkoutFormBtnRef.current.children[0].childNodes[2].click()
+      }
     } else {
       sweetAlert("error", resp.error)
     }
@@ -181,17 +195,17 @@ export const Details: NextPageWithLayout<OrderProps> = ({
 
   const sweetAlert = (status: string, errorText?: string) => {
     if(status !== "error") {
-      setTimeout(() => {
-        Router.push({
-          pathname: '/',
-          query: {
-            alert: JSON.stringify({
-              alertTitle: 'Заказ принят',
-              alertText: 'Ожидайте билет на свою почту',
-            })
-          }
-        })
-      }, 1000)
+      // setTimeout(() => {
+      //   Router.push({
+      //     pathname: '/',
+      //     query: {
+      //       alert: JSON.stringify({
+      //         alertTitle: 'Заказ принят',
+      //         alertText: 'Ожидайте билет на свою почту',
+      //       })
+      //     }
+      //   })
+      // }, 1000)
     } else {
       if (errorText === "Not available") setErrorText('Выбранные места уже успели занять')
       else setErrorText('Вы ввели не корректные данные')
@@ -200,25 +214,28 @@ export const Details: NextPageWithLayout<OrderProps> = ({
   }
 
   const getPaymentContent = () => {
+    const costOfOneWayTickets = oneWayTicketsOrder.totalCost
     const paymentContent = []
+
     if (returnTicketsOrder) {
+      const costOfRoundTripTicket = returnTicketsOrder.totalCost
       paymentContent.push({
         title: "Стоимость билетов основного рейса",
-        text: `${oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length}грн.`
+        text: `${costOfOneWayTickets}грн.`
       }, {
         title: "Стоимость обратного билета",
-        text: `${returnTicketsOrder.fare * returnTicketsOrder.seats.length}грн.`
+        text: `${costOfRoundTripTicket}грн.`
       }, {
         title: "Итого",
-        text: `${(oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length) + (returnTicketsOrder.fare * returnTicketsOrder.seats.length)}грн.`
+        text: `${(costOfOneWayTickets) + (costOfRoundTripTicket)}грн.`
       })
     } else {
       paymentContent.push({
         title: "Стоимость билета",
-        text: `${oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length}грн.`
+        text: `${costOfOneWayTickets}грн.`
       }, {
         title: "Итого",
-        text: `${(oneWayTicketsOrder.fare * oneWayTicketsOrder.seats.length)}грн.`
+        text: `${(costOfOneWayTickets)}грн.`
       })
     }
 
@@ -236,24 +253,7 @@ export const Details: NextPageWithLayout<OrderProps> = ({
         direction="row"
         className={`${classes.heading_main_container}`}
       >
-        <Grid item xs={12} className={`${classes.heading_wrap}`}>
-          <IconButton
-            aria-label="back"
-            size="large"
-            onClick={() => {
-              if (referer !== null && referer.includes('/buses')) {
-                Router.back()
-              } else {
-                Router.push('/')
-              }
-            }}
-          >
-            <ArrowBackIcon fontSize="inherit" />
-          </IconButton>
-          <Typography variant="h4" component="div">
-            Оформление заказа
-          </Typography>
-        </Grid>
+        <Heading referer={referer} />
 
         <Grid item xs={12}>
           <Grid
@@ -374,7 +374,7 @@ export const Details: NextPageWithLayout<OrderProps> = ({
                 content={[
                   {
                     title: "Рейс",
-                    text: `${oneWayTicketsOrder.start} - ${oneWayTicketsOrder.end}`
+                    text: `${oneWayTicketsOrder.naming}`
                   },
                   {
                     title: "Дата",
@@ -385,7 +385,7 @@ export const Details: NextPageWithLayout<OrderProps> = ({
                     text: oneWayTicketsOrder.seats.map(seat => `${seat} `)
                   },
                   {
-                    title: "Цена за билет",
+                    title: "Цена за билет(место)",
                     text: `${oneWayTicketsOrder.fare}грн.`
                   }
                 ]}
@@ -395,7 +395,7 @@ export const Details: NextPageWithLayout<OrderProps> = ({
                 content={[
                   {
                     title: "Рейс",
-                    text: `${returnTicketsOrder.start} - ${returnTicketsOrder.end}`
+                    text: `${returnTicketsOrder.naming}`
                   },
                   {
                     title: "Дата",
@@ -406,7 +406,7 @@ export const Details: NextPageWithLayout<OrderProps> = ({
                     text: returnTicketsOrder.seats.map(seat => `${seat} `)
                   },
                   {
-                    title: "Цена за билет",
+                    title: "Цена за билет(место)",
                     text: `${returnTicketsOrder.fare}грн.`
                   }
                 ]}
@@ -434,7 +434,12 @@ export const Details: NextPageWithLayout<OrderProps> = ({
           </Grid>
         </Grid>
       </Grid>
-
+      <div
+        ref={checkoutFormBtnRef}
+        className="checkout_form_btn"
+        style={{overflow: 'hidden', height: 0}}
+        dangerouslySetInnerHTML={{ __html: paymentForm }}
+      ></div>
 
       {isErrorVisible && <ConfirmModal
         isVisible={isErrorVisible}
@@ -451,25 +456,60 @@ type OrderProps = {
   oneWayTicketsOrder: DetailsProps
   returnTicketsOrder?: DetailsProps
   referer: string | null
-}
+} & TPaymentForm
 
 export const getServerSideProps: GetServerSideProps = async(context) => {
   const orderString: any = context?.query?.order
   const order: OrderProps = dec(orderString)
 
   if (order && order?.oneWayTicketsOrder) {
+    const costOfOneWayTickets: number = Number(order.oneWayTicketsOrder.fare) * Number(order.oneWayTicketsOrder.seats.length)
+
     const orderProps: OrderProps = {
-      oneWayTicketsOrder: order?.oneWayTicketsOrder ? order.oneWayTicketsOrder : null,
-      referer: context?.req?.headers?.referer || null
+      oneWayTicketsOrder: {
+        ...order.oneWayTicketsOrder,
+        totalCost: costOfOneWayTickets,
+        naming: `${order.oneWayTicketsOrder.start} - ${order.oneWayTicketsOrder.end}`
+      },
+      referer: context?.req?.headers?.referer || null,
+      paymentForm: '',
     }
 
+    let costOfRoundTripTicket = 0
     if (order?.returnTicketsOrder) {
-      orderProps.returnTicketsOrder = order.returnTicketsOrder
+      costOfRoundTripTicket = Number(order.returnTicketsOrder.fare) * Number(order.returnTicketsOrder.seats.length)
+      orderProps.returnTicketsOrder = {
+        ...order.returnTicketsOrder,
+        totalCost: costOfRoundTripTicket,
+        naming: `${order.returnTicketsOrder.start} - ${order.returnTicketsOrder.end}`
+      }
     }
+
+    const amount = Number(costOfOneWayTickets + costOfRoundTripTicket)
+
+    if (Number.isNaN(amount)) return {
+      props: {
+        oneWayTicketsOrder: null,
+        returnTicketsOrder: null,
+        referer: context?.req?.headers?.referer || null
+      }
+    }
+
+    const liqpay = new LiqPay(PAYMENT_GATEWAY_PUBLIC_KEY, PAYMENT_GATEWAY_PRIVATE_KEY)
+    const paymentFormHtml = liqpay.cnb_form({
+      'action'         : 'pay',
+      'amount'         : String(amount), // '1'
+      'currency'       : 'UAH',
+      'description'    : 'description text',
+      'order_id'       : 'order_id_1',
+      'version'        : '3',
+      'result_url'     : `https://www.${WEBSITE_DOMAIN}/?alert={"alertTitle":"Заказ%20принят","alertText":"Ожидайте%20билет%20на%20свою%20почту"}`
+    })
 
     return {
       props: {
-        ...orderProps
+        ...orderProps,
+        paymentForm: paymentFormHtml
       }
     }
   }
