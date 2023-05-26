@@ -1,4 +1,7 @@
 export const WEBSITE_NAME = process.env.NEXT_PUBLIC_WEBSITE_NAME || ""
+export const WEBSITE_DOMAIN = process.env.NEXT_PUBLIC_DOMAIN || ""
 export const API = process.env.NEXT_PUBLIC_API || ""
 export const API_ROOT = process.env.NEXT_PUBLIC_API_ROOT || ""
 export const PATH_TO_LOGO = "/static/img/logos/AdobeStock_323576245-ai.png"
+export const PAYMENT_GATEWAY_PUBLIC_KEY = process.env.NEXT_PUBLIC_LIQPAY_PUBLIC_KEY || ""
+export const PAYMENT_GATEWAY_PRIVATE_KEY = process.env.NEXT_PUBLIC_LIQPAY_PRIVATE_KEY || ""
