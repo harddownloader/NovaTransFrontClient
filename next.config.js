@@ -60,6 +60,20 @@ const nextConfig = {
 
     return config;
   },
+
+  // redirects
+  async redirects() {
+    const redirectsRules = [];
+
+    // is NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE true? - shot down website, and show warning page
+    if (/^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)) redirectsRules.push({
+      source: '/:path((?!site_is_down$).*)',
+      permanent: false,
+      destination: '/site_is_down',
+    });
+
+    return redirectsRules;
+  }
 };
 
 module.exports = withPlugins([
