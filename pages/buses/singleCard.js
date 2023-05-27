@@ -121,8 +121,8 @@ const SingleCard = (props) => {
   }
 
   const encryptInfo = (order) => {
-    const resp = enc(order)
-    handleSuccess(resp)
+    const orderQuery = enc(order)
+    handleSuccess(orderQuery)
   }
 
   const getTripContent = (ticketDescription, bus, stCollapse, isTimeInTripVisible) => {
