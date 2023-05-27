@@ -10,7 +10,7 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 
 // assets
-import classes from "./Details.module.scss"
+import classes from "./Heading.module.scss"
 
 export const Heading = ({ referer }) => {
   return (

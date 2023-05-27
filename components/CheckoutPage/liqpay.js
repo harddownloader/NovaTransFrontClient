@@ -22,7 +22,7 @@
  *
  */
 
-const request = require('request');
+// const request = require('request'); // COMMENTED ORIGINAL CODE
 const crypto = require('crypto');
 
 /**
@@ -55,14 +55,24 @@ module.exports = function LiqPay(public_key, private_key) {
     const data = Buffer.from(JSON.stringify(params)).toString('base64');
     const signature = this.str_to_sign(private_key + data + private_key);
 
-    request.post(this.host + path, { form: { data: data, signature: signature } }, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          callback(JSON.parse(body))
-        } else {
-          callbackerr(error, response);
-        }
-      }
-    );
+    console.error('My custom Error: I commented this code, to get rid of the outdated package("request"), if you need this functionality, please rewrite code from request.post to fetch/axios');
+    Error('My custom Error: I commented this code, to get rid of the outdated package("request"), if you need this functionality, please rewrite code from request.post to fetch/axios')
+    // I STARTED CREATING FIRST PROTO OF FUTURE API REQUEST
+    // fetch(this.host + path, {
+    //   method: 'POST',
+    // }).finally((data) => {
+    //   console.log('finaly', {data})
+    // })
+
+    // COMMENTED ORIGINAL CODE
+    // request.post(this.host + path, { form: { data: data, signature: signature } }, function (error, response, body) {
+    //     if (!error && response.statusCode == 200) {
+    //       callback(JSON.parse(body))
+    //     } else {
+    //       callbackerr(error, response);
+    //     }
+    //   }
+    // );
   };
 
   /**

@@ -24,8 +24,8 @@ import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import { PaperCard } from '@/components/Card/PaperCard'
 import { BaseSeo } from "@/components/seo/BaseSeo"
 import { CommonLayout } from "@/components/Layouts"
-import LiqPay from "./liqpay"
-import { Heading } from "./Heading"
+import LiqPay from "@/components/CheckoutPage/liqpay"
+import { Heading } from "@/components/CheckoutPage/Heading/Heading"
 
 // utils
 import { dec } from "@/utils/encdec"
@@ -162,7 +162,7 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
         seatNumber: JSON.stringify(seatNumbers)
       }
       
-      resp = await postBookSeat(slug, body)
+      // resp = await postBookSeat(slug, body)
     } else if(oneWayTicketsOrder && returnTicketsOrder) {
       const body = {
         name,
@@ -180,7 +180,7 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
         ]
       }
 
-      resp = await postMultiBookSeat(body)
+      // resp = await postMultiBookSeat(body)
     } else console.error(`You haven't orders info for saving`)
 
     if (!resp.error) {
@@ -437,7 +437,7 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
       <div
         ref={checkoutFormBtnRef}
         className="checkout_form_btn"
-        style={{overflow: 'hidden', height: 0}}
+        // style={{overflow: 'hidden', height: 0}}
         dangerouslySetInnerHTML={{ __html: paymentForm }}
       ></div>
 
