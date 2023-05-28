@@ -1,4 +1,3 @@
-import fetch from "isomorphic-unfetch"
 import { API } from "@/utils/const"
 
 export const getAllLocations = async () => {

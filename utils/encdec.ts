@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken"
 export const enc = (info: string): string => {
   const token = jwt.sign(
     info,
-    "hawa"
+    "hawa",
+  { algorithm: 'HS256', allowInsecureKeySizes: true, allowInvalidAsymmetricKeyTypes: true }
     // {expiresIn:"1h"}
   )
 

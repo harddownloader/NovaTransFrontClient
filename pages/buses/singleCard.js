@@ -4,7 +4,7 @@ import Collapse from "@mui/material/Collapse"
 import { SeatModal } from '@/components/Dialog/SeatModal'
 import TripDetails from "@/components/Dialog/TripDetails"
 import Router from "next/router"
-import { enc, dec } from "../../utils/encdec"
+import { enc } from "utils/encdec"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { useTheme } from '@mui/material/styles'
