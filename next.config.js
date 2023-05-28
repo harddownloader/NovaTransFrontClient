@@ -2,7 +2,6 @@
 const path = require('path')
 const withPlugins = require('next-compose-plugins');
 const withImages = require('next-images');
-// const typescript = require('@zeit/next-typescript');
 
 // next.js configuration
 const nextConfig = {
@@ -62,18 +61,29 @@ const nextConfig = {
   },
 
   // redirects
-  async redirects() {
-    const redirectsRules = [];
-
-    // is NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE true? - shot down website, and show warning page
-    if (/^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)) redirectsRules.push({
-      source: '/:path((?!site_is_down$).*)',
-      permanent: false,
-      destination: '/site_is_down',
-    });
-
-    return redirectsRules;
-  }
+  // async redirects() {
+  //   const redirectsRules = [];
+  //
+  //   console.log({
+  //     'redirect all pages status': /^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)
+  //   })
+  //   // is NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE true? - shot down website, and show warning page
+  //   if (/^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)) {
+  //     redirectsRules.push({
+  //       source: '/:path((?!another-page$).*)',
+  //       missing: [
+  //         {
+  //           type: 'header',
+  //           key: 'x-do-not-redirect',
+  //         },
+  //       ],
+  //       permanent: false,
+  //       destination: '/site_is_down',
+  //     });
+  //   }
+  //
+  //   return redirectsRules;
+  // }
 };
 
 module.exports = withPlugins([
