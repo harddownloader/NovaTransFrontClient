@@ -1,5 +1,12 @@
 import React from "react"
-import Document, { Html, Head, Main, NextScript } from "next/document"
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript
+} from "next/document"
+
+// mui
 import { ServerStyleSheets } from '@mui/styles'
 import { createTheme, responsiveFontSizes } from "@mui/material/styles"
 
