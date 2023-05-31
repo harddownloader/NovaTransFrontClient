@@ -1,9 +1,15 @@
-import React, { useState, useMemo } from 'react'
-import SingleCard from "./singleCard"
+import React, { useState } from 'react'
+
+// mui
 import { Typography } from '@mui/material'
+
+// project components
+import { SingleCard } from "./singleCard"
+
+// assets
 import classes from './cards.module.scss'
 
-const Cards = ({ 
+export const Cards = ({
   buses
 }) => {
   const oneWayTickets = buses?.oneWayTickets
@@ -139,5 +145,3 @@ const Cards = ({
     </>
   )
 }
-
-export default Cards

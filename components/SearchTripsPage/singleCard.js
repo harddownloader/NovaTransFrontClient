@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react"
+import Router from "next/router"
+
+// mui
 import Alert from '@mui/material/Alert'
 import Collapse from "@mui/material/Collapse"
-import { SeatModal } from '@/components/Dialog/SeatModal'
-import TripDetails from "@/components/Dialog/TripDetails"
-import Router from "next/router"
-import { enc } from "utils/encdec"
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { useTheme } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
+
+// project components
+import { SeatModal } from '@/components/Dialog/SeatModal'
+import TripDetails from "@/components/Dialog/TripDetails"
+
+// utils
+import { enc } from "@/utils/encdec"
+
 // sass
 import styles from "./SingleCard.module.scss"
 import stCollapse from "./SingleCard.Collapse.module.scss"
 
-
-const SingleCard = (props) => {
+export const SingleCard = (props) => {
   const {
     searchingWithReturnTicket,
     isReturnTicket,
@@ -505,5 +511,3 @@ const SingleCard = (props) => {
     </div>
   )
 }
-
-export default SingleCard

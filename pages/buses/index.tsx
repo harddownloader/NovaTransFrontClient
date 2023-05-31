@@ -8,7 +8,7 @@ import React, {
 import Grid from '@mui/material/Grid'
 
 // project components
-import Cards from "./cards"
+import { Cards } from "@/components/SearchTripsPage"
 import Loading from "@/components/Loading"
 import { BaseSeo } from "@/components/seo/BaseSeo"
 import { SearchTicketsLayout } from "@/components/Layouts/SearchTicketsLayout"
@@ -29,7 +29,7 @@ import {
 // types
 import { TicketsList } from '@/interfaces/tickets'
 import { ISearchForm } from "@/interfaces/searchform"
-import {getAllLocations} from "@/actions/location";
+import { getAllLocations } from "@/actions/location"
 
 const Buses = ({ resp, searchQuery, locations }) => {
   const [buses, setBuses] = useState<TicketsList>({ oneWayTickets: [] })

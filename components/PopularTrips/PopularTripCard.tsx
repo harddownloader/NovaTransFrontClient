@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import styles from "../../pages/buses/SingleCard.module.scss"
+import styles from "../SearchTripsPage/SingleCard.module.scss"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import Collapse from "@mui/material/Collapse"
-import stCollapse from "../../pages/buses/SingleCard.Collapse.module.scss"
+import stCollapse from "../SearchTripsPage/SingleCard.Collapse.module.scss"
 import { useTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import { futureAnyFix } from "@/interfaces/futureAnyFix"
