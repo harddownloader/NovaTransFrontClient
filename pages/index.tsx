@@ -1,4 +1,7 @@
-import React, {useState, useEffect, ReactElement} from "react"
+import React, {
+  useState,
+  useEffect,
+} from "react"
 
 // mui
 import CssBaseline from "@mui/material/CssBaseline"
@@ -14,7 +17,7 @@ import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import { BaseSeo } from "@/components/seo/BaseSeo"
 
 // utils
-import { WEBSITE_NAME} from "@/utils/const"
+import { WEBSITE_NAME } from "@/utils/const"
 
 // store
 import {
@@ -73,14 +76,6 @@ function App({ alert=null, locations }) {
     </>
   )
 }
-
-// App.getInitialProps = ({ query }) => {
-//   if (query?.alert) {
-//     const alert = JSON.parse(query.alert)
-//     return {alert}
-//   }
-//   return {}
-// }
 
 export const getServerSideProps = async (context) => {
   const { query } = context
