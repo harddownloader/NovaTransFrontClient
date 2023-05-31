@@ -4,37 +4,36 @@ import Router from "next/router"
 
 // mui
 import { makeStyles } from '@mui/styles'
-import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container"
-import Grid from "@mui/material/Grid"
-import TextField from '@mui/material/TextField'
-import Button from "@mui/material/Button"
-import Box from "@mui/material/Box"
-import InputAdornment from '@mui/material/InputAdornment'
+import { useTheme } from '@mui/material/styles'
+import { blue } from '@mui/material/colors'
+import {
+  Typography,
+  Container,
+  Grid,
+  TextField,
+  Button,
+  Box,
+  InputAdornment,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Collapse,
+  useMediaQuery,
+  Autocomplete
+} from "@mui/material"
+import SearchIcon from '@mui/icons-material/Search'
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined'
 import SouthEastOutlinedIcon from '@mui/icons-material/SouthEastOutlined'
-import FormGroup from "@mui/material/FormGroup"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import Checkbox from "@mui/material/Checkbox"
-import SearchIcon from '@mui/icons-material/Search'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { useTheme } from '@mui/material/styles'
-import Collapse from '@mui/material/Collapse'
-import { blue } from '@mui/material/colors'
-import Autocomplete from "@mui/material/Autocomplete"
 
 // project components
-import MaterialUIPickers from "@/components/Pickers/DatePicker"
+import { MaterialUIPickers } from "@/components/Pickers/DatePicker"
 
 // store
 import {
   useAppDispatch,
   useAppSelector,
 } from '@/store/hooks'
-import {
-  getLocations,
-  selectLocations,
-} from '@/store/locations/locationsSlice'
+import { selectLocations } from '@/store/locations/locationsSlice'
 
 // types
 import { ISearchForm } from "@/interfaces/searchform"
@@ -84,21 +83,7 @@ const useStyles = makeStyles((theme) => {
   // select
   select: {},
   // data picker
-  dataPicker: {
-    lineHeight: "1.1876em",
-    padding: "8px 12px 0px",
-    //
-    "& .MuiInputLabel-shrink": {
-      transform: "translate(12px, 10px) scale(0.75)",
-    },
-    // нижние подчеркивание
-    "& .MuiInput-underline:before": {
-      borderBottom: "none",
-    },
-    "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-      borderBottom: "none",
-    },
-  },
+  dataPicker: {},
   // selects + data pickers
   searchField: {
     backgroundColor: theme.palette.background.paper,
@@ -134,27 +119,25 @@ function SearchTickets(props) {
   } = useAppSelector(selectLocations)
 
   // checkbox------------------
-  const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(
-    (!props?.info?.returnStartLocation && props?.info?.startLocation) ? false : true
-  )
-  const classes = useStyles({isBackTicketFieldsShow: isBackTicketFieldsShow})
+  const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
+    !(!props?.info?.returnStartLocation && props?.info?.startLocation)
+  ))
+  const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
 
   // a list of cities
   const [locations, setLocations] = useState([])
-  // данные для отправки запроса(откуда,куда, дата)
-  const todayDateWithFormat = convertDateObjToString(currentDateObj)
+
+  // fields
   const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
     startLocation: props?.info?.startLocation ? props.info.startLocation : null,
     endLocation: props?.info?.endLocation ? props.info.endLocation : null,
-    journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : todayDateWithFormat,
+    journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : currentDateObj,
 
     returnStartLocation: props?.info?.returnStartLocation ? props.info.returnStartLocation : null,
     returnEndLocation: props?.info?.returnEndLocation ? props.info.returnEndLocation : null,
-    returnJourneyDate: props?.info?.returnJourneyDate ? new Date(props.info.returnJourneyDate) : todayDateWithFormat,
+    returnJourneyDate: props?.info?.returnJourneyDate ? new Date(props.info.returnJourneyDate) : currentDateObj,
   })
-  // end select-----------------
 
-  // туда
   const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
     const newValueObj = locations.find(location => location.name === newValue)
     setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
@@ -453,11 +436,11 @@ function SearchTickets(props) {
 
               <Grid item xs={12} sm={12} md={3}>
                 <MaterialUIPickers
-                  classes={`${classes.select} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
-                  isLastElementInRow
                   value={formData.returnJourneyDate}
                   minDate={currentDateObj}
                   onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
+                  classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
+                  isLastElementInRow
                 />
               </Grid>
             </Grid>
