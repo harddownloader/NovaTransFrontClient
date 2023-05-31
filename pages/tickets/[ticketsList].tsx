@@ -58,6 +58,7 @@ export const TicketPage = ({ bookings }) => {
                         <div className={classes.receipt}>
                           <Image
                             src={PATH_TO_LOGO}
+                            alt={`logo ${WEBSITE_NAME}`}
                             className={classes.airliner_logo}
                             width={50}
                             height={41}
