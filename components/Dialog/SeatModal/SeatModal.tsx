@@ -269,7 +269,7 @@ export function SeatModal(props) {
                   </Typography>
                   <div className={`${classes.seat_modal_footer} ${classes.seats_list__list_wrap}`}>
                     {currentSeats.map(seat => (
-                      <div className={classes.selectedSeatNumber}>{seat}</div>
+                      <div className={classes.selectedSeatNumber} key={seat}>{seat}</div>
                     ))}
                   </div>
                 </div>
