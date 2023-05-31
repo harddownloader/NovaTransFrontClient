@@ -14,21 +14,26 @@ import styles from "./DataPicker.module.scss"
 import searchTicketsStyles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
 
 export interface IMaterialUIPickersProps {
-
+  isLastElementInRow: boolean
+  minDate: Date
+  value: Date
+  onChangeDate: Function
+  classNames: string
+  InputProps?: any
 }
 
 /*
 * last mui data pickers migration:
 * https://next.mui.com/x/migration/migration-pickers-v5/#input-renderer-required-in-v5
 * */
-export const MaterialUIPickers = (props) => {
-  const {
-    isLastElementInRow,
-    minDate,
-    value,
-    onChangeDate,
-    classNames
-  } = props
+export const MaterialUIPickers = ({
+                                    isLastElementInRow,
+                                    minDate,
+                                    value,
+                                    onChangeDate,
+                                    classNames,
+                                    InputProps={}
+                                  }: IMaterialUIPickersProps) => {
   const [selectedDate, setSelectedDate] = useState(value)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -66,23 +71,12 @@ export const MaterialUIPickers = (props) => {
         adapterLocale={ruLocale}
       >
         <DatePicker
-
-          // --- OLD PROPERTIES ---
-          // disableToolbar={true}
-          // variant="inline"
-          // format="MM/dd/yyyy"
-          // margin="normal"
-          // id="date-picker-inline"
-          // KeyboardButtonProps={{
-          //   "aria-label": "change date",
-          // }}
-
           label="Дата поездки"
           value={selectedDate}
           onChange={handleDateChange}
           minDate={minDate}
           className={
-            `${styles.date_picker__container} ${props.classes}` // props.classes - I don't know why, but that's doesn't work
+            `${styles.date_picker__container} ${classNames}`
           }
           ref={refDatePicker}
           onClose={() => setIsOpen(false)}
@@ -92,7 +86,7 @@ export const MaterialUIPickers = (props) => {
             textField: {
               // WHY it isn't works?
               InputProps: {
-                  ...props?.InputProps,
+                  ...InputProps,
                   startAdornment: (
                     <InputAdornment position="start">
                       <CalendarToday />
@@ -104,23 +98,6 @@ export const MaterialUIPickers = (props) => {
               onClick: (e) => setIsOpen(true),
             }
           }}
-          // renderInput={(props) => {
-          //   return <TextField
-          //       {...props}
-          //       InputProps={{
-          //         ...props?.InputProps,
-          //         startAdornment: (
-          //           <InputAdornment position="start">
-          //             <CalendarTodayIcon />
-          //           </InputAdornment>
-          //         ),
-          //         endAdornment: null
-          //       }}
-          //       className={`${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`}
-          //       onClick={(e) => setIsOpen(true)}
-          //     />
-          //   }
-          // }
         />
       </LocalizationProvider>
     </Grid>

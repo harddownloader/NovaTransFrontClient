@@ -328,7 +328,7 @@ function SearchTickets(props) {
                 value={formData.journeyDate}
                 minDate={currentDateObj}
                 onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
-                classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
+                classNames={`${classes.dataPicker} ${classes.searchField}`}
                 isLastElementInRow
               />
             </Grid>
@@ -439,7 +439,7 @@ function SearchTickets(props) {
                   value={formData.returnJourneyDate}
                   minDate={currentDateObj}
                   onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
-                  classes={`${classes.dataPicker} ${classes.searchField}`} // props.classes - I don't know why, but that's works very bad
+                  classNames={`${classes.dataPicker} ${classes.searchField}`}
                   isLastElementInRow
                 />
               </Grid>
