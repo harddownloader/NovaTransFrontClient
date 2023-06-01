@@ -18,7 +18,7 @@ export const HomePage = () => {
 
       <main>
         <h2>HomePage component</h2>
-        <SearchTickets />
+        {/*<SearchTickets />*/}
         <WhyAreWe />
         {/*<PopularTrips />*/}
         <AboutDrivers />
