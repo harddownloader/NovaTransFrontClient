@@ -20,6 +20,7 @@
     "@mui/styles": "^5.13.2",
     "@mui/x-date-pickers": "^6.5.0",
     "@reduxjs/toolkit": "^1.8.2",
+    "@sentry/nextjs": "^7.53.1",
     "date-fns": "^2.22.1",
     "jsonwebtoken": "^8.5.1",
     "next": "^13.4.4",
