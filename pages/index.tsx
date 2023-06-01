@@ -11,32 +11,32 @@ import { BaseSeo } from "@/components/seo/BaseSeo"
 import { WEBSITE_NAME } from "@/utils/const"
 
 // store
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@/store/hooks'
-import {
-  getLocations,
-  selectLocations,
-  setLocations,
-} from '@/store/locations/locationsSlice'
+// import {
+//   useAppDispatch,
+//   useAppSelector,
+// } from '@/store/hooks'
+// import {
+//   getLocations,
+//   selectLocations,
+//   setLocations,
+// } from '@/store/locations/locationsSlice'
 // import { getAllLocations } from "@/actions/location"
 
 function App({ locations }) {
-  const dispatch = useAppDispatch()
-  const {
-    data,
-    pending, 
-    error,
-  } = useAppSelector(selectLocations)
-
-  useEffect(() => {
-    if (
-      locations.length === 0 &&
-      (!data?.length && !pending)
-    ) dispatch(getLocations())
-    else dispatch(setLocations(locations))
-  }, [])
+  // const dispatch = useAppDispatch()
+  // const {
+  //   data,
+  //   pending,
+  //   error,
+  // } = useAppSelector(selectLocations)
+  //
+  // useEffect(() => {
+  //   if (
+  //     locations.length === 0 &&
+  //     (!data?.length && !pending)
+  //   ) dispatch(getLocations())
+  //   else dispatch(setLocations(locations))
+  // }, [])
 
   return (
     <>
