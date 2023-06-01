@@ -50,27 +50,27 @@ function App({ locations }) {
   )
 }
 
-export const getServerSideProps = async (context) => {
-  const { query } = context
-  let props = {}
-
-  // if (query?.alert) {
-  //   const alert = JSON.parse(query.alert)
-  //   props = {
-  //     ...props,
-  //     alert
-  //   }
-  // }
-  //
-  // const locations = await getAllLocations()
-  // if (locations) props = {
-  //   ...props,
-  //   locations
-  // }
-
-  return {
-    props: props
-  }
-}
+// export const getServerSideProps = async (context) => {
+//   const { query } = context
+//   let props = {}
+//
+//   // if (query?.alert) {
+//   //   const alert = JSON.parse(query.alert)
+//   //   props = {
+//   //     ...props,
+//   //     alert
+//   //   }
+//   // }
+//   //
+//   // const locations = await getAllLocations()
+//   // if (locations) props = {
+//   //   ...props,
+//   //   locations
+//   // }
+//
+//   return {
+//     props: props
+//   }
+// }
 
 export default App
