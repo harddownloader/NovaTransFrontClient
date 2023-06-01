@@ -3,17 +3,8 @@ import React, {
   useEffect,
 } from "react"
 
-// mui
-import CssBaseline from "@mui/material/CssBaseline"
-
 // project components
-import Header from "@/components/HeaderMaterial/Header"
-import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
-import WhyAreWe from "@/components/Home/WhyAreWe"
-import PopularTrips from "@/components/PopularTrips"
-import AboutDrivers from "@/components/Home/AboutDrivers"
-import Footer from "@/components/Footer/Footer"
-import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
+// import { HomePage } from "@/components/HomePage"
 import { BaseSeo } from "@/components/seo/BaseSeo"
 
 // utils
@@ -29,10 +20,9 @@ import {
   selectLocations,
   setLocations,
 } from '@/store/locations/locationsSlice'
-import { getAllLocations } from "@/actions/location"
+// import { getAllLocations } from "@/actions/location"
 
-function App({ alert=null, locations }) {
-  const [isAlertVisible, setIsAlertVisible] = useState(Boolean(alert))
+function App({ locations }) {
   const dispatch = useAppDispatch()
   const {
     data,
@@ -54,25 +44,8 @@ function App({ alert=null, locations }) {
         title={`Купить билеты на автобус, заказать автобусные билеты онлайн`}
         description={`Заказать или купить билет на автобус онлайн на сайте ${WEBSITE_NAME}. Онлайн бронирование билетов на автобусы . Забронировать автобусный билет на сайте ${WEBSITE_NAME}`}
       />
-      <CssBaseline />
-      <Header />
-
-      <main>
-        <SearchTickets />
-        <WhyAreWe />
-        {/*<PopularTrips />*/}
-        <AboutDrivers />
-      </main>
-
-      {isAlertVisible && <ConfirmModal
-        isVisible={isAlertVisible}
-        changeVisibility={() => setIsAlertVisible(!isAlertVisible)}
-        titleText={alert?.alertTitle}
-        contentText={alert?.alertText}
-        cancelButtonText={'ОК'}
-      />}
-
-      <Footer />
+      <h1>HOME PAGE</h1>
+      {/*<HomePage />*/}
     </>
   )
 }

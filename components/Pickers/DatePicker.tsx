@@ -11,7 +11,7 @@ import { CalendarToday } from '@mui/icons-material'
 
 // assets
 import styles from "./DataPicker.module.scss"
-import searchTicketsStyles from '@/components/Home/SearchTickets/SearchTickets.module.scss'
+import searchTicketsStyles from '@/components/HomePage/SearchTickets/SearchTickets.module.scss'
 
 export interface IMaterialUIPickersProps {
   isLastElementInRow: boolean

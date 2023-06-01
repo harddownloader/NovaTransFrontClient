@@ -40,7 +40,7 @@ import { ISearchForm } from "@/interfaces/searchform"
 import { futureAnyFix } from "@/interfaces/futureAnyFix"
 
 // helpers
-import { convertDateObjToString } from "@/components/Home/SearchTickets/helpers"
+import { convertDateObjToString } from "@/components/HomePage/SearchTickets/helpers"
 
 // assets
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"

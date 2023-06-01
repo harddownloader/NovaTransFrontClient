@@ -7,7 +7,7 @@ import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this w
 // project components
 import Header from "@/components/HeaderMaterial/Header"
 import Footer from "@/components/Footer/Footer"
-import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
+import SearchTickets from "@/components/HomePage/SearchTickets/SearchTickets"
 
 // types
 import { ISearchForm } from '@/interfaces/searchform'
