@@ -8,7 +8,6 @@ import Header from "@/components/HeaderMaterial/Header"
 import SearchTickets from "@/components/HomePage/SearchTickets/SearchTickets"
 import WhyAreWe from "@/components/HomePage/WhyAreWe"
 import AboutDrivers from "@/components/HomePage/AboutDrivers"
-import ConfirmModal from "@/components/Dialog/Confirm/ConfirmModal"
 import Footer from "@/components/Footer/Footer"
 
 export const HomePage = () => {
@@ -19,8 +18,8 @@ export const HomePage = () => {
 
       <main>
         <h2>HomePage component</h2>
-        {/*<SearchTickets />*/}
-        {/*<WhyAreWe />*/}
+        <SearchTickets />
+        <WhyAreWe />
         {/*<PopularTrips />*/}
         <AboutDrivers />
       </main>
