@@ -37,6 +37,7 @@
 
 // types
 import { ISearchForm } from "@/interfaces/searchform"
+import React from "react";
 // import { futureAnyFix } from "@/interfaces/futureAnyFix"
 //
 // // helpers
@@ -462,134 +463,143 @@ export interface TSearchTickets {
 // }
 
 
-export const SearchTickets = ({ type, info }: TSearchTickets) => {
-  console.log('SearchTickets props', {type, info})
-  // const theme = useTheme()
-  // const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
-  //
-  // const dispatch = useAppDispatch()
-  // const {
-  //   data,
-  //   pending,
-  //   error,
-  // } = useAppSelector(selectLocations)
-  //
-  // // checkbox------------------
-  // const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
-  //   !(!info?.returnStartLocation && info?.startLocation)
-  // ))
-  // const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
-  //
-  // // a list of cities
-  // const [locations, setLocations] = useState([])
-  //
-  // // fields
-  // const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
-  //   startLocation: info?.startLocation ? info.startLocation : null,
-  //   endLocation: info?.endLocation ? info.endLocation : null,
-  //   journeyDate: info?.journeyDate ? new Date(info.journeyDate) : currentDateObj,
-  //
-  //   returnStartLocation: info?.returnStartLocation ? info.returnStartLocation : null,
-  //   returnEndLocation: info?.returnEndLocation ? info.returnEndLocation : null,
-  //   returnJourneyDate: info?.returnJourneyDate ? new Date(info.returnJourneyDate) : currentDateObj,
-  // })
-  //
-  // const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
-  //   const newValueObj = locations.find(location => location.name === newValue)
-  //   setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
-  // }
-  //
-  // const onChangeDate = (val, inputName) => {
-  //   const journeyDate = format(val, "yyyy-MM-dd")
-  //   setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
-  // }
-  //
-  // useEffect(() => {
-  //   if (data.length && !pending) setLocations(data)
-  // }, [data])
-  //
-  // useEffect(() => {
-  //   if (!isBackTicketFieldsShow) {
-  //     setFormData({
-  //       ...formData,
-  //       returnStartLocation: null,
-  //       returnEndLocation: null,
-  //       returnJourneyDate: null,
-  //     })
-  //   }
-  // }, [isBackTicketFieldsShow])
-  //
-  // const searchTicketsRequestHandler = () => {
-  //   const requestBody = {
-  //     ...formData
-  //   }
-  //   if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
-  //   if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
-  //
-  //   Router.push({
-  //     pathname: "/buses",
-  //     query: requestBody,
-  //   })
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {number} status
-  //  * @returns jsx component
-  //  *
-  //  * status = 1 - desktop
-  //  * status = 2 - mobile
-  //  */
-  // const getSearchTicketsBtn = (status) => {
-  //   if (
-  //     (status === 1 && !isNotMobile) ||
-  //     (status === 2 && isNotMobile)
-  //   ) return <></>
-  //
-  //   return (
-  //     <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
-  //       <Box
-  //         sx={{
-  //           ml: !isNotMobile ? 0 : 1,
-  //           mt: !isNotMobile ? 1 : 0
-  //         }}
-  //         className={styles.search_btn_container}
-  //       >
-  //         <Button
-  //           variant="contained"
-  //           size="large"
-  //           color="primary"
-  //           className={styles.search_btn}
-  //           onClick={searchTicketsRequestHandler}
-  //           disabled={!Boolean(
-  //             formData?.startLocation &&
-  //             formData?.endLocation &&
-  //             formData?.journeyDate
-  //           )}
-  //           startIcon={<SearchIcon/>}
-  //           fullWidth
-  //         >
-  //           Найти билет
-  //         </Button>
-  //       </Box>
-  //     </Grid>
-  //   )
-  // }
-  //
-  // const optionsLocations = locations.length ? locations.map(location => location.name) : []
-  //
-  // const getAutoCompleteValue = (nameField) => {
-  //   return locations.find(location => location._id === formData[`${nameField}`])
-  // }
-  //
-  // const fromValue = getAutoCompleteValue("startLocation")
-  // const toValue = getAutoCompleteValue("endLocation")
-  // const returnFromValue = getAutoCompleteValue("returnStartLocation")
-  // const returnToValue = getAutoCompleteValue("returnEndLocation")
+// export const SearchTickets = ({ type, info }: TSearchTickets) => {
+//   console.log('SearchTickets props', {type, info})
+//   // const theme = useTheme()
+//   // const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
+//   //
+//   // const dispatch = useAppDispatch()
+//   // const {
+//   //   data,
+//   //   pending,
+//   //   error,
+//   // } = useAppSelector(selectLocations)
+//   //
+//   // // checkbox------------------
+//   // const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
+//   //   !(!info?.returnStartLocation && info?.startLocation)
+//   // ))
+//   // const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
+//   //
+//   // // a list of cities
+//   // const [locations, setLocations] = useState([])
+//   //
+//   // // fields
+//   // const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
+//   //   startLocation: info?.startLocation ? info.startLocation : null,
+//   //   endLocation: info?.endLocation ? info.endLocation : null,
+//   //   journeyDate: info?.journeyDate ? new Date(info.journeyDate) : currentDateObj,
+//   //
+//   //   returnStartLocation: info?.returnStartLocation ? info.returnStartLocation : null,
+//   //   returnEndLocation: info?.returnEndLocation ? info.returnEndLocation : null,
+//   //   returnJourneyDate: info?.returnJourneyDate ? new Date(info.returnJourneyDate) : currentDateObj,
+//   // })
+//   //
+//   // const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
+//   //   const newValueObj = locations.find(location => location.name === newValue)
+//   //   setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
+//   // }
+//   //
+//   // const onChangeDate = (val, inputName) => {
+//   //   const journeyDate = format(val, "yyyy-MM-dd")
+//   //   setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
+//   // }
+//   //
+//   // useEffect(() => {
+//   //   if (data.length && !pending) setLocations(data)
+//   // }, [data])
+//   //
+//   // useEffect(() => {
+//   //   if (!isBackTicketFieldsShow) {
+//   //     setFormData({
+//   //       ...formData,
+//   //       returnStartLocation: null,
+//   //       returnEndLocation: null,
+//   //       returnJourneyDate: null,
+//   //     })
+//   //   }
+//   // }, [isBackTicketFieldsShow])
+//   //
+//   // const searchTicketsRequestHandler = () => {
+//   //   const requestBody = {
+//   //     ...formData
+//   //   }
+//   //   if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
+//   //   if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
+//   //
+//   //   Router.push({
+//   //     pathname: "/buses",
+//   //     query: requestBody,
+//   //   })
+//   // }
+//   //
+//   // /**
+//   //  *
+//   //  * @param {number} status
+//   //  * @returns jsx component
+//   //  *
+//   //  * status = 1 - desktop
+//   //  * status = 2 - mobile
+//   //  */
+//   // const getSearchTicketsBtn = (status) => {
+//   //   if (
+//   //     (status === 1 && !isNotMobile) ||
+//   //     (status === 2 && isNotMobile)
+//   //   ) return <></>
+//   //
+//   //   return (
+//   //     <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
+//   //       <Box
+//   //         sx={{
+//   //           ml: !isNotMobile ? 0 : 1,
+//   //           mt: !isNotMobile ? 1 : 0
+//   //         }}
+//   //         className={styles.search_btn_container}
+//   //       >
+//   //         <Button
+//   //           variant="contained"
+//   //           size="large"
+//   //           color="primary"
+//   //           className={styles.search_btn}
+//   //           onClick={searchTicketsRequestHandler}
+//   //           disabled={!Boolean(
+//   //             formData?.startLocation &&
+//   //             formData?.endLocation &&
+//   //             formData?.journeyDate
+//   //           )}
+//   //           startIcon={<SearchIcon/>}
+//   //           fullWidth
+//   //         >
+//   //           Найти билет
+//   //         </Button>
+//   //       </Box>
+//   //     </Grid>
+//   //   )
+//   // }
+//   //
+//   // const optionsLocations = locations.length ? locations.map(location => location.name) : []
+//   //
+//   // const getAutoCompleteValue = (nameField) => {
+//   //   return locations.find(location => location._id === formData[`${nameField}`])
+//   // }
+//   //
+//   // const fromValue = getAutoCompleteValue("startLocation")
+//   // const toValue = getAutoCompleteValue("endLocation")
+//   // const returnFromValue = getAutoCompleteValue("returnStartLocation")
+//   // const returnToValue = getAutoCompleteValue("returnEndLocation")
+//
+//   return (
+//     <>
+//       <h1>SearchTickets</h1>
+//     </>
+//   )
+// }
 
+
+export const SearchTickets = ({ type='searchPage', info={} }) => {
   return (
     <>
-      <h1>SearchTickets</h1>
+      <h1>SearchTickets mock v2.0</h1>
     </>
   )
 }
