@@ -638,21 +638,21 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
     setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
   }
 
-  // useEffect(() => {
-  //   if (data.length && !pending) setLocations(data)
-  // }, [data])
-  //
-  // useEffect(() => {
-  //   if (!isBackTicketFieldsShow) {
-  //     setFormData({
-  //       ...formData,
-  //       returnStartLocation: null,
-  //       returnEndLocation: null,
-  //       returnJourneyDate: null,
-  //     })
-  //   }
-  // }, [isBackTicketFieldsShow])
-  //
+  useEffect(() => {
+    if (data.length && !pending) setLocations(data)
+  }, [data])
+
+  useEffect(() => {
+    if (!isBackTicketFieldsShow) {
+      setFormData({
+        ...formData,
+        returnStartLocation: null,
+        returnEndLocation: null,
+        returnJourneyDate: null,
+      })
+    }
+  }, [isBackTicketFieldsShow])
+
   // const searchTicketsRequestHandler = () => {
   //   const requestBody = {
   //     ...formData
@@ -723,7 +723,7 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
 
   return (
     <>
-      <h1>SearchTickets mock v2.3</h1>
+      <h1>SearchTickets mock v2.4</h1>
     </>
   )
 }
