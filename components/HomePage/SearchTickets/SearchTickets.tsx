@@ -104,8 +104,8 @@ const useStyles = makeStyles((theme) => {
     },
   }
 }})
-//
-// const currentDateObj = new Date()
+
+const currentDateObj = new Date()
 
 export interface TSearchTickets {
   type?: "searchPage"
@@ -595,7 +595,7 @@ export interface TSearchTickets {
 // }
 
 
-export const SearchTickets = ({ type='searchPage', info={} }) => {
+export const SearchTickets = ({ type='searchPage', info=null }) => {
   console.log('SearchTickets props', {type, info})
   const theme = useTheme()
   const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
@@ -653,62 +653,62 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
     }
   }, [isBackTicketFieldsShow])
 
-  // const searchTicketsRequestHandler = () => {
-  //   const requestBody = {
-  //     ...formData
-  //   }
-  //   if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
-  //   if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
-  //
-  //   Router.push({
-  //     pathname: "/buses",
-  //     query: requestBody,
-  //   })
-  // }
-  //
-  // /**
-  //  *
-  //  * @param {number} status
-  //  * @returns jsx component
-  //  *
-  //  * status = 1 - desktop
-  //  * status = 2 - mobile
-  //  */
-  // const getSearchTicketsBtn = (status) => {
-  //   if (
-  //     (status === 1 && !isNotMobile) ||
-  //     (status === 2 && isNotMobile)
-  //   ) return <></>
-  //
-  //   return (
-  //     <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
-  //       <Box
-  //         sx={{
-  //           ml: !isNotMobile ? 0 : 1,
-  //           mt: !isNotMobile ? 1 : 0
-  //         }}
-  //         className={styles.search_btn_container}
-  //       >
-  //         <Button
-  //           variant="contained"
-  //           size="large"
-  //           color="primary"
-  //           className={styles.search_btn}
-  //           onClick={searchTicketsRequestHandler}
-  //           disabled={!Boolean(
-  //             formData?.startLocation &&
-  //             formData?.endLocation &&
-  //             formData?.journeyDate
-  //           )}
-  //           startIcon={<SearchIcon/>}
-  //           fullWidth
-  //         >
-  //           Найти билет
-  //         </Button>
-  //       </Box>
-  //     </Grid>
-  //   )
-  // }
+  const searchTicketsRequestHandler = () => {
+    const requestBody = {
+      ...formData
+    }
+    if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
+    if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
+
+    Router.push({
+      pathname: "/buses",
+      query: requestBody,
+    })
+  }
+
+  /**
+   *
+   * @param {number} status
+   * @returns jsx component
+   *
+   * status = 1 - desktop
+   * status = 2 - mobile
+   */
+  const getSearchTicketsBtn = (status) => {
+    if (
+      (status === 1 && !isNotMobile) ||
+      (status === 2 && isNotMobile)
+    ) return <></>
+
+    return (
+      <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
+        <Box
+          sx={{
+            ml: !isNotMobile ? 0 : 1,
+            mt: !isNotMobile ? 1 : 0
+          }}
+          className={styles.search_btn_container}
+        >
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            className={styles.search_btn}
+            onClick={searchTicketsRequestHandler}
+            disabled={!Boolean(
+              formData?.startLocation &&
+              formData?.endLocation &&
+              formData?.journeyDate
+            )}
+            startIcon={<SearchIcon/>}
+            fullWidth
+          >
+            Найти билет
+          </Button>
+        </Box>
+      </Grid>
+    )
+  }
   //
   // const optionsLocations = locations.length ? locations.map(location => location.name) : []
   //
@@ -723,7 +723,7 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
 
   return (
     <>
-      <h1>SearchTickets mock v2.4</h1>
+      <h1>SearchTickets mock v2.5</h1>
     </>
   )
 }
