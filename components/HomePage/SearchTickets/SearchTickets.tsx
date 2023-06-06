@@ -612,7 +612,7 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
   const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
     !(!info?.returnStartLocation && info?.startLocation)
   ))
-  // const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
+  const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
   //
   // // a list of cities
   // const [locations, setLocations] = useState([])
@@ -723,7 +723,7 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
 
   return (
     <>
-      <h1>SearchTickets mock v2.1</h1>
+      <h1>SearchTickets mock v2.2</h1>
     </>
   )
 }
