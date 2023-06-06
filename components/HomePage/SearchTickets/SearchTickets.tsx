@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => {
 
 const currentDateObj = new Date()
 
-function SearchTickets(props) {
+function SearchTickets_old(props) {
   const theme = useTheme()
   const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -231,7 +231,6 @@ function SearchTickets(props) {
   const returnFromValue = getAutoCompleteValue("returnStartLocation")
   const returnToValue = getAutoCompleteValue("returnEndLocation")
 
-  return null
   return (
       <div className={classes.heroContent}>
         {props.type !== "searchPage" ? (
@@ -454,6 +453,15 @@ function SearchTickets(props) {
           {getSearchTicketsBtn(2)}
         </Container>
       </div>
+  )
+}
+
+
+const SearchTickets = () => {
+  return (
+    <>
+      <h1>SearchTickets</h1>
+    </>
   )
 }
 
