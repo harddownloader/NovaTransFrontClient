@@ -820,13 +820,13 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
           <Grid item xs={12} sm={12} md={3}
                 className={`${classes.gridSelect}`}
           >
-            {/*<MaterialUIPickers*/}
-            {/*  value={formData.journeyDate}*/}
-            {/*  minDate={currentDateObj}*/}
-            {/*  onChangeDate={(val) => onChangeDate(val, 'journeyDate')}*/}
-            {/*  classNames={`${classes.dataPicker} ${classes.searchField}`}*/}
-            {/*  isLastElementInRow*/}
-            {/*/>*/}
+            <MaterialUIPickers
+              value={formData.journeyDate}
+              minDate={currentDateObj}
+              onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
+              classNames={`${classes.dataPicker} ${classes.searchField}`}
+              isLastElementInRow
+            />
           </Grid>
 
           {/* search btn */}
