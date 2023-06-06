@@ -798,7 +798,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
               // value={toValue?.name ? toValue.name : null}
               options={optionsLocations}
               // onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
-              // style={{borderRadius: '0px'}}
+              style={{borderRadius: '0px'}}
               renderInput={(params) => (
                 <TextField
                   {...params}
