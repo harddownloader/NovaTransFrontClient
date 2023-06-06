@@ -475,7 +475,7 @@ const SearchTickets = ({ type, info }: TSearchTickets) => {
 
   // checkbox------------------
   const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
-    !(!props?.info?.returnStartLocation && props?.info?.startLocation)
+    !(!info?.returnStartLocation && info?.startLocation)
   ))
   const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
 
@@ -484,13 +484,13 @@ const SearchTickets = ({ type, info }: TSearchTickets) => {
 
   // fields
   const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
-    startLocation: props?.info?.startLocation ? props.info.startLocation : null,
-    endLocation: props?.info?.endLocation ? props.info.endLocation : null,
-    journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : currentDateObj,
+    startLocation: info?.startLocation ? info.startLocation : null,
+    endLocation: info?.endLocation ? info.endLocation : null,
+    journeyDate: info?.journeyDate ? new Date(info.journeyDate) : currentDateObj,
 
-    returnStartLocation: props?.info?.returnStartLocation ? props.info.returnStartLocation : null,
-    returnEndLocation: props?.info?.returnEndLocation ? props.info.returnEndLocation : null,
-    returnJourneyDate: props?.info?.returnJourneyDate ? new Date(props.info.returnJourneyDate) : currentDateObj,
+    returnStartLocation: info?.returnStartLocation ? info.returnStartLocation : null,
+    returnEndLocation: info?.returnEndLocation ? info.returnEndLocation : null,
+    returnJourneyDate: info?.returnJourneyDate ? new Date(info.returnJourneyDate) : currentDateObj,
   })
 
   const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
