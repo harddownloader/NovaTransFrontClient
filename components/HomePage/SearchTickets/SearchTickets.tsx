@@ -231,6 +231,7 @@ function SearchTickets(props) {
   const returnFromValue = getAutoCompleteValue("returnStartLocation")
   const returnToValue = getAutoCompleteValue("returnEndLocation")
 
+  return null
   return (
       <div className={classes.heroContent}>
         {props.type !== "searchPage" ? (
