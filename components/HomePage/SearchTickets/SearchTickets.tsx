@@ -759,32 +759,32 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
         <Grid container gap={0}>
           {/* откуда */}
           <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
-          {/*  <Autocomplete*/}
-          {/*    disablePortal*/}
-          {/*    id="toCity1"*/}
-          {/*    className={`${classes.select} ${classes.searchField} ${styles.searchField} first_el`}*/}
-          {/*    noOptionsText="Не найдено"*/}
-          {/*    loading={pending}*/}
-          {/*    loadingText="Загрузка..."*/}
-          {/*    value={fromValue?.name ? fromValue.name : null}*/}
-          {/*    options={optionsLocations}*/}
-          {/*    onChange={(event, newValue) => onChangeDirectionField(newValue, "startLocation")}*/}
-          {/*    renderInput={(params) => (*/}
-          {/*      <TextField*/}
-          {/*        {...params}*/}
-          {/*        InputProps={{*/}
-          {/*          ...params?.InputProps,*/}
-          {/*          startAdornment: (*/}
-          {/*            <InputAdornment position="start">*/}
-          {/*              <NorthEastOutlinedIcon />*/}
-          {/*            </InputAdornment>*/}
-          {/*          )*/}
-          {/*        }}*/}
-          {/*        label="Откуда"*/}
-          {/*        className={`${classes.searchFieldRenderedInput} first_input_el`}*/}
-          {/*      />*/}
-          {/*    )}*/}
-          {/*  />*/}
+            <Autocomplete
+              disablePortal
+              id="toCity1"
+              className={`${classes.select} ${classes.searchField} ${styles.searchField} first_el`}
+              noOptionsText="Не найдено"
+              loading={pending}
+              loadingText="Загрузка..."
+              value={fromValue?.name ? fromValue.name : null}
+              options={optionsLocations}
+              onChange={(event, newValue) => onChangeDirectionField(newValue, "startLocation")}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  InputProps={{
+                    ...params?.InputProps,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <NorthEastOutlinedIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                  label="Откуда"
+                  className={`${classes.searchFieldRenderedInput} first_input_el`}
+                />
+              )}
+            />
           </Grid>
           {/* куда */}
           <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
