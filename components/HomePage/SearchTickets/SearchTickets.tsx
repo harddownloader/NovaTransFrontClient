@@ -709,21 +709,21 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
       </Grid>
     )
   }
-  //
-  // const optionsLocations = locations.length ? locations.map(location => location.name) : []
-  //
-  // const getAutoCompleteValue = (nameField) => {
-  //   return locations.find(location => location._id === formData[`${nameField}`])
-  // }
-  //
-  // const fromValue = getAutoCompleteValue("startLocation")
-  // const toValue = getAutoCompleteValue("endLocation")
-  // const returnFromValue = getAutoCompleteValue("returnStartLocation")
-  // const returnToValue = getAutoCompleteValue("returnEndLocation")
+
+  const optionsLocations = locations.length ? locations.map(location => location.name) : []
+
+  const getAutoCompleteValue = (nameField) => {
+    return locations.find(location => location._id === formData[`${nameField}`])
+  }
+
+  const fromValue = getAutoCompleteValue("startLocation")
+  const toValue = getAutoCompleteValue("endLocation")
+  const returnFromValue = getAutoCompleteValue("returnStartLocation")
+  const returnToValue = getAutoCompleteValue("returnEndLocation")
 
   return (
     <>
-      <h1>SearchTickets mock v2.5</h1>
+      <h1>SearchTickets mock v2.6</h1>
     </>
   )
 }
