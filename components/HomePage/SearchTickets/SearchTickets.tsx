@@ -728,7 +728,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
   // )
   return (
     <div className={classes.heroContent}>
-      <h1>SearchTickets mock v3.1</h1>
+      <h1>SearchTickets mock v3.2</h1>
       {type !== "searchPage" ? (
         // welcome block
         <Container maxWidth="md" className={styles.welcome_block}>
@@ -755,7 +755,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
       ) : <></>}
 
       {/* thither */}
-      <Container maxWidth="md" className={`${styles.search_tickets} ${props.type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
+      <Container maxWidth="md" className={`${styles.search_tickets} ${type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
         <Grid container gap={0}>
           {/* откуда */}
           <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
