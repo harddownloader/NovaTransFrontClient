@@ -944,10 +944,10 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
       {/*</Collapse>*/}
       {/*/!* two part end*!/*/}
 
-      {/*/!* search btn *!/*/}
-      {/*<Container>*/}
-      {/*  {getSearchTicketsBtn(2)}*/}
-      {/*</Container>*/}
+      {/* search btn */}
+      <Container>
+        {getSearchTicketsBtn(2)}
+      </Container>
     </div>
   )
 }
