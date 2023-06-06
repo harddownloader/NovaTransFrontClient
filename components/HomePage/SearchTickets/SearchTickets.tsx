@@ -37,7 +37,6 @@ import { selectLocations } from '@/store/locations/locationsSlice'
 
 // types
 import { ISearchForm } from "@/interfaces/searchform"
-import React from "react";
 // import { futureAnyFix } from "@/interfaces/futureAnyFix"
 //
 // // helpers
