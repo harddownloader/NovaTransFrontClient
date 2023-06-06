@@ -609,9 +609,9 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
 
 
   // // checkbox------------------
-  // const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
-  //   !(!info?.returnStartLocation && info?.startLocation)
-  // ))
+  const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
+    !(!info?.returnStartLocation && info?.startLocation)
+  ))
   // const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
   //
   // // a list of cities
