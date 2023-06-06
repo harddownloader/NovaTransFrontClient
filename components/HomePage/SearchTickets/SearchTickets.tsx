@@ -613,31 +613,31 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
     !(!info?.returnStartLocation && info?.startLocation)
   ))
   const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
-  //
-  // // a list of cities
-  // const [locations, setLocations] = useState([])
-  //
-  // // fields
-  // const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
-  //   startLocation: info?.startLocation ? info.startLocation : null,
-  //   endLocation: info?.endLocation ? info.endLocation : null,
-  //   journeyDate: info?.journeyDate ? new Date(info.journeyDate) : currentDateObj,
-  //
-  //   returnStartLocation: info?.returnStartLocation ? info.returnStartLocation : null,
-  //   returnEndLocation: info?.returnEndLocation ? info.returnEndLocation : null,
-  //   returnJourneyDate: info?.returnJourneyDate ? new Date(info.returnJourneyDate) : currentDateObj,
-  // })
-  //
-  // const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
-  //   const newValueObj = locations.find(location => location.name === newValue)
-  //   setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
-  // }
-  //
-  // const onChangeDate = (val, inputName) => {
-  //   const journeyDate = format(val, "yyyy-MM-dd")
-  //   setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
-  // }
-  //
+
+  // a list of cities
+  const [locations, setLocations] = useState([])
+
+  // fields
+  const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
+    startLocation: info?.startLocation ? info.startLocation : null,
+    endLocation: info?.endLocation ? info.endLocation : null,
+    journeyDate: info?.journeyDate ? new Date(info.journeyDate) : currentDateObj,
+
+    returnStartLocation: info?.returnStartLocation ? info.returnStartLocation : null,
+    returnEndLocation: info?.returnEndLocation ? info.returnEndLocation : null,
+    returnJourneyDate: info?.returnJourneyDate ? new Date(info.returnJourneyDate) : currentDateObj,
+  })
+
+  const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
+    const newValueObj = locations.find(location => location.name === newValue)
+    setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
+  }
+
+  const onChangeDate = (val, inputName) => {
+    const journeyDate = format(val, "yyyy-MM-dd")
+    setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
+  }
+
   // useEffect(() => {
   //   if (data.length && !pending) setLocations(data)
   // }, [data])
@@ -723,7 +723,7 @@ export const SearchTickets = ({ type='searchPage', info={} }) => {
 
   return (
     <>
-      <h1>SearchTickets mock v2.2</h1>
+      <h1>SearchTickets mock v2.3</h1>
     </>
   )
 }
