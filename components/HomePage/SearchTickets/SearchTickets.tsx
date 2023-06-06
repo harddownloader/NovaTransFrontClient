@@ -463,6 +463,129 @@ function SearchTickets_old(props: TSearchTickets) {
 
 
 const SearchTickets = ({ type, info }: TSearchTickets) => {
+  const theme = useTheme()
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
+
+  const dispatch = useAppDispatch()
+  const {
+    data,
+    pending,
+    error,
+  } = useAppSelector(selectLocations)
+
+  // checkbox------------------
+  const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
+    !(!props?.info?.returnStartLocation && props?.info?.startLocation)
+  ))
+  const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
+
+  // a list of cities
+  const [locations, setLocations] = useState([])
+
+  // fields
+  const [formData, setFormData] = useState<ISearchForm | futureAnyFix>({
+    startLocation: props?.info?.startLocation ? props.info.startLocation : null,
+    endLocation: props?.info?.endLocation ? props.info.endLocation : null,
+    journeyDate: props?.info?.journeyDate ? new Date(props.info.journeyDate) : currentDateObj,
+
+    returnStartLocation: props?.info?.returnStartLocation ? props.info.returnStartLocation : null,
+    returnEndLocation: props?.info?.returnEndLocation ? props.info.returnEndLocation : null,
+    returnJourneyDate: props?.info?.returnJourneyDate ? new Date(props.info.returnJourneyDate) : currentDateObj,
+  })
+
+  const onChangeDirectionField = (newValue, nameOfObjectsKeyForChange) => {
+    const newValueObj = locations.find(location => location.name === newValue)
+    setFormData({ ...formData, ...{ [`${nameOfObjectsKeyForChange}`]: newValueObj ? newValueObj._id : null } })
+  }
+
+  const onChangeDate = (val, inputName) => {
+    const journeyDate = format(val, "yyyy-MM-dd")
+    setFormData({ ...formData, ...{ [`${inputName}`]: journeyDate } })
+  }
+
+  useEffect(() => {
+    if (data.length && !pending) setLocations(data)
+  }, [data])
+
+  useEffect(() => {
+    if (!isBackTicketFieldsShow) {
+      setFormData({
+        ...formData,
+        returnStartLocation: null,
+        returnEndLocation: null,
+        returnJourneyDate: null,
+      })
+    }
+  }, [isBackTicketFieldsShow])
+
+  const searchTicketsRequestHandler = () => {
+    const requestBody = {
+      ...formData
+    }
+    if (formData.journeyDate instanceof Date) requestBody.journeyDate = convertDateObjToString(requestBody.journeyDate)
+    if (formData.returnJourneyDate instanceof Date) requestBody.returnJourneyDate = convertDateObjToString(requestBody.returnJourneyDate)
+
+    Router.push({
+      pathname: "/buses",
+      query: requestBody,
+    })
+  }
+
+  /**
+   *
+   * @param {number} status
+   * @returns jsx component
+   *
+   * status = 1 - desktop
+   * status = 2 - mobile
+   */
+  const getSearchTicketsBtn = (status) => {
+    if (
+      (status === 1 && !isNotMobile) ||
+      (status === 2 && isNotMobile)
+    ) return <></>
+
+    return (
+      <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
+        <Box
+          sx={{
+            ml: !isNotMobile ? 0 : 1,
+            mt: !isNotMobile ? 1 : 0
+          }}
+          className={styles.search_btn_container}
+        >
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            className={styles.search_btn}
+            onClick={searchTicketsRequestHandler}
+            disabled={!Boolean(
+              formData?.startLocation &&
+              formData?.endLocation &&
+              formData?.journeyDate
+            )}
+            startIcon={<SearchIcon/>}
+            fullWidth
+          >
+            Найти билет
+          </Button>
+        </Box>
+      </Grid>
+    )
+  }
+
+  const optionsLocations = locations.length ? locations.map(location => location.name) : []
+
+  const getAutoCompleteValue = (nameField) => {
+    return locations.find(location => location._id === formData[`${nameField}`])
+  }
+
+  const fromValue = getAutoCompleteValue("startLocation")
+  const toValue = getAutoCompleteValue("endLocation")
+  const returnFromValue = getAutoCompleteValue("returnStartLocation")
+  const returnToValue = getAutoCompleteValue("returnEndLocation")
+
   return (
     <>
       <h1>SearchTickets</h1>
