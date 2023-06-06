@@ -733,7 +733,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
   // )
   return (
     <div className={classes.heroContent}>
-      <h1>SearchTickets mock v3.3</h1>
+      <h1>SearchTickets mock v3.8</h1>
       {type !== "searchPage" ? (
         // welcome block
         <Container maxWidth="md" className={styles.welcome_block}>
@@ -831,9 +831,9 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
             >
               <DatePicker
                 label="Дата поездки"
-                value={new Date()}
-                onChange={() => {}}
-                minDate={new Date()}
+                // value={new Date()}
+                // onChange={() => {}}
+                // minDate={new Date()}
                 // className={
                 //   `${styles.date_picker__container} ${classNames}`
                 // }
