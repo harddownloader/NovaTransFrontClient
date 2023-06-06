@@ -596,9 +596,13 @@ export interface TSearchTickets {
 
 
 export const SearchTickets = ({ type='searchPage', info={} }) => {
+  console.log('SearchTickets props', {type, info})
+  const theme = useTheme()
+  const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
+
   return (
     <>
-      <h1>SearchTickets mock v2.0</h1>
+      <h1>SearchTickets mock v2.1</h1>
     </>
   )
 }
