@@ -107,7 +107,12 @@ const useStyles = makeStyles((theme) => {
 
 const currentDateObj = new Date()
 
-function SearchTickets_old(props) {
+export interface TSearchTickets {
+  type?: "searchPage"
+  info?: ISearchForm
+}
+
+function SearchTickets_old(props: TSearchTickets) {
   const theme = useTheme()
   const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -457,7 +462,7 @@ function SearchTickets_old(props) {
 }
 
 
-const SearchTickets = () => {
+const SearchTickets = ({ type, info }: TSearchTickets) => {
   return (
     <>
       <h1>SearchTickets</h1>
