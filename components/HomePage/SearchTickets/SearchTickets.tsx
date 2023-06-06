@@ -46,64 +46,64 @@ import { convertDateObjToString } from "@/components/HomePage/SearchTickets/help
 const BgImage = "/static/img/backgrounds/bg-winter.jpg"
 import styles from './SearchTickets.module.scss'
 
-// const useStyles = makeStyles((theme) => {
-//   return {
-//   // container
-//   heroContent: (props: {
-//     isBackTicketFieldsShow: boolean
-//   }) => ({
-//     backgroundColor: theme.palette.background.paper,
-//     backgroundImage: `url(${BgImage})`,
-//     backgroundRepeat: "no-repeat",
-//     backgroundPosition: "center bottom",
-//     backgroundSize: "cover",
-//     marginTop: "-85px",
-//
-//     padding: props.isBackTicketFieldsShow ? theme.spacing(6, 0, 14) : theme.spacing(1, 0, 1),
-//   }),
-//   // grid select
-//   gridSelect: {
-//     padding: "0 !important",
-//     color: "#fff",
-//   },
-//   // form control for select
-//   formControl: {
-//     margin: theme.spacing(0),
-//     minWidth: 120,
-//     width: "100%",
-//     // нижние подчеркивание
-//     "& .MuiInput-underline:before": {
-//       borderBottom: "none",
-//     },
-//     "&.center_el": {
-//       borderRight: "1px solid rgb(233, 233, 233)",
-//       borderLeft: "1px solid rgb(233, 233, 233)",
-//     },
-//   },
-//   // select
-//   select: {},
-//   // data picker
-//   dataPicker: {},
-//   // selects + data pickers
-//   searchField: {
-//     backgroundColor: theme.palette.background.paper,
-//     borderRadius: 0,
-//     "&.first_el": {
-//       borderRadius: "4px 0 0 4px",
-//     },
-//     "&.first_el:hover": {
-//       borderRadius: "4px 0 0 4px",
-//     },
-//   },
-//   searchFieldRenderedInput: {
-//     "&.first_input_el .MuiInputBase-root": {
-//       borderRadius: "4px 0 0 4px",
-//     },
-//     "&.middle_input_el .MuiInputBase-root": {
-//       borderRadius: "0px",
-//     },
-//   }
-// }})
+const useStyles = makeStyles((theme) => {
+  return {
+  // container
+  heroContent: (props: {
+    isBackTicketFieldsShow: boolean
+  }) => ({
+    backgroundColor: theme.palette.background.paper,
+    backgroundImage: `url(${BgImage})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center bottom",
+    backgroundSize: "cover",
+    marginTop: "-85px",
+
+    padding: props.isBackTicketFieldsShow ? theme.spacing(6, 0, 14) : theme.spacing(1, 0, 1),
+  }),
+  // grid select
+  gridSelect: {
+    padding: "0 !important",
+    color: "#fff",
+  },
+  // form control for select
+  formControl: {
+    margin: theme.spacing(0),
+    minWidth: 120,
+    width: "100%",
+    // нижние подчеркивание
+    "& .MuiInput-underline:before": {
+      borderBottom: "none",
+    },
+    "&.center_el": {
+      borderRight: "1px solid rgb(233, 233, 233)",
+      borderLeft: "1px solid rgb(233, 233, 233)",
+    },
+  },
+  // select
+  select: {},
+  // data picker
+  dataPicker: {},
+  // selects + data pickers
+  searchField: {
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: 0,
+    "&.first_el": {
+      borderRadius: "4px 0 0 4px",
+    },
+    "&.first_el:hover": {
+      borderRadius: "4px 0 0 4px",
+    },
+  },
+  searchFieldRenderedInput: {
+    "&.first_input_el .MuiInputBase-root": {
+      borderRadius: "4px 0 0 4px",
+    },
+    "&.middle_input_el .MuiInputBase-root": {
+      borderRadius: "0px",
+    },
+  }
+}})
 //
 // const currentDateObj = new Date()
 
