@@ -758,7 +758,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
       <Container maxWidth="md" className={`${styles.search_tickets} ${type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
         <Grid container gap={0}>
           {/* откуда */}
-          {/*<Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>*/}
+          <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
           {/*  <Autocomplete*/}
           {/*    disablePortal*/}
           {/*    id="toCity1"*/}
@@ -785,36 +785,36 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
           {/*      />*/}
           {/*    )}*/}
           {/*  />*/}
-          {/*</Grid>*/}
+          </Grid>
           {/* куда */}
           <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
-            {/*<Autocomplete*/}
-            {/*  disablePortal*/}
-            {/*  id="toCity2"*/}
-            {/*  className={`${classes.select} ${classes.searchField} ${styles.searchField}`}*/}
-            {/*  noOptionsText="Не найдено"*/}
-            {/*  loading={pending}*/}
-            {/*  loadingText="Загрузка..."*/}
-            {/*  value={toValue?.name ? toValue.name : null}*/}
-            {/*  options={optionsLocations}*/}
-            {/*  onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}*/}
-            {/*  style={{borderRadius: '0px'}}*/}
-            {/*  renderInput={(params) => (*/}
-            {/*    <TextField*/}
-            {/*      {...params}*/}
-            {/*      InputProps={{*/}
-            {/*        ...params?.InputProps,*/}
-            {/*        startAdornment: (*/}
-            {/*          <InputAdornment position="start">*/}
-            {/*            <SouthEastOutlinedIcon />*/}
-            {/*          </InputAdornment>*/}
-            {/*        )*/}
-            {/*      }}*/}
-            {/*      label="Куда"*/}
-            {/*      className={`${classes.searchFieldRenderedInput} middle_input_el`}*/}
-            {/*    />*/}
-            {/*  )}*/}
-            {/*/>*/}
+            <Autocomplete
+              disablePortal
+              id="toCity2"
+              className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
+              noOptionsText="Не найдено"
+              loading={pending}
+              loadingText="Загрузка..."
+              value={toValue?.name ? toValue.name : null}
+              options={optionsLocations}
+              onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
+              style={{borderRadius: '0px'}}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  InputProps={{
+                    ...params?.InputProps,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SouthEastOutlinedIcon />
+                      </InputAdornment>
+                    )
+                  }}
+                  label="Куда"
+                  className={`${classes.searchFieldRenderedInput} middle_input_el`}
+                />
+              )}
+            />
           </Grid>
 
           <Grid item xs={12} sm={12} md={3}
