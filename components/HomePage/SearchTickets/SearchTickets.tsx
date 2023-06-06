@@ -793,8 +793,8 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
               id="toCity2"
               className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
               noOptionsText="Не найдено"
-              // loading={pending}
-              // loadingText="Загрузка..."
+              loading={pending}
+              loadingText="Загрузка..."
               // value={toValue?.name ? toValue.name : null}
               options={optionsLocations}
               // onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
