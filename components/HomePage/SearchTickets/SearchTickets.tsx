@@ -789,10 +789,10 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
           {/* куда */}
           <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
             <Autocomplete
-              // disablePortal
-              // id="toCity2"
-              // className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
-              // noOptionsText="Не найдено"
+              disablePortal
+              id="toCity2"
+              className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
+              noOptionsText="Не найдено"
               // loading={pending}
               // loadingText="Загрузка..."
               // value={toValue?.name ? toValue.name : null}
