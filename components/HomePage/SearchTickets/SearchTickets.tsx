@@ -795,7 +795,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
               noOptionsText="Не найдено"
               loading={pending}
               loadingText="Загрузка..."
-              // value={toValue?.name ? toValue.name : null}
+              value={toValue?.name ? toValue.name : null}
               options={optionsLocations}
               // onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
               style={{borderRadius: '0px'}}
