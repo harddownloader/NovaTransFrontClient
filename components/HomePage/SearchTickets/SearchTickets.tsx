@@ -37,15 +37,15 @@ import { selectLocations } from '@/store/locations/locationsSlice'
 
 // types
 import { ISearchForm } from "@/interfaces/searchform"
-// import { futureAnyFix } from "@/interfaces/futureAnyFix"
-//
-// // helpers
-// import { convertDateObjToString } from "@/components/HomePage/SearchTickets/helpers"
-//
-// // assets
-// const BgImage = "/static/img/backgrounds/bg-winter.jpg"
-// import styles from './SearchTickets.module.scss'
-//
+import { futureAnyFix } from "@/interfaces/futureAnyFix"
+
+// helpers
+import { convertDateObjToString } from "@/components/HomePage/SearchTickets/helpers"
+
+// assets
+const BgImage = "/static/img/backgrounds/bg-winter.jpg"
+import styles from './SearchTickets.module.scss'
+
 // const useStyles = makeStyles((theme) => {
 //   return {
 //   // container
