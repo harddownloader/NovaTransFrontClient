@@ -82,22 +82,34 @@ export const MaterialUIPickers = ({
           onClose={() => setIsOpen(false)}
           open={isOpen}
           onOpen={() => setIsOpen(true)}
-          componentsProps={{
+          slotProps={{
             textField: {
-              // WHY it isn't works?
-              InputProps: {
-                  ...InputProps,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CalendarToday />
-                    </InputAdornment>
-                  ),
-                  endAdornment: null
-                },
-              className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
-              onClick: (e) => setIsOpen(true),
-            }
-          }}
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CalendarToday />
+                </InputAdornment>
+              ),
+              endAdornment: null
+            },
+            className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
+            onClick: (e) => setIsOpen(true),
+            }}
+          // componentsProps={{
+          //   textField: {
+          //     // WHY it isn't works?
+          //     InputProps: {
+          //         ...InputProps,
+          //         startAdornment: (
+          //           <InputAdornment position="start">
+          //             <CalendarToday />
+          //           </InputAdornment>
+          //         ),
+          //         endAdornment: null
+          //       },
+          //     className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
+          //     onClick: (e) => setIsOpen(true),
+          //   }
+          // }}
         />
       </LocalizationProvider>
     </Grid>
