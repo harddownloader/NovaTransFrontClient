@@ -827,7 +827,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
           >
             <LocalizationProvider
               dateAdapter={AdapterDateFns}
-              adapterLocale={ruLocale}
+              // adapterLocale={ruLocale}
             >
               <DatePicker
                 label="Дата поездки"
