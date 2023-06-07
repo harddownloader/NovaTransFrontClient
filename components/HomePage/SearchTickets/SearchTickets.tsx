@@ -825,47 +825,47 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
           <Grid item xs={12} sm={12} md={3}
                 className={`${classes.gridSelect}`}
           >
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              // adapterLocale={ruLocale}
-            >
-              <DatePicker
-                label="Дата поездки"
-                // value={new Date()}
-                // onChange={() => {}}
-                // minDate={new Date()}
-                // className={
-                //   `${styles.date_picker__container} ${classNames}`
-                // }
-                // ref={refDatePicker}
-                // onClose={() => setIsOpen(false)}
-                // open={isOpen}
-                // onOpen={() => setIsOpen(true)}
-                // componentsProps={{
-                //   textField: {
-                //     // WHY it isn't works?
-                //     InputProps: {
-                //       // ...InputProps,
-                //       startAdornment: (
-                //         <InputAdornment position="start">
-                //           <CalendarToday />
-                //         </InputAdornment>
-                //       ),
-                //       endAdornment: null
-                //     },
-                //     // className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
-                //     // onClick: (e) => setIsOpen(true),
-                //   }
-                // }}
-              />
-            </LocalizationProvider>
-            {/*<MaterialUIPickers*/}
-            {/*  value={formData.journeyDate}*/}
-            {/*  minDate={currentDateObj}*/}
-            {/*  onChangeDate={(val) => onChangeDate(val, 'journeyDate')}*/}
-            {/*  classNames={`${classes.dataPicker} ${classes.searchField}`}*/}
-            {/*  isLastElementInRow*/}
-            {/*/>*/}
+            {/*<LocalizationProvider*/}
+            {/*  dateAdapter={AdapterDateFns}*/}
+            {/*  // adapterLocale={ruLocale}*/}
+            {/*>*/}
+            {/*  <DatePicker*/}
+            {/*    label="Дата поездки"*/}
+            {/*    // value={new Date()}*/}
+            {/*    // onChange={() => {}}*/}
+            {/*    // minDate={new Date()}*/}
+            {/*    // className={*/}
+            {/*    //   `${styles.date_picker__container} ${classNames}`*/}
+            {/*    // }*/}
+            {/*    // ref={refDatePicker}*/}
+            {/*    // onClose={() => setIsOpen(false)}*/}
+            {/*    // open={isOpen}*/}
+            {/*    // onOpen={() => setIsOpen(true)}*/}
+            {/*    // componentsProps={{*/}
+            {/*    //   textField: {*/}
+            {/*    //     // WHY it isn't works?*/}
+            {/*    //     InputProps: {*/}
+            {/*    //       // ...InputProps,*/}
+            {/*    //       startAdornment: (*/}
+            {/*    //         <InputAdornment position="start">*/}
+            {/*    //           <CalendarToday />*/}
+            {/*    //         </InputAdornment>*/}
+            {/*    //       ),*/}
+            {/*    //       endAdornment: null*/}
+            {/*    //     },*/}
+            {/*    //     // className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,*/}
+            {/*    //     // onClick: (e) => setIsOpen(true),*/}
+            {/*    //   }*/}
+            {/*    // }}*/}
+            {/*  />*/}
+            {/*</LocalizationProvider>*/}
+            <MaterialUIPickers
+              value={formData.journeyDate}
+              minDate={currentDateObj}
+              onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
+              classNames={`${classes.dataPicker} ${classes.searchField}`}
+              isLastElementInRow
+            />
           </Grid>
 
           {/* search btn */}
