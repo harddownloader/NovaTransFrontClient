@@ -93,7 +93,7 @@ export const MaterialUIPickers = ({
             },
             className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
             onClick: (e) => setIsOpen(true),
-            }}
+          }}
           // componentsProps={{
           //   textField: {
           //     // WHY it isn't works?
