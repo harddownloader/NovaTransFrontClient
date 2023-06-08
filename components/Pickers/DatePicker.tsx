@@ -84,15 +84,15 @@ export const MaterialUIPickers = ({
           onOpen={() => setIsOpen(true)}
           slotProps={{
             textField: {
-              InputProps: {
-                  ...InputProps,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CalendarToday />
-                    </InputAdornment>
-                  ),
-                  endAdornment: null
-                },
+              // InputProps: {
+              //     ...InputProps,
+              //     startAdornment: (
+              //       <InputAdornment position="start">
+              //         <CalendarToday />
+              //       </InputAdornment>
+              //     ),
+              //     endAdornment: null
+              //   },
               className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
               onClick: (e) => setIsOpen(true),
             }
