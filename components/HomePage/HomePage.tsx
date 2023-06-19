@@ -17,7 +17,7 @@ export const HomePage = () => {
       <Header />
 
       <main>
-        <SearchTickets isHeadingVisible={true} />
+        {/*<SearchTickets isHeadingVisible={true} />*/}
         <WhyAreWe />
         {/*<PopularTrips />*/}
         <AboutDrivers />
