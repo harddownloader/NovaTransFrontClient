@@ -1,6 +1,9 @@
+// 'use client'
+
 import React, { useState, useEffect } from "react"
 import { format } from "date-fns" // time and data
 import Router from "next/router"
+// import dynamic from 'next/dynamic'
 
 // mui
 import { useTheme } from '@mui/material/styles'
@@ -729,15 +732,15 @@ export const SearchTickets = ({ isHeadingVisible=false, info=null }: TSearchTick
           <Grid item xs={12} sm={12} md={3}
                 className={`${classes.gridSelect}`}
           >
-            <MaterialUIPickers
-              value={formData.journeyDate}
-              minDate={currentDateObj}
-              onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
-              classNames={`${classes.dataPicker} ${classes.searchField}`}
-              classNamesInputIconWrap={classes.input_icon_wrap}
-              classNamesInputIcon={classes.input_icon}
-              isLastElementInRow
-            />
+            {/*<MaterialUIPickers*/}
+            {/*  value={formData.journeyDate}*/}
+            {/*  minDate={currentDateObj}*/}
+            {/*  onChangeDate={(val) => onChangeDate(val, 'journeyDate')}*/}
+            {/*  classNames={`${classes.dataPicker} ${classes.searchField}`}*/}
+            {/*  classNamesInputIconWrap={classes.input_icon_wrap}*/}
+            {/*  classNamesInputIcon={classes.input_icon}*/}
+            {/*  isLastElementInRow*/}
+            {/*/>*/}
           </Grid>
 
           {/* search btn */}
@@ -833,15 +836,15 @@ export const SearchTickets = ({ isHeadingVisible=false, info=null }: TSearchTick
             </Grid>
 
             <Grid item xs={12} sm={12} md={3}>
-              <MaterialUIPickers
-                value={formData.returnJourneyDate}
-                minDate={currentDateObj}
-                onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
-                classNames={`${classes.dataPicker} ${classes.searchField}`}
-                classNamesInputIconWrap={classes.input_icon_wrap}
-                classNamesInputIcon={classes.input_icon}
-                isLastElementInRow
-              />
+              {/*<MaterialUIPickers*/}
+              {/*  value={formData.returnJourneyDate}*/}
+              {/*  minDate={currentDateObj}*/}
+              {/*  onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}*/}
+              {/*  classNames={`${classes.dataPicker} ${classes.searchField}`}*/}
+              {/*  classNamesInputIconWrap={classes.input_icon_wrap}*/}
+              {/*  classNamesInputIcon={classes.input_icon}*/}
+              {/*  isLastElementInRow*/}
+              {/*/>*/}
             </Grid>
           </Grid>
         </Container>
