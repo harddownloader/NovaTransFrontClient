@@ -100,3 +100,5 @@ export const MaterialUIPickers = ({
     </Grid>
   )
 }
+
+export default MaterialUIPickers
