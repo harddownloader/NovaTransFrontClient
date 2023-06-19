@@ -1,13 +1,14 @@
 import React from "react"
 
 // mui
-import CssBaseline from "@mui/material/CssBaseline"
-import Grid from "@mui/material/Grid"
-import Typography from "@mui/material/Typography"
-import Link from "@mui/material/Link"
-import { makeStyles } from '@mui/styles'
-import Container from "@mui/material/Container"
-import Box from "@mui/material/Box"
+import {
+  CssBaseline,
+  Grid,
+  Typography,
+  Link,
+  Container,
+  Box,
+} from "@mui/material"
 
 // project components
 import Copyright from './Copyright'
@@ -18,59 +19,11 @@ import EmailIcon from '@mui/icons-material/Email'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 
 // styles
-import styles from "./Footer.module.scss"
+import classes from "./Footer.module.scss"
 
 // images
 import { PATH_TO_LOGO, WEBSITE_NAME } from "@/utils/const"
 const headingImg = "/static/img/logos/NewTrans.png"
-
-const useStyles = makeStyles((theme) => ({
-  "@global": {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: "none",
-    },
-  },
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbar: {
-    flexWrap: "wrap",
-  },
-  toolbarTitle: {
-    flexGrow: 1,
-  },
-  link: {
-    margin: theme.spacing(1, 1.5),
-  },
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
-  cardHeader: {
-    backgroundColor:
-      theme.palette.mode === "light"
-        ? theme.palette.grey[200]
-        : theme.palette.grey[700],
-  },
-  cardPricing: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "baseline",
-    marginBottom: theme.spacing(2),
-  },
-  footer: {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(8),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    [theme.breakpoints.up("sm")]: {
-      paddingTop: theme.spacing(6),
-      paddingBottom: theme.spacing(6),
-    },
-  },
-}))
-
 
 const pagesRows = [
   {
@@ -96,26 +49,24 @@ const pagesRows = [
   },
 ]
 
-export default function Footer() {
-  const classes = useStyles()
-
+export const Footer = () => {
   const socials = [
     {
       title: "Контакты",
       links: [
         {
           name: "+38097-356-96-96",
-          icon: <LocalPhoneIcon className={styles.social_link__icon} color="primary" />,
+          icon: <LocalPhoneIcon className={classes.social_link__icon} color="primary" />,
           link: 'tel:380973569696',
         },
         {
           name: "newtrans.comp@gmail.com",
-          icon: <EmailIcon className={styles.social_link__icon} color="primary" />,
+          icon: <EmailIcon className={classes.social_link__icon} color="primary" />,
           link: 'mailto:newtrans.comp@gmail.com',
         },
         {
           name: "Одеская обл., ул. Фрунзе 64",
-          icon: <LocationOnIcon className={styles.social_link__icon} color="primary" />,
+          icon: <LocationOnIcon className={classes.social_link__icon} color="primary" />,
           link: '#',
         }
       ],
@@ -131,10 +82,10 @@ export default function Footer() {
           <Grid
             item
             xs={12} sm={3} md={3}
-            className={`${styles.footer__company} ${styles.info_block}`}
+            className={`${classes.footer__company} ${classes.info_block}`}
           >
             <div
-              className={styles.footer_logo_wrapper}
+              className={classes.footer_logo_wrapper}
             >
               <img
                 src={PATH_TO_LOGO}
@@ -143,7 +94,7 @@ export default function Footer() {
               />
             </div>
             <div
-              className={styles.footer_logo_wrapper}
+              className={classes.footer_logo_wrapper}
             >
               <img
                 src={headingImg}
@@ -154,7 +105,7 @@ export default function Footer() {
             <Typography
               color="textSecondary"
               gutterBottom
-              className={styles.footer__logo_description}
+              className={classes.footer__logo_description}
             >
               Если перевозки -<br /> то мы
             </Typography>
@@ -166,27 +117,27 @@ export default function Footer() {
               sm={3}
               md={6}
               key={index}
-              className={`${styles.footer__pages_list} ${styles.info_block}`}
+              className={`${classes.footer__pages_list} ${classes.info_block}`}
             >
               <Typography
                 variant="h6"
                 color="textPrimary"
                 gutterBottom
-                className={styles.pages_list__title}
+                className={classes.pages_list__title}
               >
                 {pagesCol.title}
               </Typography>
-              <ul>
+              <ul className={classes.pages_list}>
                 {pagesCol.list.map((page, index) => (
                   <li
                     key={index}
-                    className={styles.pages_list__item}
+                    className={classes.pages_list__item}
                   >
                     <Link
                       href={page.link}
                       variant="subtitle1"
                       color="textSecondary"
-                      className={styles.pages_list__item_link}
+                      className={classes.pages_list__item_link}
                       underline="none"
                     >
                       {page.title}
@@ -204,16 +155,16 @@ export default function Footer() {
               sm={3}
               md={3}
               key={index}
-              className={`${styles.social_list_container} ${styles.info_block}`}
+              className={`${classes.social_list_container} ${classes.info_block}`}
             >
               <Typography variant="h6" color="textPrimary" gutterBottom>
                 {social.title}
               </Typography>
-              <ul className={styles.social_list}>
+              <ul className={classes.social_list}>
                 {social.links.map((link, index) => (
-                  <li key={index} className={styles.social_link__item}>
+                  <li key={index} className={classes.social_link__item}>
                     <Link href={link.link} underline="none" variant="subtitle1" color="textSecondary" >
-                      <Typography className={styles.social_list__text}>
+                      <Typography className={classes.social_list__text}>
                         {link.icon} {link.name}
                       </Typography>
                     </Link>

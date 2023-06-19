@@ -1,7 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-} from "react"
+import React, { useEffect } from "react"
 
 // project components
 import { HomePage } from "@/components/HomePage"
@@ -44,7 +41,6 @@ function App({ locations=[] }) {
         title={`Купить билеты на автобус, заказать автобусные билеты онлайн`}
         description={`Заказать или купить билет на автобус онлайн на сайте ${WEBSITE_NAME}. Онлайн бронирование билетов на автобусы . Забронировать автобусный билет на сайте ${WEBSITE_NAME}`}
       />
-      <h1>HOME PAGE</h1>
       <HomePage />
     </>
   )
@@ -53,15 +49,6 @@ function App({ locations=[] }) {
 export const getServerSideProps = async (context) => {
   const { query } = context
   let props = {}
-
-  // if (query?.alert) {
-  //   const alert = JSON.parse(query.alert)
-  //   props = {
-  //     ...props,
-  //     alert
-  //   }
-  // }
-  //
 
   try {
     const locations = await getAllLocations()

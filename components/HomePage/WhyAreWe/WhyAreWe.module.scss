@@ -1,0 +1,26 @@
+.heroContent {
+  background-color: #fff;
+  padding: 4rem 0px 3rem;
+}
+
+.who_are_we__container {
+  padding: 3rem 0px;
+  background-color: #fff;
+}
+
+.who_are_we__item {
+  text-align: center;
+}
+
+.why-are-we__icon {}
+
+@media only screen and (max-width: 575px) {
+  .who_are_we__container {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .who_are_we__item {
+    margin: 2rem 0;
+  }
+}

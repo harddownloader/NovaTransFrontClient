@@ -12,7 +12,7 @@ import { Alert } from "@mui/material"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 // assets
-import classes from "@/components/HeaderMaterial/Header.module.scss"
+import classes from "@/components/Header/Header.module.scss"
 
 export const AlertArea = () => {
   const [isMainAlertOpen, setIsMainAlertOpen] = useLocalStorage(true, 'isMainAlertOpen')

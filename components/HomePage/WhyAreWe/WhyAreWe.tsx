@@ -1,29 +1,19 @@
-import React from "react";
+import React from "react"
 
-// import { makeStyles } from "@mui/material/styles";
-import { makeStyles } from '@mui/styles';
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-// import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-import Typography from "@mui/material/Typography";
-// import Button from '@mui/material/Button';
-// styles
-import styles from "@/styles/WhyAreWe.module.scss";
-// icons
-import QueryBuilderIcon from "@mui/icons-material/QueryBuilder";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+// mui
+import {
+  Container,
+  Grid,
+  Typography
+} from '@mui/material'
+
+// assets
+import classes from "./WhyAreWe.module.scss"
+import QueryBuilderIcon from "@mui/icons-material/QueryBuilder"
+import CreditCardIcon from "@mui/icons-material/CreditCard"
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined'
-const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-}));
 
-const items = [
+const cols = [
   {
     image: (
       <QueryBuilderIcon
@@ -57,44 +47,31 @@ const items = [
     title: "Возврат билетов",
     description: "Быстрое оформление возврата в личном кабинете",
   },
-];
+]
 
-function WhyAreWe() {
-  const classes = useStyles();
-
+export const WhyAreWe = () => {
   return (
     <div className={classes.heroContent}>
-      <Container maxWidth="md" className={styles.who_are_we__container}>
+      <Container maxWidth="md" className={classes.who_are_we__container}>
         <Grid container>
-          {items.map((card, index) => (
+          {cols.map((card, index) => (
             <Grid
               item
               key={index}
               xs={12}
               sm={6}
               md={4}
-              className={styles.who_are_we__item}
+              className={classes.who_are_we__item}
             >
-              {/* <Card className={classes.card}> */}
-              {/* <CardMedia
-                className={classes.cardMedia}
-                image="https://source.unsplash.com/random"
-                title="Image title"
-              /> */}
               {card.image}
-              {/* <CardContent className={classes.cardContent}> */}
               <Typography gutterBottom variant="h5" component="h2">
                 {card.title}
               </Typography>
               <Typography>{card.description}</Typography>
-              {/* </CardContent> */}
-              {/* </Card> */}
             </Grid>
           ))}
         </Grid>
       </Container>
     </div>
-  );
+  )
 }
-
-export default WhyAreWe;

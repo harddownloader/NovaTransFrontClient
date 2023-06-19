@@ -1,28 +1,14 @@
 import React from 'react'
-// import dynamic from 'next/dynamic';
-
 
 // mui
-import CssBaseline from "@mui/material/CssBaseline"
+import { CssBaseline } from "@mui/material"
 
 // project components
-import Header from "@/components/HeaderMaterial/Header"
-import { SearchTickets } from "@/components/HomePage/SearchTickets/SearchTickets"
-import WhyAreWe from "@/components/HomePage/WhyAreWe"
-import AboutDrivers from "@/components/HomePage/AboutDrivers"
-import Footer from "@/components/Footer/Footer"
-
-// const SearchTickets = dynamic(() => import("@/components/HomePage/SearchTickets/SearchTickets"), {
-//   loading: () => <p>Loading...</p>,
-// });
-
-// const SearchTicketsClone = () => {
-//   return (
-//     <>
-//       <h1>SearchTickets mock</h1>
-//     </>
-//   )
-// }
+import { Header } from "@/components/Header"
+import { SearchTickets } from "@/components/HomePage/SearchTickets"
+import { WhyAreWe } from "@/components/HomePage/WhyAreWe"
+import { AboutDrivers } from "@/components/HomePage/AboutDrivers"
+import { Footer } from "@/components/Footer"
 
 export const HomePage = () => {
   return (
@@ -31,8 +17,7 @@ export const HomePage = () => {
       <Header />
 
       <main>
-        <h2>HomePage component</h2>
-        <SearchTickets />
+        <SearchTickets isHeadingVisible={true} />
         <WhyAreWe />
         {/*<PopularTrips />*/}
         <AboutDrivers />

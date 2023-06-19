@@ -4,10 +4,11 @@ import dynamic from 'next/dynamic'
 // import Image from 'next/image'
 
 // mui
-import { makeStyles } from '@mui/styles'
-import AppBar from "@mui/material/AppBar"
-import Toolbar from "@mui/material/Toolbar"
-import Container from '@mui/material/Container'
+import {
+  AppBar,
+  Toolbar,
+  Container,
+} from '@mui/material'
 import { Breakpoint } from "@mui/system/createTheme/createBreakpoints" // this was exported from mui breakpoint type for Container maxWidth, that path may change in the future
 
 // project components
@@ -22,25 +23,15 @@ import classes from "./Header.module.scss"
 
 const headingImg = "/static/img/logos/NewTrans.png"
 
-const useStyles = makeStyles((theme) => {
-  return {
-    icon: {
-      marginRight: theme.spacing(1),
-    }
-  }
-})
-
 interface HeaderProps {
   isDarkStyle?: boolean
   containerWidth?: false | Breakpoint
 }
 
-const Header = ({
+export const Header = ({
   isDarkStyle=false,
   containerWidth="md"
 }: HeaderProps) => {
-  const styles = useStyles()
-  
   return (
     <>
       <DynamicAlertArea />
@@ -53,15 +44,15 @@ const Header = ({
       <Container maxWidth={containerWidth}>
         <Toolbar disableGutters>
           <div className={classes.logo_wrap}>
-            <Link href='/'>
+            <Link href='/' className={classes.logo_wrap_link}>
               <img
                 src={PATH_TO_LOGO}
                 alt={`logo ${WEBSITE_NAME}`}
                 height={40}
-                className={`${styles.icon} ${classes.pointer}`}
+                className={`${classes.logo_img} ${classes.pointer}`}
               />
             </Link>
-            <Link href='/'>
+            <Link href='/' className={classes.logo_wrap_link}>
               <img
                 src={headingImg}
                 alt={`logo ${WEBSITE_NAME}`}
@@ -80,5 +71,3 @@ const Header = ({
     </>
   )
 }
-
-export default Header

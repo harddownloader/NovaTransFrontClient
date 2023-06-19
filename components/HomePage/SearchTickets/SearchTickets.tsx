@@ -3,9 +3,7 @@ import { format } from "date-fns" // time and data
 import Router from "next/router"
 
 // mui
-import { makeStyles } from '@mui/styles'
 import { useTheme } from '@mui/material/styles'
-import { blue } from '@mui/material/colors'
 import {
   Typography,
   Container,
@@ -19,18 +17,14 @@ import {
   Checkbox,
   Collapse,
   useMediaQuery,
-  Autocomplete
+  Autocomplete,
 } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search'
 import NorthEastOutlinedIcon from '@mui/icons-material/NorthEastOutlined'
 import SouthEastOutlinedIcon from '@mui/icons-material/SouthEastOutlined'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { CalendarToday } from "@mui/icons-material"
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
-import ruLocale from "date-fns/locale/ru"
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
 // project components
+import { Heading } from './Heading'
 import { MaterialUIPickers } from "@/components/Pickers/DatePicker"
 
 // store
@@ -48,73 +42,13 @@ import { futureAnyFix } from "@/interfaces/futureAnyFix"
 import { convertDateObjToString } from "@/components/HomePage/SearchTickets/helpers"
 
 // assets
-const BgImage = "/static/img/backgrounds/bg-winter.jpg"
-import styles from './SearchTickets.module.scss'
-
-const useStyles = makeStyles((theme) => {
-  return {
-  // container
-  heroContent: (props: {
-    isBackTicketFieldsShow: boolean
-  }) => ({
-    backgroundColor: theme.palette.background.paper,
-    backgroundImage: `url(${BgImage})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center bottom",
-    backgroundSize: "cover",
-    marginTop: "-85px",
-
-    padding: props.isBackTicketFieldsShow ? theme.spacing(6, 0, 14) : theme.spacing(1, 0, 1),
-  }),
-  // grid select
-  gridSelect: {
-    padding: "0 !important",
-    color: "#fff",
-  },
-  // form control for select
-  formControl: {
-    margin: theme.spacing(0),
-    minWidth: 120,
-    width: "100%",
-    // нижние подчеркивание
-    "& .MuiInput-underline:before": {
-      borderBottom: "none",
-    },
-    "&.center_el": {
-      borderRight: "1px solid rgb(233, 233, 233)",
-      borderLeft: "1px solid rgb(233, 233, 233)",
-    },
-  },
-  // select
-  select: {},
-  // data picker
-  dataPicker: {},
-  // selects + data pickers
-  searchField: {
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: 0,
-    "&.first_el": {
-      borderRadius: "4px 0 0 4px",
-    },
-    "&.first_el:hover": {
-      borderRadius: "4px 0 0 4px",
-    },
-  },
-  searchFieldRenderedInput: {
-    "&.first_input_el .MuiInputBase-root": {
-      borderRadius: "4px 0 0 4px",
-    },
-    "&.middle_input_el .MuiInputBase-root": {
-      borderRadius: "0px",
-    },
-  }
-}})
+import classes from './SearchTickets.module.scss'
 
 const currentDateObj = new Date()
 
 export interface TSearchTickets {
-  type?: "searchPage"
-  info?: ISearchForm
+  isHeadingVisible: boolean
+  info?: ISearchForm | null
 }
 
 // function SearchTickets_old(props: TSearchTickets) {
@@ -600,8 +534,7 @@ export interface TSearchTickets {
 // }
 
 
-export const SearchTickets = ({ type='searchPage', info=null }) => {
-  console.log('SearchTickets props', {type, info})
+export const SearchTickets = ({ isHeadingVisible=false, info=null }: TSearchTickets) => {
   const theme = useTheme()
   const isNotMobile = useMediaQuery(theme.breakpoints.up('md'))
 
@@ -617,7 +550,6 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
   const [isBackTicketFieldsShow, setIsBackTicketFieldsShow] = useState(Boolean(
     !(!info?.returnStartLocation && info?.startLocation)
   ))
-  const classes = useStyles({ isBackTicketFieldsShow: isBackTicketFieldsShow })
 
   // a list of cities
   const [locations, setLocations] = useState([])
@@ -692,13 +624,13 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
             ml: !isNotMobile ? 0 : 1,
             mt: !isNotMobile ? 1 : 0
           }}
-          className={styles.search_btn_container}
+          className={classes.search_btn_container}
         >
           <Button
             variant="contained"
             size="large"
             color="primary"
-            className={styles.search_btn}
+            className={classes.search_btn}
             onClick={searchTicketsRequestHandler}
             disabled={!Boolean(
               formData?.startLocation &&
@@ -726,48 +658,21 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
   const returnFromValue = getAutoCompleteValue("returnStartLocation")
   const returnToValue = getAutoCompleteValue("returnEndLocation")
 
-  // return (
-  //   <>
-  //     <h1>SearchTickets mock v2.6</h1>
-  //   </>
-  // )
   return (
-    <div className={classes.heroContent}>
-      <h1>SearchTickets mock v3.8</h1>
-      {type !== "searchPage" ? (
-        // welcome block
-        <Container maxWidth="md" className={styles.welcome_block}>
-          <Typography
-            component="h1"
-            variant={isNotMobile ? "h2" : "h4"}
-            align="center"
-            // color="textPrimary"
-            gutterBottom
-            className={styles.heading}
-          >
-            Билеты на автобус
-          </Typography>
-          <Typography
-            variant={isNotMobile ? "h5" : "h6"}
-            align="center"
-            // color="textSecondary"
-            paragraph
-            className={styles.heading}
-          >
-            по Украине, Молдавии, Румынии и Болгарии
-          </Typography>
-        </Container>
-      ) : <></>}
+    <div
+      className={`${classes.heroContent} ${isBackTicketFieldsShow ? classes.withReturnTrip : classes.oneWay}`}
+    >
+      {isHeadingVisible &&  <Heading isNotMobile={isNotMobile} />}
 
       {/* thither */}
-      <Container maxWidth="md" className={`${styles.search_tickets} ${type === "searchPage" ? styles.search_tickets_on_search_page : ''}`}>
+      <Container maxWidth="md" className={`${classes.search_tickets} ${!isHeadingVisible ? classes.search_tickets_on_search_page : ''}`}>
         <Grid container gap={0}>
           {/* откуда */}
           <Grid item xs={12} sm={12} md={3} className={classes.gridSelect}>
             <Autocomplete
               disablePortal
               id="toCity1"
-              className={`${classes.select} ${classes.searchField} ${styles.searchField} first_el`}
+              className={`${classes.select} ${classes.searchField} first_el`}
               noOptionsText="Не найдено"
               loading={pending}
               loadingText="Загрузка..."
@@ -781,7 +686,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
                     ...params?.InputProps,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <NorthEastOutlinedIcon />
+                        <NorthEastOutlinedIcon className={classes.input_icon} />
                       </InputAdornment>
                     )
                   }}
@@ -796,14 +701,13 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
             <Autocomplete
               disablePortal
               id="toCity2"
-              className={`${classes.select} ${classes.searchField} ${styles.searchField}`}
+              className={`${classes.select} ${classes.searchField}`}
               noOptionsText="Не найдено"
               loading={pending}
               loadingText="Загрузка..."
               value={toValue?.name ? toValue.name : null}
               options={optionsLocations}
               onChange={(event, newValue) => onChangeDirectionField(newValue, "endLocation")}
-              style={{borderRadius: '0px'}}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -811,7 +715,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
                     ...params?.InputProps,
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SouthEastOutlinedIcon />
+                        <SouthEastOutlinedIcon className={classes.input_icon} />
                       </InputAdornment>
                     )
                   }}
@@ -825,45 +729,13 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
           <Grid item xs={12} sm={12} md={3}
                 className={`${classes.gridSelect}`}
           >
-            {/*<LocalizationProvider*/}
-            {/*  dateAdapter={AdapterDateFns}*/}
-            {/*  // adapterLocale={ruLocale}*/}
-            {/*>*/}
-            {/*  <DatePicker*/}
-            {/*    label="Дата поездки"*/}
-            {/*    // value={new Date()}*/}
-            {/*    // onChange={() => {}}*/}
-            {/*    // minDate={new Date()}*/}
-            {/*    // className={*/}
-            {/*    //   `${styles.date_picker__container} ${classNames}`*/}
-            {/*    // }*/}
-            {/*    // ref={refDatePicker}*/}
-            {/*    // onClose={() => setIsOpen(false)}*/}
-            {/*    // open={isOpen}*/}
-            {/*    // onOpen={() => setIsOpen(true)}*/}
-            {/*    // componentsProps={{*/}
-            {/*    //   textField: {*/}
-            {/*    //     // WHY it isn't works?*/}
-            {/*    //     InputProps: {*/}
-            {/*    //       // ...InputProps,*/}
-            {/*    //       startAdornment: (*/}
-            {/*    //         <InputAdornment position="start">*/}
-            {/*    //           <CalendarToday />*/}
-            {/*    //         </InputAdornment>*/}
-            {/*    //       ),*/}
-            {/*    //       endAdornment: null*/}
-            {/*    //     },*/}
-            {/*    //     // className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,*/}
-            {/*    //     // onClick: (e) => setIsOpen(true),*/}
-            {/*    //   }*/}
-            {/*    // }}*/}
-            {/*  />*/}
-            {/*</LocalizationProvider>*/}
             <MaterialUIPickers
               value={formData.journeyDate}
               minDate={currentDateObj}
               onChangeDate={(val) => onChangeDate(val, 'journeyDate')}
               classNames={`${classes.dataPicker} ${classes.searchField}`}
+              classNamesInputIconWrap={classes.input_icon_wrap}
+              classNamesInputIcon={classes.input_icon}
               isLastElementInRow
             />
           </Grid>
@@ -874,7 +746,7 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
 
         {/* back tickets checkbox */}
         <Grid container gap={3} justifyContent={isNotMobile ? "start" : "center"}>
-          <Grid item xs={10} sm={10} md={6} className={styles.returnBackCheckboxWrap}>
+          <Grid item xs={10} sm={10} md={6} className={classes.returnBackCheckboxWrap}>
             <FormGroup row>
               <FormControlLabel
                 control={
@@ -882,20 +754,11 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
                     checked={isBackTicketFieldsShow}
                     onChange={(e) => setIsBackTicketFieldsShow(!isBackTicketFieldsShow)}
                     color="primary"
-                    className={styles.returnBackCheckbox}
-                    sx={{
-                      color: blue[700],
-                      '&.Mui-checked': {
-                        color: blue[700],
-                      },
-                    }}
+                    className={classes.returnBackCheckbox}
                   />
                 }
-                className={styles.customFormControlClass}
+                className={classes.customFormControlClass}
                 label="Обратный билет"
-                sx={{
-                  color: '#fff', fontSize: 34,
-                }}
               />
             </FormGroup>
           </Grid>
@@ -904,83 +767,85 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
       </Container>
 
       {/*/!* back *!/*/}
-      {/*<Collapse in={isBackTicketFieldsShow}>*/}
-      {/*  <Container*/}
-      {/*    maxWidth="md"*/}
-      {/*    className={`search-tickets ${styles.return_trip} ${*/}
-      {/*      isBackTicketFieldsShow ? "activate" : ""*/}
-      {/*    }`}*/}
-      {/*  >*/}
-      {/*    <Grid container gap={0}>*/}
-      {/*      /!* откуда *!/*/}
-      {/*      <Grid item xs={12} sm={12} md={3}>*/}
-      {/*        <Autocomplete*/}
-      {/*          disablePortal*/}
-      {/*          id="fromCity1"*/}
-      {/*          className={`${classes.select} ${classes.searchField}  ${styles.searchField} first_el`}*/}
-      {/*          noOptionsText="Не найдено"*/}
-      {/*          loadingText="Загрузка..."*/}
-      {/*          options={optionsLocations}*/}
-      {/*          value={returnFromValue?.name ? returnFromValue.name : null}*/}
-      {/*          onChange={(val, newValue) => onChangeDirectionField(newValue, "returnStartLocation")}*/}
-      {/*          renderInput={(params) => (*/}
-      {/*            <TextField*/}
-      {/*              {...params}*/}
-      {/*              InputProps={{*/}
-      {/*                ...params?.InputProps,*/}
-      {/*                startAdornment: (*/}
-      {/*                  <InputAdornment position="start">*/}
-      {/*                    <NorthEastOutlinedIcon />*/}
-      {/*                  </InputAdornment>*/}
-      {/*                )*/}
-      {/*              }}*/}
-      {/*              label="Откуда"*/}
-      {/*              className={`${classes.searchFieldRenderedInput} first_input_el`}*/}
-      {/*            />*/}
-      {/*          )}*/}
-      {/*        />*/}
-      {/*      </Grid>*/}
-      {/*      /!* куда *!/*/}
-      {/*      <Grid item xs={12} sm={12} md={3}>*/}
-      {/*        <Autocomplete*/}
-      {/*          disablePortal*/}
-      {/*          id="fromCity2"*/}
-      {/*          className={`${classes.select} ${classes.searchField} ${styles.searchField}`}*/}
-      {/*          noOptionsText="Не найдено"*/}
-      {/*          loadingText="Загрузка..."*/}
-      {/*          options={optionsLocations}*/}
-      {/*          value={returnToValue?.name ? returnToValue.name : null}*/}
-      {/*          onChange={(val, newValue) => onChangeDirectionField(newValue, "returnEndLocation")}*/}
-      {/*          renderInput={(params) => (*/}
-      {/*            <TextField*/}
-      {/*              {...params}*/}
-      {/*              InputProps={{*/}
-      {/*                ...params?.InputProps,*/}
-      {/*                startAdornment: (*/}
-      {/*                  <InputAdornment position="start">*/}
-      {/*                    <SouthEastOutlinedIcon />*/}
-      {/*                  </InputAdornment>*/}
-      {/*                )*/}
-      {/*              }}*/}
-      {/*              label="Куда"*/}
-      {/*              className={`${classes.searchFieldRenderedInput} middle_input_el`}*/}
-      {/*            />*/}
-      {/*          )}*/}
-      {/*        />*/}
-      {/*      </Grid>*/}
+      <Collapse in={isBackTicketFieldsShow}>
+        <Container
+          maxWidth="md"
+          className={`search-tickets ${classes.return_trip} ${
+            isBackTicketFieldsShow ? "activate" : ""
+          }`}
+        >
+          <Grid container gap={0}>
+            {/* откуда */}
+            <Grid item xs={12} sm={12} md={3}>
+              <Autocomplete
+                disablePortal
+                id="fromCity1"
+                className={`${classes.select} ${classes.searchField} first_el`}
+                noOptionsText="Не найдено"
+                loadingText="Загрузка..."
+                options={optionsLocations}
+                value={returnFromValue?.name ? returnFromValue.name : null}
+                onChange={(val, newValue) => onChangeDirectionField(newValue, "returnStartLocation")}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{
+                      ...params?.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <NorthEastOutlinedIcon className={classes.input_icon} />
+                        </InputAdornment>
+                      )
+                    }}
+                    label="Откуда"
+                    className={`${classes.searchFieldRenderedInput} first_input_el`}
+                  />
+                )}
+              />
+            </Grid>
+            {/* куда */}
+            <Grid item xs={12} sm={12} md={3}>
+              <Autocomplete
+                disablePortal
+                id="fromCity2"
+                className={`${classes.select} ${classes.searchField}`}
+                noOptionsText="Не найдено"
+                loadingText="Загрузка..."
+                options={optionsLocations}
+                value={returnToValue?.name ? returnToValue.name : null}
+                onChange={(val, newValue) => onChangeDirectionField(newValue, "returnEndLocation")}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    InputProps={{
+                      ...params?.InputProps,
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <SouthEastOutlinedIcon className={classes.input_icon} />
+                        </InputAdornment>
+                      )
+                    }}
+                    label="Куда"
+                    className={`${classes.searchFieldRenderedInput} middle_input_el`}
+                  />
+                )}
+              />
+            </Grid>
 
-      {/*      <Grid item xs={12} sm={12} md={3}>*/}
-      {/*        <MaterialUIPickers*/}
-      {/*          value={formData.returnJourneyDate}*/}
-      {/*          minDate={currentDateObj}*/}
-      {/*          onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}*/}
-      {/*          classNames={`${classes.dataPicker} ${classes.searchField}`}*/}
-      {/*          isLastElementInRow*/}
-      {/*        />*/}
-      {/*      </Grid>*/}
-      {/*    </Grid>*/}
-      {/*  </Container>*/}
-      {/*</Collapse>*/}
+            <Grid item xs={12} sm={12} md={3}>
+              <MaterialUIPickers
+                value={formData.returnJourneyDate}
+                minDate={currentDateObj}
+                onChangeDate={(val) => onChangeDate(val, 'returnJourneyDate')}
+                classNames={`${classes.dataPicker} ${classes.searchField}`}
+                classNamesInputIconWrap={classes.input_icon_wrap}
+                classNamesInputIcon={classes.input_icon}
+                isLastElementInRow
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </Collapse>
       {/*/!* two part end*!/*/}
 
       {/* search btn */}
@@ -990,5 +855,3 @@ export const SearchTickets = ({ type='searchPage', info=null }) => {
     </div>
   )
 }
-
-export default SearchTickets

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef } from "react"
 import { isValid } from "date-fns"
 import ruLocale from "date-fns/locale/ru"
 
@@ -19,6 +19,8 @@ export interface IMaterialUIPickersProps {
   value: Date
   onChangeDate: Function
   classNames: string
+  classNamesInputIconWrap?: string
+  classNamesInputIcon?: string
   InputProps?: any
 }
 
@@ -32,6 +34,8 @@ export const MaterialUIPickers = ({
                                     value,
                                     onChangeDate,
                                     classNames,
+                                    classNamesInputIconWrap='',
+                                    classNamesInputIcon='',
                                     InputProps={}
                                   }: IMaterialUIPickersProps) => {
   const [selectedDate, setSelectedDate] = useState(value)
@@ -45,24 +49,15 @@ export const MaterialUIPickers = ({
     if (isValidDate) onChangeDate(date)
   }
 
-  useEffect(() => {
-    /**
-     * из-за того что у datepicker-a не работает вставка прописного класса в className
-     * (по непонятным мне причинам)
-     * пришлось прокидывать border-radius через ref 
-     */
-    if (
-      refDatePicker &&
-      refDatePicker.hasOwnProperty('current') &&
-      refDatePicker.current &&
-      refDatePicker.current.hasOwnProperty('lastChild') &&
-      refDatePicker.current.lastChild &&
-      refDatePicker.current.lastChild.hasOwnProperty('style')
-    ) {
-      
-      refDatePicker.current.lastChild.style='borderRadius: 0 4px 4px 0'
-    }
-  })
+  const InputAdornmentComponent = (props) => {
+    return (
+      <InputAdornment {...props}>
+        <div className={`${classNamesInputIconWrap}`}>
+          <CalendarToday className={classNamesInputIcon} />
+        </div>
+      </InputAdornment>
+    )
+  }
 
   return (
     <Grid container justifyContent="space-around">
@@ -82,33 +77,24 @@ export const MaterialUIPickers = ({
           onClose={() => setIsOpen(false)}
           open={isOpen}
           onOpen={() => setIsOpen(true)}
-          slotProps={{
-            textField: {
-              className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
-              onClick: (e) => setIsOpen(true),
-            },
-            // inputAdornment: (
-            //   <InputAdornment position="start">
-            //     <CalendarToday />
-            //   </InputAdornment>
-            // )
+          slots={{
+            inputAdornment: InputAdornmentComponent,
           }}
-          // componentsProps={{
-          //   textField: {
-          //     // WHY it isn't works?
-          //     InputProps: {
-          //         ...InputProps,
-          //         startAdornment: (
-          //           <InputAdornment position="start">
-          //             <CalendarToday />
-          //           </InputAdornment>
-          //         ),
-          //         endAdornment: null
-          //       },
-          //     className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
-          //     onClick: (e) => setIsOpen(true),
-          //   }
-          // }}
+          slotProps={{
+            inputAdornment: {
+              position: 'start',
+            },
+            textField: {
+              InputProps: {
+                className: `${styles.date_input_wrap}`
+              },
+              className: `${styles.date_picker__container} ${styles.date_picker__input} ${searchTicketsStyles.searchField} ${isLastElementInRow ? styles.last_el : ''}`,
+              onClick: (e) => {
+                e.stopPropagation()
+                setIsOpen(true)
+              },
+            },
+          }}
         />
       </LocalizationProvider>
     </Grid>
