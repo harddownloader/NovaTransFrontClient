@@ -6,7 +6,7 @@ Allow: /
 User-agent: *
 Disallow: /details
 Disallow: /tickets/*
-Disallow: /test
+Disallow: /test/*
 
 # Host
 Host: https://localhost:3001
