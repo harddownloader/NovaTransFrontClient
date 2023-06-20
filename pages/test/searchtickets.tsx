@@ -45,7 +45,7 @@ import { futureAnyFix } from "@/interfaces/futureAnyFix"
 import { convertDateObjToString } from "@/components/HomePage/SearchTickets/helpers"
 
 // assets
-import classes from './SearchTickets.module.scss'
+import classes from '@/components/HomePage/SearchTickets/SearchTickets.module.scss'
 
 const currentDateObj = new Date()
 
@@ -858,3 +858,5 @@ export const SearchTickets = ({ isHeadingVisible=false, info=null }: TSearchTick
     </div>
   )
 }
+
+export default SearchTickets
