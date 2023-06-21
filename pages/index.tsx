@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
 // project components
 import { HomePage } from "@/components/HomePage"
@@ -19,7 +20,7 @@ import {
 } from '@/store/locations/locationsSlice'
 import { getAllLocations } from "@/actions/location"
 
-function App({ locations=[] }) {
+function App({ locations=[] }): InferGetServerSidePropsType<typeof getServerSideProps> {
   const dispatch = useAppDispatch()
   const {
     data,
@@ -46,23 +47,32 @@ function App({ locations=[] }) {
   )
 }
 
-// export const getServerSideProps = async (context) => {
-//   const { query } = context
-//   let props = {}
-//
-//   try {
-//     const locations = await getAllLocations()
-//     if (locations) props = {
-//       ...props,
-//       locations
-//     }
-//   } catch (error) {
-//     console.error('Home page srr fetching error', { error })
-//   }
-//
-//   return {
-//     props: props
-//   }
-// }
+export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+  const { query, res } = context
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
+
+  const props = {
+    locations: []
+  }
+
+  try {
+    const locations = await getAllLocations()
+    if (locations) props.locations = [...locations]
+  } catch (error) {
+    // console.error('Home page srr fetching error', { error })
+    throw new Error('Home page ssr fetching error', error)
+  }
+
+  // const locations = await getAllLocations().then((locationsRes) => {
+  //
+  // })
+
+  return {
+    props: props
+  }
+}
 
 export default App
