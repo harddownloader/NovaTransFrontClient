@@ -70,20 +70,20 @@ export const getServerSideProps: GetServerSideProps<{
     locations: []
   }
 
-  try {
-    const timeout = 1000
-    const controller = new AbortController()
-    const id = setTimeout(() => controller.abort(), timeout)
-    const locations = await getAllLocations({
-      fetchOptions: {
-        signal: controller.signal
-      }
-    })
-    clearTimeout(id)
-    if (locations) props.locations = [...locations]
-  } catch (error) {
-    console.error('Home page ssr fetching error', error)
-  }
+  // try {
+  //   const timeout = 1000
+  //   const controller = new AbortController()
+  //   const id = setTimeout(() => controller.abort(), timeout)
+  //   const locations = await getAllLocations({
+  //     fetchOptions: {
+  //       signal: controller.signal
+  //     }
+  //   })
+  //   clearTimeout(id)
+  //   if (locations) props.locations = [...locations]
+  // } catch (error) {
+  //   console.error('Home page ssr fetching error', error)
+  // }
 
   return {
     props: props
