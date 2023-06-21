@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const path = require('path')
 
+// eslint-disable-next-line
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+})
+
 // This file sets a custom webpack configuration to use your Next.js app
 // with Sentry.
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
@@ -71,10 +76,25 @@ const nextConfig = {
   // }
 }
 
-module.exports = nextConfig
+const sentryWebpackPluginOptions = {
+  ignore: ['node_modules'],
+  include: '.next',
+  silent: true,
+  configFile: 'sentry.properties',
+  dryRun: !process.env.NEXT_PUBLIC_SENTRY_DSN
+}
 
-module.exports = withSentryConfig(
-  module.exports,
-  { silent: true },
-  { hideSourcemaps: true },
+module.exports = withBundleAnalyzer(
+  process.env.NEXT_PUBLIC_SENTRY_DSN
+    ? withSentryConfig(
+        {
+          ...nextConfig,
+          sentry: {
+            hideSourceMaps: true,
+            widenClientFileUpload: true,
+          },
+        },
+        sentryWebpackPluginOptions
+      )
+    : nextConfig
 )

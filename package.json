@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "analyze-build": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@date-io/date-fns": "^2.16.0",
@@ -33,6 +34,7 @@
     "sass": "^1.35.1"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^13.4.6",
     "@svgr/webpack": "^8.0.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -43,6 +45,7 @@
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "@types/react-redux": "^7.1.24",
+    "cross-env": "^7.0.3",
     "jest": "^28.1.1",
     "jest-css-modules-transform": "^4.4.2",
     "ts-jest": "^28.0.5",
