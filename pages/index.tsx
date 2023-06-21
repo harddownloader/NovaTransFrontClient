@@ -8,6 +8,9 @@ import { BaseSeo } from "@/components/seo/BaseSeo"
 // utils
 import { WEBSITE_NAME } from "@/utils/const"
 
+// types
+import { TLocations } from '@/interfaces/locations'
+
 // store
 import {
   useAppDispatch,
@@ -20,7 +23,7 @@ import {
 } from '@/store/locations/locationsSlice'
 import { getAllLocations } from "@/actions/location"
 
-function App({ locations=[] }): InferGetServerSidePropsType<typeof getServerSideProps> {
+function App({ locations=[] }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const dispatch = useAppDispatch()
   const {
     data,
@@ -47,14 +50,18 @@ function App({ locations=[] }): InferGetServerSidePropsType<typeof getServerSide
   )
 }
 
-export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
+export const getServerSideProps: GetServerSideProps<{
+  locations: TLocations
+}> = async (context) => {
   const { query, res } = context
   res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
   )
 
-  const props = {
+  const props: {
+    locations: TLocations
+  } = {
     locations: []
   }
 
@@ -62,13 +69,8 @@ export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
     const locations = await getAllLocations()
     if (locations) props.locations = [...locations]
   } catch (error) {
-    // console.error('Home page srr fetching error', { error })
     throw new Error('Home page ssr fetching error', error)
   }
-
-  // const locations = await getAllLocations().then((locationsRes) => {
-  //
-  // })
 
   return {
     props: props
