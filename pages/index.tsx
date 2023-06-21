@@ -91,4 +91,4 @@ function App({ locations=[] }) {
 //   }
 // }
 //
-// export default App
+export default App
