@@ -23,7 +23,8 @@ import {
 } from '@/store/locations/locationsSlice'
 import { getAllLocations } from "@/actions/location"
 
-function App({ locations=[] }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+// function App({ locations=[] }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function App({ locations=[] }) {
   const dispatch = useAppDispatch()
   const {
     data,
