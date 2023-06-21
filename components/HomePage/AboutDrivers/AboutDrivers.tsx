@@ -44,3 +44,5 @@ export const AboutDrivers = () => {
     </div>
   )
 }
+
+export default AboutDrivers

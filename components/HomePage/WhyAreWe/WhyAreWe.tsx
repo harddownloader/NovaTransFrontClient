@@ -75,3 +75,5 @@ export const WhyAreWe = () => {
     </div>
   )
 }
+
+export default WhyAreWe
