@@ -46,23 +46,23 @@ function App({ locations=[] }) {
   )
 }
 
-export const getServerSideProps = async (context) => {
-  const { query } = context
-  let props = {}
-
-  try {
-    const locations = await getAllLocations()
-    if (locations) props = {
-      ...props,
-      locations
-    }
-  } catch (error) {
-    console.error('Home page srr fetching error', { error })
-  }
-
-  return {
-    props: props
-  }
-}
+// export const getServerSideProps = async (context) => {
+//   const { query } = context
+//   let props = {}
+//
+//   try {
+//     const locations = await getAllLocations()
+//     if (locations) props = {
+//       ...props,
+//       locations
+//     }
+//   } catch (error) {
+//     console.error('Home page srr fetching error', { error })
+//   }
+//
+//   return {
+//     props: props
+//   }
+// }
 
 export default App
