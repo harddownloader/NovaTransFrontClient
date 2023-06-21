@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
 // project components
 import { HomePage } from "@/components/HomePage"
@@ -7,9 +6,6 @@ import { BaseSeo } from "@/components/seo/BaseSeo"
 
 // utils
 import { WEBSITE_NAME } from "@/utils/const"
-
-// types
-import { TLocations } from '@/interfaces/locations'
 
 // store
 import {
@@ -21,9 +17,7 @@ import {
   selectLocations,
   setLocations,
 } from '@/store/locations/locationsSlice'
-import { getAllLocations } from "@/actions/location"
 
-// function App({ locations=[] }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 function App({ locations=[] }) {
   const dispatch = useAppDispatch()
   const {
@@ -52,12 +46,18 @@ function App({ locations=[] }) {
 }
 
 /*
+* UPD: I works on Vercel only when getServerSideProps completely absent
+*
+* PREVIOUS NOTE:
 * We have to use fetch with timeout.
+* https://dmitripavlutin.com/timeout-fetch-request/
+* https://stackoverflow.com/questions/46946380/fetch-api-request-timeout
+*
 * Because Vercel has a timeout of 10 seconds, and our backend can only start at the time of the request.
 * As a result, we will get an error from Vercel.
 * */
 // export const getServerSideProps: GetServerSideProps<{
-//   locations: TLocations
+//   locations: TLocations // import { TLocations } from '@/interfaces/locations'
 // }> = async (context) => {
 //   const { query, res } = context
 //   res.setHeader(
@@ -90,5 +90,5 @@ function App({ locations=[] }) {
 //     props: props
 //   }
 // }
-//
+
 export default App
