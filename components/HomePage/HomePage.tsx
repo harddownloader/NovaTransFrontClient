@@ -7,7 +7,7 @@ import Skeleton from "@mui/material/Skeleton"
 
 // project components
 // import { Header } from "@/components/Header"
-import { SearchTickets } from "@/components/HomePage/SearchTickets"
+// import { SearchTickets } from "@/components/HomePage/SearchTickets"
 // import { WhyAreWe } from "@/components/HomePage/WhyAreWe"
 // import { AboutDrivers } from "@/components/HomePage/AboutDrivers"
 // import { Footer } from "@/components/Footer"
@@ -15,6 +15,10 @@ import { SearchTickets } from "@/components/HomePage/SearchTickets"
 // dynamic imports
 const Header = dynamic(() => import("@/components/Header"), {
   loading: () => <Skeleton animation="wave" height={80} />
+})
+
+const SearchTickets = dynamic(() => import("@/components/HomePage/SearchTickets"), {
+  loading: () => <Skeleton animation="wave" height={350} />
 })
 
 const WhyAreWe = dynamic(() => import("@/components/HomePage/WhyAreWe"), {

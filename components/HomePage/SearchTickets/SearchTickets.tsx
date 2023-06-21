@@ -858,3 +858,5 @@ export const SearchTickets = ({ isHeadingVisible=false, info=null }: TSearchTick
     </div>
   )
 }
+
+export default SearchTickets
