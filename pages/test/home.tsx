@@ -51,7 +51,7 @@ export const getServerSideProps = async (context) => {
   let props = {}
 
   try {
-    const locations = await getAllLocations()
+    const locations = await getAllLocations({})
     if (locations) props = {
       ...props,
       locations

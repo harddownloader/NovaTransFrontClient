@@ -50,6 +50,11 @@ function App({ locations=[] }: InferGetServerSidePropsType<typeof getServerSideP
   )
 }
 
+/*
+* We have to use fetch with timeout.
+* Because Vercel has a timeout of 10 seconds, and our backend can only start at the time of the request.
+* As a result, we will get an error from Vercel.
+* */
 export const getServerSideProps: GetServerSideProps<{
   locations: TLocations
 }> = async (context) => {
@@ -66,10 +71,18 @@ export const getServerSideProps: GetServerSideProps<{
   }
 
   try {
-    const locations = await getAllLocations()
+    const timeout = 1000
+    const controller = new AbortController()
+    const id = setTimeout(() => controller.abort(), timeout)
+    const locations = await getAllLocations({
+      fetchOptions: {
+        signal: controller.signal
+      }
+    })
+    clearTimeout(id)
     if (locations) props.locations = [...locations]
   } catch (error) {
-    throw new Error('Home page ssr fetching error', error)
+    console.error('Home page ssr fetching error', error)
   }
 
   return {
