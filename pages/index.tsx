@@ -46,7 +46,7 @@ function App({ locations=[] }) {
 }
 
 /*
-* UPD: I works on Vercel only when getServerSideProps completely absent
+* UPD: It works on Vercel only when getServerSideProps completely absent
 *
 * PREVIOUS NOTE:
 * We have to use fetch with timeout.
