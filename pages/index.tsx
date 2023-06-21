@@ -50,6 +50,7 @@ function App({ locations=[] }) {
 *
 * PREVIOUS NOTE:
 * We have to use fetch with timeout.
+* https://www.reddit.com/r/nextjs/comments/n8y8iy/every_time_i_open_my_nextjs_site_hosted_on_vercel/
 * https://dmitripavlutin.com/timeout-fetch-request/
 * https://stackoverflow.com/questions/46946380/fetch-api-request-timeout
 *
