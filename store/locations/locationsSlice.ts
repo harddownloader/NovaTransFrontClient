@@ -26,7 +26,7 @@ const initialState: LocationsState = {
 }
 
 export const getLocations = createAsyncThunk('locations/locations', async () => {
-  const locations = await getAllLocations()
+  const locations = await getAllLocations({})
   return locations
 })
 

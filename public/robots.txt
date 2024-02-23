@@ -1,0 +1,15 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /details
+Disallow: /tickets/*
+Disallow: /test/*
+
+# Host
+Host: https://localhost:3001
+
+# Sitemaps
+Sitemap: https://localhost:3001/sitemap.xml

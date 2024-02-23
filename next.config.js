@@ -1,91 +1,100 @@
-// next.config.js
+/** @type {import('next').NextConfig} */
 const path = require('path')
-const withPlugins = require('next-compose-plugins');
-const withImages = require('next-images');
-// const typescript = require('@zeit/next-typescript');
 
-// next.js configuration
+// eslint-disable-next-line
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+})
+
+// This file sets a custom webpack configuration to use your Next.js app
+// with Sentry.
+// https://nextjs.org/docs/api-reference/next.config.js/introduction
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+const { withSentryConfig } = require('@sentry/nextjs');
+
+const apiURL = new URL(process.env.NEXT_PUBLIC_API)
+const allowedImageDomains = process.env.NEXT_PUBLIC_ALLOWED_IMAGE_DOMAINS
+  ? process.env.NEXT_PUBLIC_ALLOWED_IMAGE_DOMAINS.split(",")
+  : []
+const imageConversionFormats = process.env.NEXT_PUBLIC_IMAGE_CONVERSION_FORMATS
+  ? process.env.NEXT_PUBLIC_IMAGE_CONVERSION_FORMATS.split(",")
+  : []
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // useFileSystemPublicRoutes: false,
-  // distDir: 'build',
-  serverless: true,
-  // webpack5
-  webpack5: true,
-
-  // images
+  reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    domains: [apiURL.hostname, ...allowedImageDomains],
+    formats: imageConversionFormats,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    dangerouslyAllowSVG: true,
   },
-  
-  // sass
   sassOptions: {
-    cssModules: true,
     includePaths: [path.join(__dirname, 'styles')],
   },
+  webpack(config, { isServer }) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    })
 
-  // webpack config
-  webpack: (config, options) => {
+    if (!isServer) {
+      // don't resolve 'fs' module on the client to prevent this error on build --> Error: Can't resolve 'fs'
+      config.resolve.fallback = {
+        fs: false
+      }
+    }
 
-    const { isServer } = options;
-    // config.module.rules.push({
-    //   test: /\.(ogg|mp3|wav|mpe?g)$/i,
-    //   exclude: config.exclude,
-    //   use: [
-    //     {
-    //       loader: require.resolve('url-loader'),
-    //       options: {
-    //         limit: config.inlineImageLimit,
-    //         fallback: require.resolve('file-loader'),
-    //         publicPath: `${config.assetPrefix}/_next/static/img/`,
-    //         outputPath: `${isServer ? '../' : ''}static/img/`,
-    //         name: '[name]-[hash].[ext]',
-    //         esModule: config.esModule || false,
-    //       },
-    //     },
-    //   ],
-    // },
-    // {
-    //   test: /\.(png|jpg|gif)$/i,
-    //   use: [
-    //     {
-    //       loader: 'url-loader',
-    //       options: {
-    //         limit: 8192,
-    //       },
-    //     },
-    //   ],
-    // },
-    // );
-
-
-    return config;
+    return config
   },
 
   // redirects
-  async redirects() {
-    const redirectsRules = [];
+  // async redirects() {
+  //   const redirectsRules = [];
+  //
+  //   console.log({
+  //     'redirect all pages status': /^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)
+  //   })
+  //   // is NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE true? - shot down website, and show warning page
+  //   if (/^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)) {
+  //     redirectsRules.push({
+  //       source: '/:path((?!another-page$).*)',
+  //       missing: [
+  //         {
+  //           type: 'header',
+  //           key: 'x-do-not-redirect',
+  //         },
+  //       ],
+  //       permanent: false,
+  //       destination: '/site_is_down',
+  //     });
+  //   }
+  //
+  //   return redirectsRules;
+  // }
+}
 
-    // is NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE true? - shot down website, and show warning page
-    if (/^true$/i.test(process.env.NEXT_PUBLIC_WEBSITE_NOT_AVAILABLE)) redirectsRules.push({
-      source: '/:path((?!site_is_down$).*)',
-      permanent: false,
-      destination: '/site_is_down',
-    });
+const sentryWebpackPluginOptions = {
+  ignore: ['node_modules'],
+  include: '.next',
+  silent: true,
+  configFile: 'sentry.properties',
+  dryRun: !process.env.NEXT_PUBLIC_SENTRY_DSN
+}
 
-    return redirectsRules;
-  }
-};
-
-module.exports = withPlugins([
-
-  // add a plugin without a configuration
-  withImages,
-
-  // another plugin with a configuration
-  // [typescript, {
-  //   typescriptLoaderOptions: {
-  //     transpileOnly: false,
-  //   },
-  // }],
-
-], nextConfig);
+module.exports = withBundleAnalyzer(
+  process.env.NEXT_PUBLIC_SENTRY_DSN
+    ? withSentryConfig(
+        {
+          ...nextConfig,
+          sentry: {
+            hideSourceMaps: true,
+            widenClientFileUpload: true,
+          },
+        },
+        sentryWebpackPluginOptions
+      )
+    : nextConfig
+)

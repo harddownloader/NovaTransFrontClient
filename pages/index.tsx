@@ -1,20 +1,11 @@
-import React, {useState, useEffect, ReactElement} from "react"
-
-// mui
-import CssBaseline from "@mui/material/CssBaseline"
+import React, { useEffect } from "react"
 
 // project components
-import Header from "@/components/HeaderMaterial/Header"
-import SearchTickets from "@/components/Home/SearchTickets/SearchTickets"
-import WhyAreWe from "@/components/Home/WhyAreWe"
-import PopularTrips from "@/components/PopularTrips"
-import AboutDrivers from "@/components/Home/AboutDrivers"
-import Footer from "@/components/Footer/Footer"
-import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
+import { HomePage } from "@/components/HomePage"
 import { BaseSeo } from "@/components/seo/BaseSeo"
 
 // utils
-import { WEBSITE_NAME} from "@/utils/const"
+import { WEBSITE_NAME } from "@/utils/const"
 
 // store
 import {
@@ -26,14 +17,12 @@ import {
   selectLocations,
   setLocations,
 } from '@/store/locations/locationsSlice'
-import { getAllLocations } from "@/actions/location"
 
-function App({ alert=null, locations }) {
-  const [isAlertVisible, setIsAlertVisible] = useState(Boolean(alert))
+function App({ locations=[] }) {
   const dispatch = useAppDispatch()
   const {
     data,
-    pending, 
+    pending,
     error,
   } = useAppSelector(selectLocations)
 
@@ -51,58 +40,56 @@ function App({ alert=null, locations }) {
         title={`Купить билеты на автобус, заказать автобусные билеты онлайн`}
         description={`Заказать или купить билет на автобус онлайн на сайте ${WEBSITE_NAME}. Онлайн бронирование билетов на автобусы . Забронировать автобусный билет на сайте ${WEBSITE_NAME}`}
       />
-      <CssBaseline />
-      <Header />
-
-      <main>
-        <SearchTickets />
-        <WhyAreWe />
-        {/*<PopularTrips />*/}
-        <AboutDrivers />
-      </main>
-
-      {isAlertVisible && <ConfirmModal
-        isVisible={isAlertVisible}
-        changeVisibility={() => setIsAlertVisible(!isAlertVisible)}
-        titleText={alert?.alertTitle}
-        contentText={alert?.alertText}
-        cancelButtonText={'ОК'}
-      />}
-
-      <Footer />
+      <HomePage />
     </>
   )
 }
 
-// App.getInitialProps = ({ query }) => {
-//   if (query?.alert) {
-//     const alert = JSON.parse(query.alert)
-//     return {alert}
+/*
+* UPD: It works on Vercel only when getServerSideProps completely absent
+*
+* PREVIOUS NOTE:
+* We have to use fetch with timeout.
+* https://www.reddit.com/r/nextjs/comments/n8y8iy/every_time_i_open_my_nextjs_site_hosted_on_vercel/
+* https://dmitripavlutin.com/timeout-fetch-request/
+* https://stackoverflow.com/questions/46946380/fetch-api-request-timeout
+*
+* Because Vercel has a timeout of 10 seconds, and our backend can only start at the time of the request.
+* As a result, we will get an error from Vercel.
+* */
+// export const getServerSideProps: GetServerSideProps<{
+//   locations: TLocations // import { TLocations } from '@/interfaces/locations'
+// }> = async (context) => {
+//   const { query, res } = context
+//   res.setHeader(
+//     'Cache-Control',
+//     'public, s-maxage=10, stale-while-revalidate=59'
+//   )
+//
+//   const props: {
+//     locations: TLocations
+//   } = {
+//     locations: []
 //   }
-//   return {}
+//
+//   // try {
+//   //   const timeout = 1000
+//   //   const controller = new AbortController()
+//   //   const id = setTimeout(() => controller.abort(), timeout)
+//   //   const locations = await getAllLocations({
+//   //     fetchOptions: {
+//   //       signal: controller.signal
+//   //     }
+//   //   })
+//   //   clearTimeout(id)
+//   //   if (locations) props.locations = [...locations]
+//   // } catch (error) {
+//   //   console.error('Home page ssr fetching error', error)
+//   // }
+//
+//   return {
+//     props: props
+//   }
 // }
-
-export const getServerSideProps = async (context) => {
-  const { query } = context
-  let props = {}
-
-  if (query?.alert) {
-    const alert = JSON.parse(query.alert)
-    props = {
-      ...props,
-      alert
-    }
-  }
-
-  const locations = await getAllLocations()
-  if (locations) props = {
-    ...props,
-    locations
-  }
-
-  return {
-    props: props
-  }
-}
 
 export default App

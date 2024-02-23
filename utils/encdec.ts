@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken"
 
+const secretOrPrivateKey = 'somePrivateKey'
+
 export const enc = (info: string): string => {
   const token = jwt.sign(
     info,
-    "hawa"
+    secretOrPrivateKey,
     // {expiresIn:"1h"}
   )
 
@@ -12,7 +14,7 @@ export const enc = (info: string): string => {
 
 export const dec = (info: string): any => {
   let data: any = false
-  jwt.verify(info, "hawa", async (err, decoded) => {
+  jwt.verify(info, secretOrPrivateKey, async (err, decoded) => {
     if (err) {
       data = false
     }

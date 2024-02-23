@@ -1,0 +1,91 @@
+@import '../../styles/mixins/TripDetails';
+@import '../../styles/mixins/Common';
+
+// collapse
+.tabPanel {
+  @include tabPanel;
+}
+.detailsRoute {
+  @include detailsRoute;
+}
+.detailsRouteColumn {
+  @include detailsRouteColumn;
+}
+.detailsRouteColumn.fistCol {
+  @include detailsRouteColumnFirst;
+}
+.detailsRouteColumn.secondCol {
+  @include detailsRouteColumnSecond;
+}
+.detailsRouteInfo {
+  @include detailsRouteInfo;
+}
+.detailsRouteInfo p {
+  @include detailsRouteInfo_p;
+}
+.bold {
+  @include bold;
+}
+.details {
+  @include details;
+}
+.detailsContent {
+  @include detailsContent;
+}
+.detailsContent > div {
+  @include detailsContent_in_div;
+}
+.wrapperPoints {
+  @include wrapperPoints;
+}
+.mobile_ticket__segment_divider {
+  @include mobile_ticket__segment_divider;
+}
+.item {
+  @include item;
+}
+.item > div:first-child {
+  @include item_in_div_first_child;
+}
+.time {
+  @include time;
+}
+.date {
+  @include date;
+}
+.city {
+  @include city;
+}
+.address {
+  @include address;
+}
+.listUnstyled {
+  @include listUnstyled;
+}
+.listUnstyled strong {
+  @include listUnstyled_strong;
+}
+.title {
+  @include title;
+}
+.d_inline_block {
+  @include d_inline_block;
+}
+.pointer {
+  @include pointer;
+}
+.icon {
+
+}
+.icon_info {
+
+}
+.text_primary {
+  
+}
+
+@media only screen and (max-width: 667px) {
+  .tabPanel {
+    display: none;
+  }
+}

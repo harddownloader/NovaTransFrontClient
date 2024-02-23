@@ -1,3 +1,38 @@
+@import "./../../styles/mixins/Lists";
+
+.appBar{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.toolbar {
+  flex-wrap: wrap;
+}
+.toolbarTitle {
+  flex-grow: 1;
+}
+.link {
+  margin: 8px 12px;
+}
+.heroContent {
+  padding: 64px 0px 48px;
+}
+.cardHeader {
+  background-color: #eeeeee;
+}
+.cardPricing {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+.footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin-top: 64px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+// ---
+
 .logo_heading {
   font-weight: 600;
 }
@@ -29,9 +64,11 @@
   padding-left: 1.5rem;
 }
 
-.pages_list__title{
-
+.pages_list {
+  @include ul_list;
 }
+
+.pages_list__title {}
 
 .pages_list__item {
   margin-bottom: 0.3em;
@@ -41,21 +78,31 @@
   font-size: 0.9em;
 }
 
-.social_list_container {
-  
+.social_list_container {}
+
+.social_list {
+  @include ul_list;
 }
+
 .social_list__text {
   display: flex;
   font-size: 0.9em;
 }
 
-.social_link__item{
+.social_link__item {
   display: flex;
   margin-bottom: 0.3rem;
 }
 
 .social_link__icon{
   margin-right: 0.3rem;
+}
+
+@media (min-width:600px) {
+  .footer {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
 }
 
 @media only screen and (max-width: 575px) {

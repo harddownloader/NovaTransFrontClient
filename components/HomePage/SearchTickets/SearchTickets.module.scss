@@ -1,0 +1,142 @@
+@import "./../../../styles/variables";
+
+.heroContent {
+  background-color: #fff;
+  background-image: url("/static/img/backgrounds/bg-winter.jpg");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  margin-top: -5.3rem;
+
+  &.oneWay {
+    padding: 0.5rem 0rem;
+  }
+  &.withReturnTrip {
+    padding: 3rem 0rem 7rem;
+  }
+}
+
+.gridSelect {
+  padding: 0 !important;
+  color: #fff;
+}
+
+// locations autocomplete
+.select {
+  margin: 0rem;
+}
+
+.searchField {
+  background-color: #fff;
+  border-radius: 0rem;
+
+  label {
+    margin-top: 0.625rem;
+  }
+
+  &:global(.first_el) {
+    border-radius: $common_br 0 0 $common_br;
+  }
+}
+
+// input icons
+.input_icon_wrap {
+  display: flex;
+  align-items: center;
+}
+.input_icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.searchFieldRenderedInput {
+  &:global(.first_input_el) {
+    border-radius: $common_br 0 0 $common_br;
+    & :global(.MuiInputBase-root) {
+      border-radius: $common_br 0 0 $common_br;
+    }
+  }
+
+  &:global(.middle_input_el .MuiInputBase-root) {
+    border-radius: 0rem;
+  }
+}
+
+.dataPicker {}
+
+.search_tickets__container {
+  // background-image: url("/assets/images/backgrounds/bg-winter-mobile.jpg");
+}
+
+.search_tickets {}
+
+.search_tickets_on_search_page {
+  margin-top: 7rem;
+}
+
+.search_field {
+  .MuiInputBase-root {
+    border-radius: 0 $common_br 0$common_br 0;
+  }
+}
+
+.search_btn_container {
+  height: 100%;
+}
+
+.search_btn {
+  height: 100%;
+}
+
+.returnBackCheckbox {
+  color: $blue_color;
+  &:global(.Mui-checked) {
+    color: $blue_color;
+  }
+}
+
+.customFormControlClass {
+  color: #fff;
+  font-size: 34px;
+  .MuiFormControlLabel-label {
+    color: #fff;
+  }
+}
+
+// return trip
+.search_tickets.return_trip {
+  padding: 0rem 0rem;
+}
+
+.search_tickets.return_trip {
+  display: none;
+}
+
+.search_tickets.return_trip.activate {
+  display: block;
+}
+
+.returnBackCheckboxWrap {}
+
+.MuiInputBase-input {
+  color: white !important;
+}
+
+@media only screen and (max-width: 575px) {
+  .search_btn {
+    width: 100%;
+  }
+
+  .heroContent {
+    &.oneWay {
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .returnBackCheckboxWrap {
+    display: flex;
+    justify-content: center;
+    padding: 0.6rem;
+  }
+}

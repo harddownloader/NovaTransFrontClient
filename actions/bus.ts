@@ -1,6 +1,5 @@
 import { ISearchForm } from "@/interfaces/searchform"
 import queryString from "query-string"
-import fetch from "isomorphic-unfetch"
 import { API } from "@/utils/const"
 
 export const searchBus = async (query: ISearchForm) => {

@@ -1,5 +1,4 @@
-import fetch from "isomorphic-unfetch";
-import {API} from "@/utils/const";
+import { API } from "@/utils/const";
 
 export const getBusSeats = async (busSeatsId: string) => {
   const response = await fetch(`${API}/buses-seats/${busSeatsId}`, {

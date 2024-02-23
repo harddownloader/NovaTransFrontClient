@@ -29,3 +29,9 @@ yarn-error.log*
 
 # IDE
 .idea
+
+# Sentry
+.sentryclirc
+
+# Sentry
+next.config.original.js

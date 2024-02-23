@@ -5,7 +5,6 @@ import React, {
   useRef,
   ReactElement,
 } from "react"
-import Router from "next/router"
 import { GetServerSideProps } from 'next'
 import { useIMask } from 'react-imask'
 
@@ -24,8 +23,8 @@ import ConfirmModal from '@/components/Dialog/Confirm/ConfirmModal'
 import { PaperCard } from '@/components/Card/PaperCard'
 import { BaseSeo } from "@/components/seo/BaseSeo"
 import { CommonLayout } from "@/components/Layouts"
-import LiqPay from "./liqpay"
-import { Heading } from "./Heading"
+import LiqPay from "@/components/CheckoutPage/liqpay"
+import { Heading } from "@/components/CheckoutPage/Heading/Heading"
 
 // utils
 import { dec } from "@/utils/encdec"
@@ -89,30 +88,6 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
 
   const checkoutFormBtnRef = useRef(null)
 
-  useEffect(() => {
-    if (
-      !oneWayTicketsOrder.fare ||
-      !oneWayTicketsOrder.seats ||
-      !oneWayTicketsOrder.journeyDate ||
-      !oneWayTicketsOrder.start ||
-      !oneWayTicketsOrder.end ||
-      !oneWayTicketsOrder.slug
-    ) Router.push({ pathname: '/' })
-  }, [])
-
-  // const handleAutoComplete = value => {
-  //   setDataSource(
-  //     !value || value.indexOf("@") >= 0
-  //       ? []
-  //       : [
-  //           `${value}@gmail.com`,
-  //           `${value}@outlook.com`,
-  //           `${value}@yahoo.com`
-  //         ]
-  //   )
-  //   setEmail(value)
-  // }
-
   const handleName = (value: string) => {
     nameErrorHandler(value)
     setName(value)
@@ -162,7 +137,7 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
         seatNumber: JSON.stringify(seatNumbers)
       }
       
-      resp = await postBookSeat(slug, body)
+      // resp = await postBookSeat(slug, body)
     } else if(oneWayTicketsOrder && returnTicketsOrder) {
       const body = {
         name,
@@ -180,7 +155,7 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
         ]
       }
 
-      resp = await postMultiBookSeat(body)
+      // resp = await postMultiBookSeat(body)
     } else console.error(`You haven't orders info for saving`)
 
     if (!resp.error) {
@@ -437,7 +412,7 @@ export const Details: NextPageWithLayout<OrderProps & TPaymentForm> = ({
       <div
         ref={checkoutFormBtnRef}
         className="checkout_form_btn"
-        style={{overflow: 'hidden', height: 0}}
+        // style={{overflow: 'hidden', height: 0}}
         dangerouslySetInnerHTML={{ __html: paymentForm }}
       ></div>
 
@@ -459,6 +434,13 @@ type OrderProps = {
 } & TPaymentForm
 
 export const getServerSideProps: GetServerSideProps = async(context) => {
+  const redirectToHomeNextObj = {
+    redirect: {
+      permanent: false,
+      destination: "/",
+    },
+    props:{},
+  }
   const orderString: any = context?.query?.order
   const order: OrderProps = dec(orderString)
 
@@ -487,13 +469,7 @@ export const getServerSideProps: GetServerSideProps = async(context) => {
 
     const amount = Number(costOfOneWayTickets + costOfRoundTripTicket)
 
-    if (Number.isNaN(amount)) return {
-      props: {
-        oneWayTicketsOrder: null,
-        returnTicketsOrder: null,
-        referer: context?.req?.headers?.referer || null
-      }
-    }
+    if (Number.isNaN(amount)) return redirectToHomeNextObj
 
     const liqpay = new LiqPay(PAYMENT_GATEWAY_PUBLIC_KEY, PAYMENT_GATEWAY_PRIVATE_KEY)
     const paymentFormHtml = liqpay.cnb_form({
@@ -514,13 +490,7 @@ export const getServerSideProps: GetServerSideProps = async(context) => {
     }
   }
 
-  return {
-    props: {
-      oneWayTicketsOrder: null,
-      returnTicketsOrder: null,
-      referer: context?.req?.headers?.referer || null
-    }
-  }
+  return redirectToHomeNextObj
 }
 
 Details.getLayout = function getLayout(page: ReactElement) {

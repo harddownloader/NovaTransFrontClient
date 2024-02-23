@@ -1,0 +1,26 @@
+.heroContent {
+  background-color: #fff;
+  padding: 4rem 0px 3rem;
+}
+
+.about_drivers__container {
+  padding: 4rem 0px;
+  background-color: #fff;
+}
+
+.about_drivers__heading {
+  text-align: center;
+}
+
+.about_drivers__description {}
+
+@media only screen and (max-width: 575px) {
+  .about_drivers__container {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .about_drivers__description{
+    padding: 0px 0.9rem;
+  }
+}
